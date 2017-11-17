@@ -59,7 +59,7 @@ describe('Clients acceptance test', () => {
     it('calls the API with expected data on submit', () => {
       const clientExample = {
         name: 'John',
-        phone: '999'
+        phone: '999',
       };
 
       fetchMock.restore().post(

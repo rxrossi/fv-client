@@ -18,7 +18,7 @@ describe('Clients reducer', () => {
   });
 
   it('add a new client upon receiving the client list', () => {
-    const action = actions.success([
+    const action = actions.fetchSuccess([
       { name: 'John', phone: '9 8877 7474' },
       { name: 'Mary', phone: '9 8873 3434' },
     ]);
@@ -35,7 +35,7 @@ describe('Clients reducer', () => {
   });
 
   it('returns the correct state when receives an error', () => {
-    const action = actions.error('Some error');
+    const action = actions.fetchError('Some error');
     const expected = {
       fetching: false,
       error: 'Some error',
@@ -52,7 +52,7 @@ describe('Clients reducer', () => {
   });
 
   it('retuns the correct state when requesting', () => {
-    const action = actions.request();
+    const action = actions.fetchRequest();
     const previousState = {
       error: 'Some Error',
       fetching: false,

@@ -37,4 +37,30 @@ describe('Clients action creators', () => {
         expect(store.getActions()).toEqual(actionsExpected);
       });
   });
+
+  it('add a client', () => {
+    const client = {
+      name: 'Jhon',
+      phone: '999',
+    };
+
+    fetchMock.restore().post((url, opts) => (
+      url === urls.CLIENTS
+      && opts
+      && opts.body.name === client.name
+      && opts.body.phone === client.phone
+    ), { body: client });
+
+    const initialState = {};
+    const store = mockStore(initialState);
+    const actionsExpected = [
+      { type: types.ADD_REQUEST },
+      { type: types.ADD_SUCCESS, payload: client },
+    ];
+
+    return store.dispatch(actions.addClient(client))
+      .then(() => {
+        expect(store.getActions()).toEqual(actionsExpected);
+      });
+  });
 });

@@ -1,8 +1,9 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { reduxForm } from 'redux-form';
-import 'isomorphic-fetch'; /* global fetch */
+import { connect } from 'react-redux';
 import Add from '../Components/Add';
-import * as API_URLS from '../../APIInfo';
+import { addClient } from '../actions/';
 
 const AddReduxForm = reduxForm({
   form: 'addClients',
@@ -14,15 +15,8 @@ class AddContainer extends React.Component {
     this.submit = this.submit.bind(this);
   }
 
-  // eslint-disable-next-line
   submit(values) {
-    // TODO:
-    // replace this with an action
-    // create a sort of API, extracting it from actions
-    fetch(API_URLS.CLIENTS, {
-      method: 'POST',
-      body: values,
-    });
+    this.props.addClient(values);
   }
 
   render() {
@@ -31,5 +25,8 @@ class AddContainer extends React.Component {
     );
   }
 }
+AddContainer.propTypes = {
+  addClient: PropTypes.func.isRequired,
+};
 
-export default AddContainer;
+export default connect(null, { addClient })(AddContainer);
