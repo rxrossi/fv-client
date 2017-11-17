@@ -1,3 +1,22 @@
 {
-    "extends": "airbnb"
+    "extends": "airbnb",
+    "globals": {
+      "expect": true,
+      "afterEach": true,
+      "beforeEach": true,
+      "beforeAll": true,
+      "afterAll": true,
+      "describe": true,
+      "document": true,
+      "it": true,
+      "jest": true,
+      "xit": true
+    },
+    "rules": {
+      "jsx-a11y/anchor-is-valid": [ "error", {
+        "components": [ "Link" ],
+        "specialLink": [ "hrefLeft", "hrefRight", "to" ],
+        "aspects": [ "noHref", "invalidHref", "preferButton" ]
+      }]
+    }
 }
