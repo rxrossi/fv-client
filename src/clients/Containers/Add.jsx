@@ -17,6 +17,7 @@ class AddContainer extends React.Component {
 
   submit(values) {
     this.props.addClient(values);
+    document.querySelector('input').focus();
     this.props.reset('addClients');
   }
 
