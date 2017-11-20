@@ -10,9 +10,14 @@ configure({ adapter: new Adapter() });
 
 const HOME_TEXT = 'This is home';
 const CLIENTS_TEXT = 'No clients';
-fetchMock.get('*', {}); // necessary or tests throws
 
 describe('App acceptance test', () => {
+  beforeAll(() => {
+    fetchMock.mock('*', { // if not present, test throws
+      body: [],
+    });
+  });
+
   describe('Mounting tests', () => {
     it('renders', () => {
       mount(<App />);
