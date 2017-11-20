@@ -47,8 +47,7 @@ describe('Clients action creators', () => {
     fetchMock.restore().post((url, opts) => (
       url === urls.CLIENTS
       && opts
-      && opts.body.name === client.name
-      && opts.body.phone === client.phone
+      && opts.body.name === JSON.stringify(client)
     ), { body: client });
 
     const initialState = {};

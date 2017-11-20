@@ -2,6 +2,10 @@ import 'isomorphic-fetch'; /* global fetch */
 import * as types from '../actionTypes';
 import * as urls from '../../APIInfo';
 
+const jsonHeader = {
+  'Content-Type': 'application/json',
+};
+
 export const addRequest = () => ({
   type: types.ADD_REQUEST,
 });
@@ -17,7 +21,7 @@ export const addSuccess = payload => ({
 
 export const addClient = data => (dispatch) => {
   dispatch(addRequest());
-  return fetch(urls.CLIENTS, { body: data, method: 'POST' })
+  return fetch(urls.CLIENTS, { body: JSON.stringify(data), method: 'POST', headers: jsonHeader })
     .then(res => res.json())
     .then(json => dispatch(addSuccess(json)))
     .catch(err => dispatch(addError(err)));

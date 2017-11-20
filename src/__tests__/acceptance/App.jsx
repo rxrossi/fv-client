@@ -17,6 +17,9 @@ describe('App acceptance test', () => {
       body: [],
     });
   });
+  afterAll(() => {
+    fetchMock.restore();
+  });
 
   describe('Mounting tests', () => {
     it('renders', () => {

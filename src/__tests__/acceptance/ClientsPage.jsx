@@ -66,8 +66,7 @@ describe('Clients acceptance test', () => {
         (url, opts) =>
           url === API_URLS.CLIENTS
           && opts
-          && opts.body.name === clientExample.name
-          && opts.body.phone === clientExample.phone
+          && opts.body === JSON.stringify(clientExample)
         , '{}',
       );
 
