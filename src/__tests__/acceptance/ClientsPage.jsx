@@ -70,11 +70,42 @@ describe('Clients acceptance test', () => {
         , '{}',
       );
 
-      nameInpt.simulate('change', { target: { value: clientExample.name } });
-      phoneInpt.simulate('change', { target: { value: clientExample.phone } });
+      sut.find('input[name="name"]')
+        .simulate('change', { target: { value: clientExample.name } });
+      sut.find('input[name="phone"]')
+        .simulate('change', { target: { value: clientExample.phone } });
       sut.find('form').simulate('submit');
 
       expect(fetchMock.calls().matched.length).toBe(1);
+    });
+
+    it('clears the field on submit', () => {
+      const clientExample = {
+        name: 'John',
+        phone: '999',
+      };
+
+      fetchMock.restore().post(
+        (url, opts) =>
+          url === API_URLS.CLIENTS
+          && opts
+          && opts.body === JSON.stringify(clientExample)
+        , '{}',
+      );
+
+      sut.find('input[name="name"]')
+        .simulate('change', { target: { value: clientExample.name } });
+      sut.find('input[name="phone"]')
+        .simulate('change', { target: { value: clientExample.phone } });
+
+      sut.find('form').simulate('submit');
+
+      expect(sut.find('input[name="name"]').props().value).toEqual('');
+      expect(sut.find('input[name="phone"]').props().value).toEqual('');
+    });
+
+    xit('shows the recently added user', () => {
+
     });
   });
 

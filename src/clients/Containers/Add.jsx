@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { reduxForm } from 'redux-form';
+import { reduxForm, reset } from 'redux-form';
 import { connect } from 'react-redux';
 import Add from '../Components/Add';
 import { addClient } from '../actions/';
@@ -17,6 +17,7 @@ class AddContainer extends React.Component {
 
   submit(values) {
     this.props.addClient(values);
+    this.props.reset('addClients');
   }
 
   render() {
@@ -27,6 +28,7 @@ class AddContainer extends React.Component {
 }
 AddContainer.propTypes = {
   addClient: PropTypes.func.isRequired,
+  reset: PropTypes.func.isRequired,
 };
 
-export default connect(null, { addClient })(AddContainer);
+export default connect(null, { addClient, reset })(AddContainer);
