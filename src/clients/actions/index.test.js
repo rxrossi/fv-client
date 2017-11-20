@@ -20,7 +20,7 @@ describe('Clients action creators', () => {
       { name: 'Mary', phone: '9 8787 1264' },
     ];
 
-    fetchMock.mock(urls.CLIENTS, {
+    fetchMock.get(urls.CLIENTS, {
       body: payload,
       headers: { 'content-type': 'application/json' },
     });
@@ -47,7 +47,7 @@ describe('Clients action creators', () => {
     fetchMock.restore().post((url, opts) => (
       url === urls.CLIENTS
       && opts
-      && opts.body.name === JSON.stringify(client)
+      && opts.body === JSON.stringify(client)
     ), { body: client });
 
     const initialState = {};

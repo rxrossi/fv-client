@@ -37,6 +37,15 @@ export default (state = defaultState, action) => {
         ...state,
         fetching: true,
       };
+    case types.ADD_SUCCESS:
+      return {
+        fetching: false,
+        error: undefined,
+        list: [
+          ...state.list,
+          ...underscoreIdtoIdField([action.payload]),
+        ],
+      };
     default:
       return state;
   }

@@ -37,13 +37,35 @@ describe('Clients acceptance test', () => {
     let phoneInpt;
     let submitBtn;
 
-    beforeAll(() => {
+    const clientExample = {
+      name: 'John',
+      phone: '999',
+    };
+
+    beforeEach(() => {
+      fetchMock
+        .get(API_URLS.CLIENTS, {
+          body: [],
+        });
+
+      fetchMock.post(
+        (url, opts) =>
+          url === API_URLS.CLIENTS
+          && opts
+          && opts.body === JSON.stringify(clientExample)
+        ,
+        {
+          ...clientExample,
+          id: '3',
+        },
+      );
       sut = mount(<App />);
       sut.find('a[href="/clients"]').simulate('click', { button: 0 });
+      // sut.update();
     });
 
     afterEach(() => {
-      fetchMock.reset();
+      fetchMock.restore();
     });
 
     it('has name and phone inputs and a submit button', () => {
@@ -57,18 +79,7 @@ describe('Clients acceptance test', () => {
     });
 
     it('calls the API with expected data on submit', () => {
-      const clientExample = {
-        name: 'John',
-        phone: '999',
-      };
-
-      fetchMock.restore().post(
-        (url, opts) =>
-          url === API_URLS.CLIENTS
-          && opts
-          && opts.body === JSON.stringify(clientExample)
-        , '{}',
-      );
+      expect(fetchMock.calls().matched.length).toBe(1);
 
       sut.find('input[name="name"]')
         .simulate('change', { target: { value: clientExample.name } });
@@ -76,23 +87,10 @@ describe('Clients acceptance test', () => {
         .simulate('change', { target: { value: clientExample.phone } });
       sut.find('form').simulate('submit');
 
-      expect(fetchMock.calls().matched.length).toBe(1);
+      expect(fetchMock.calls().matched.length).toBe(2);
     });
 
     it('clears the field on submit', () => {
-      const clientExample = {
-        name: 'John',
-        phone: '999',
-      };
-
-      fetchMock.restore().post(
-        (url, opts) =>
-          url === API_URLS.CLIENTS
-          && opts
-          && opts.body === JSON.stringify(clientExample)
-        , '{}',
-      );
-
       sut.find('input[name="name"]')
         .simulate('change', { target: { value: clientExample.name } });
       sut.find('input[name="phone"]')
@@ -104,8 +102,18 @@ describe('Clients acceptance test', () => {
       expect(sut.find('input[name="phone"]').props().value).toEqual('');
     });
 
-    xit('shows the recently added user', () => {
+    it('shows the recently added user', (done) => {
+      sut.find('input[name="name"]')
+        .simulate('change', { target: { value: clientExample.name } });
+      sut.find('input[name="phone"]')
+        .simulate('change', { target: { value: clientExample.phone } });
 
+      sut.find('form').simulate('submit');
+
+      setImmediate(() => {
+        expect(sut.text()).toMatch(clientExample.name);
+        done();
+      });
     });
   });
 
