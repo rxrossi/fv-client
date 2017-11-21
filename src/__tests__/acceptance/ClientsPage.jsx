@@ -96,7 +96,7 @@ describe('Clients acceptance test', () => {
       expect(submitBtn.length).toBe(1);
     });
 
-    describe('Succes case', () => {
+    describe('Success case', () => {
       beforeAll((done) => {
         sut.find('input[name="name"]')
           .simulate('change', { target: { value: clientExample.name } });
