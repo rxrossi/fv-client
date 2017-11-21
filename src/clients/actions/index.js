@@ -10,7 +10,7 @@ export const addRequest = () => ({
   type: types.ADD_REQUEST,
 });
 
-export const addError = (errorObject) => ({
+export const addError = errorObject => ({
   type: types.ADD_ERROR,
   errors: errorObject,
 });
@@ -18,6 +18,10 @@ export const addError = (errorObject) => ({
 export const addSuccess = payload => ({
   type: types.ADD_SUCCESS,
   payload,
+});
+
+export const clearAddErrors = () => ({
+  type: types.ADD_CLEAR_ERRORS,
 });
 
 export const addClient = data => (dispatch) => {

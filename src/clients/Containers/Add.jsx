@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { reduxForm, reset } from 'redux-form';
 import { connect } from 'react-redux';
 import Add from '../Components/Add';
-import { addClient } from '../actions/';
+import { addClient, clearAddErrors } from '../actions/';
 
 const AddReduxForm = reduxForm({
   form: 'addClients',
@@ -13,6 +13,10 @@ class AddContainer extends React.Component {
   constructor(props) {
     super(props);
     this.submit = this.submit.bind(this);
+  }
+
+  componentDidMount() {
+    this.props.clearAddErrors();
   }
 
   submit(values) {
@@ -34,6 +38,7 @@ AddContainer.propTypes = {
   addClient: PropTypes.func.isRequired,
   reset: PropTypes.func.isRequired,
   errors: PropTypes.objectOf(PropTypes.string),
+  clearAddErrors: PropTypes.func.isRequired,
 };
 AddContainer.defaultProps = {
   errors: {},
@@ -43,4 +48,4 @@ const mapState = state => ({
   errors: state.clients.addErrors,
 });
 
-export default connect(mapState, { addClient, reset })(AddContainer);
+export default connect(mapState, { addClient, reset, clearAddErrors })(AddContainer);
