@@ -131,9 +131,13 @@ describe('Clients acceptance test', () => {
 
     beforeAll(async (done) => {
       fetchMock
+        .restore()
         .get(API_URLS.CLIENTS, {
           code: 200,
-          body: [],
+          body: {
+            body: [],
+            code: 200,
+          },
         });
 
       fetchMock.post(
@@ -143,10 +147,8 @@ describe('Clients acceptance test', () => {
         ,
         {
           body: {
-            body: {
-              errors: [
-                { name: 'NOT_UNIQUE' },
-              ],
+            errors: {
+              name: 'NOT_UNIQUE',
             },
             code: 409,
           },
@@ -178,6 +180,18 @@ describe('Clients acceptance test', () => {
 
     it('calls the API with expected data on submit', () => {
       expect(fetchMock.calls().matched.length).toBe(2);
+    });
+
+    it('clears the field on submit', () => {
+      expect(sut.find('input[name="name"]').props().value).toEqual('');
+      expect(sut.find('input[name="phone"]').props().value).toEqual('');
+    });
+
+    it('shows the error message', () => {
+      // sut.update();
+      // console.log(sut.find('form').find('div').at(0).debug())
+      // console.log(store.getState().clients.addErrors);
+      expect(sut.text()).toMatch(/A client with this name already exists/);
     });
   });
 

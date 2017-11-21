@@ -1,7 +1,8 @@
 import * as types from '../actionTypes';
 
 const defaultState = {
-  error: undefined,
+  fetchError: undefined,
+  addErrors: {},
   fetching: false,
   list: [],
 };
@@ -22,15 +23,16 @@ export default (state = defaultState, action) => {
   switch (action.type) {
     case types.FETCH_SUCCESS:
       return {
+        ...state,
         fetching: false,
-        error: undefined,
+        fetchError: undefined,
         list: underscoreIdtoIdField(action.payload),
       };
     case types.FETCH_ERROR:
       return {
         ...state,
         fetching: false,
-        error: action.err,
+        fetchError: action.err,
       };
     case types.FETCH_REQUEST:
       return {
@@ -39,12 +41,17 @@ export default (state = defaultState, action) => {
       };
     case types.ADD_SUCCESS:
       return {
-        fetching: false,
-        error: undefined,
+        ...state,
+        addErrors: {},
         list: [
           ...state.list,
           ...underscoreIdtoIdField([action.payload]),
         ],
+      };
+    case types.ADD_ERROR:
+      return {
+        ...state,
+        addErrors: action.errors,
       };
     default:
       return state;

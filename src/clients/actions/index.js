@@ -10,8 +10,9 @@ export const addRequest = () => ({
   type: types.ADD_REQUEST,
 });
 
-export const addError = () => ({
+export const addError = (errorObject) => ({
   type: types.ADD_ERROR,
+  errors: errorObject,
 });
 
 export const addSuccess = payload => ({
@@ -27,7 +28,7 @@ export const addClient = data => (dispatch) => {
       if (json.code === 201) {
         return dispatch(addSuccess(json.body));
       }
-      return dispatch(addError(json));
+      return dispatch(addError(json.errors));
     })
     .catch(err => dispatch(addError(err)));
 };

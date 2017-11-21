@@ -12,7 +12,8 @@ describe('Clients reducer', () => {
       const actual = reducer(undefined, {});
       const expected = {
         fetching: false,
-        error: undefined,
+        addErrors: {},
+        fetchError: undefined,
         list: [],
       };
       expect(actual).toEqual(expected);
@@ -28,7 +29,8 @@ describe('Clients reducer', () => {
 
       const expected = {
         fetching: false,
-        error: undefined,
+        fetchError: undefined,
+        addErrors: {},
         list: [...action.payload],
       };
 
@@ -46,7 +48,8 @@ describe('Clients reducer', () => {
 
       const expected = {
         fetching: false,
-        error: undefined,
+        fetchError: undefined,
+        addErrors: {},
         list: [action.payload],
       };
 
@@ -57,13 +60,13 @@ describe('Clients reducer', () => {
       const action = actions.fetchError('Some error');
       const expected = {
         fetching: false,
-        error: 'Some error',
+        fetchError: 'Some error',
         list: userListExample,
       };
 
       const actual = reducer({
         fetching: true,
-        error: undefined,
+        fetchError: undefined,
         list: userListExample,
       }, action);
 
@@ -73,12 +76,12 @@ describe('Clients reducer', () => {
     it('retuns the correct state when requesting', () => {
       const action = actions.fetchRequest();
       const previousState = {
-        error: 'Some Error',
+        fetchError: 'Some Error',
         fetching: false,
         list: userListExample,
       };
       const expectedState = {
-        error: 'Some Error',
+        fetchError: 'Some Error',
         fetching: true,
         list: userListExample,
       };

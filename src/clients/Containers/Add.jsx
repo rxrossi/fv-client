@@ -26,13 +26,21 @@ class AddContainer extends React.Component {
 
   render() {
     return (
-      <AddReduxForm onSubmit={this.submit} />
+      <AddReduxForm onSubmit={this.submit} errors={this.props.errors} />
     );
   }
 }
 AddContainer.propTypes = {
   addClient: PropTypes.func.isRequired,
   reset: PropTypes.func.isRequired,
+  errors: PropTypes.objectOf(PropTypes.string),
+};
+AddContainer.defaultProps = {
+  errors: {},
 };
 
-export default connect(null, { addClient, reset })(AddContainer);
+const mapState = state => ({
+  errors: state.clients.addErrors,
+});
+
+export default connect(mapState, { addClient, reset })(AddContainer);
