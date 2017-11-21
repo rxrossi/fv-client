@@ -13,11 +13,17 @@ import View from './View';
 configure({ adapter: new Adapter() });
 
 describe('View Container', () => {
-  it('componentDidMount fetchs data', async () => {
+  let store;
+  const clientsList = [
+    { id: '1', name: 'John', phone: '9 9999 9898' },
+    { id: '2', name: 'Mary', phone: '9 1111 2222' },
+  ];
+
+  beforeAll((done) => {
     const reducer = combineReducers({
       clients,
     });
-    const store = createStore(reducer, applyMiddleware(thunk));
+    store = createStore(reducer, applyMiddleware(thunk));
 
     const App = () => (
       <Provider store={store}>
@@ -25,22 +31,19 @@ describe('View Container', () => {
       </Provider>
     );
 
-    const payload = [
-      { id: '1', name: 'John', phone: '9 9999 9898' },
-      { id: '2', name: 'Mary', phone: '9 1111 2222' },
-    ];
-
-    fetchMock.get(API_URLS.CLIENTS, {
+    fetchMock.restore().get(API_URLS.CLIENTS, {
       body: {
         code: 200,
-        body: payload,
+        body: clientsList,
       },
       headers: { 'content-type': 'application/json' },
     });
 
     mount(<App />);
 
-    await setImmediate(() => Promise.resolve());
-    expect(store.getState().clients.list).toEqual(payload);
+    setImmediate(() => done());
+  });
+  it('componentDidMount fetchs data', () => {
+    expect(store.getState().clients.list).toEqual(clientsList);
   });
 });
