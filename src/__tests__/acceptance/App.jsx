@@ -12,13 +12,17 @@ const HOME_TEXT = 'This is home';
 const CLIENTS_TEXT = 'No clients';
 
 describe('App acceptance test', () => {
-  beforeAll(() => {
+  beforeEach(() => {
     fetchMock.mock('*', { // if not present, test throws
-      body: [],
+      body: {
+        code: 200,
+        body: [],
+      },
     });
   });
-  afterAll(() => {
+  afterEach(() => {
     fetchMock.restore();
+    fetchMock.reset();
   });
 
   describe('Mounting tests', () => {

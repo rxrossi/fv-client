@@ -21,7 +21,10 @@ describe('Clients action creators', () => {
     ];
 
     fetchMock.get(urls.CLIENTS, {
-      body: payload,
+      body: {
+        code: 200,
+        body: payload,
+      },
       headers: { 'content-type': 'application/json' },
     });
 
@@ -48,7 +51,12 @@ describe('Clients action creators', () => {
       url === urls.CLIENTS
       && opts
       && opts.body === JSON.stringify(client)
-    ), { body: client });
+    ), {
+      body: {
+        code: 201,
+        body: client,
+      },
+    });
 
     const initialState = {};
     const store = mockStore(initialState);

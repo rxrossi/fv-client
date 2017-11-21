@@ -8,17 +8,25 @@ import { NO_CLIENTS_P_CLASS } from '../../clients/Components/View';
 // Configure Enzyme
 configure({ adapter: new Adapter() });
 
-fetchMock.mock('*', {
-  body: [],
-});
-
 describe('Clients acceptance test', () => {
   describe('No clients yet', () => {
     let sut;
 
-    beforeAll(() => {
+    beforeEach((done) => {
+      fetchMock.get('*', {
+        body: {
+          code: 200,
+          body: [],
+        },
+      });
       sut = mount(<App />);
       sut.find('a[href="/clients"]').simulate('click', { button: 0 });
+      setImmediate(() => done());
+    });
+
+    afterEach(() => {
+      fetchMock.reset();
+      fetchMock.restore();
     });
 
     it('has a form', () => {
@@ -42,9 +50,10 @@ describe('Clients acceptance test', () => {
       phone: '999',
     };
 
-    beforeEach(() => {
+    beforeAll(async () => {
       fetchMock
         .get(API_URLS.CLIENTS, {
+          code: 200,
           body: [],
         });
 
@@ -55,17 +64,26 @@ describe('Clients acceptance test', () => {
           && opts.body === JSON.stringify(clientExample)
         ,
         {
-          ...clientExample,
-          id: '3',
+          body: {
+            body: {
+              ...clientExample,
+              id: '3',
+            },
+            code: 201,
+          },
         },
       );
-      sut = mount(<App />);
+
+      sut = await mount(<App />);
       sut.find('a[href="/clients"]').simulate('click', { button: 0 });
-      // sut.update();
+
+      await setImmediate(() =>
+        Promise.resolve());
     });
 
-    afterEach(() => {
+    afterAll(() => {
       fetchMock.restore();
+      fetchMock.reset();
     });
 
     it('has name and phone inputs and a submit button', () => {
@@ -78,41 +96,29 @@ describe('Clients acceptance test', () => {
       expect(submitBtn.length).toBe(1);
     });
 
-    it('calls the API with expected data on submit', () => {
-      expect(fetchMock.calls().matched.length).toBe(1);
+    describe('Succes case', () => {
+      beforeAll((done) => {
+        sut.find('input[name="name"]')
+          .simulate('change', { target: { value: clientExample.name } });
+        sut.find('input[name="phone"]')
+          .simulate('change', { target: { value: clientExample.phone } });
 
-      sut.find('input[name="name"]')
-        .simulate('change', { target: { value: clientExample.name } });
-      sut.find('input[name="phone"]')
-        .simulate('change', { target: { value: clientExample.phone } });
-      sut.find('form').simulate('submit');
+        sut.find('form').simulate('submit');
 
-      expect(fetchMock.calls().matched.length).toBe(2);
-    });
+        setImmediate(() => done());
+      });
 
-    it('clears the field on submit', () => {
-      sut.find('input[name="name"]')
-        .simulate('change', { target: { value: clientExample.name } });
-      sut.find('input[name="phone"]')
-        .simulate('change', { target: { value: clientExample.phone } });
+      it('calls the API with expected data on submit', () => {
+        expect(fetchMock.calls().matched.length).toBe(2);
+      });
 
-      sut.find('form').simulate('submit');
+      it('clears the field on submit', () => {
+        expect(sut.find('input[name="name"]').props().value).toEqual('');
+        expect(sut.find('input[name="phone"]').props().value).toEqual('');
+      });
 
-      expect(sut.find('input[name="name"]').props().value).toEqual('');
-      expect(sut.find('input[name="phone"]').props().value).toEqual('');
-    });
-
-    it('shows the recently added user', (done) => {
-      sut.find('input[name="name"]')
-        .simulate('change', { target: { value: clientExample.name } });
-      sut.find('input[name="phone"]')
-        .simulate('change', { target: { value: clientExample.phone } });
-
-      sut.find('form').simulate('submit');
-
-      setImmediate(() => {
+      it('shows the recently added user', () => {
         expect(sut.text()).toMatch(clientExample.name);
-        done();
       });
     });
   });
@@ -127,17 +133,23 @@ describe('Clients acceptance test', () => {
 
     beforeEach((done) => {
       fetchMock
-        .restore()
-        .mock(API_URLS.CLIENTS, {
-          body: clientsListExample,
+        .get(API_URLS.CLIENTS, {
+          body: {
+            code: 200,
+            body: clientsListExample,
+          },
         });
 
       sut = mount(<App />);
       sut.find('a[href="/clients"]').simulate('click', { button: 0 });
 
-      setImmediate(() => {
-        done();
-      });
+      setImmediate(() =>
+        done());
+    });
+
+    afterEach(() => {
+      fetchMock.reset();
+      fetchMock.restore();
     });
 
     it('the store has the clients', () => {

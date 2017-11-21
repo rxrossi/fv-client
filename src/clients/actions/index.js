@@ -23,7 +23,7 @@ export const addClient = data => (dispatch) => {
   dispatch(addRequest());
   return fetch(urls.CLIENTS, { body: JSON.stringify(data), method: 'POST', headers: jsonHeader })
     .then(res => res.json())
-    .then(json => dispatch(addSuccess(json)))
+    .then(json => dispatch(addSuccess(json.body)))
     .catch(err => dispatch(addError(err)));
 };
 
@@ -46,6 +46,6 @@ export const fetchClients = () => (dispatch) => {
   dispatch(fetchRequest());
   return fetch(urls.CLIENTS)
     .then(res => res.json())
-    .then(json => dispatch(fetchSuccess(json)))
+    .then(json => dispatch(fetchSuccess(json.body)))
     .catch(err => dispatch(fetchError(err)));
 };

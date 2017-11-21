@@ -13,7 +13,7 @@ import View from './View';
 configure({ adapter: new Adapter() });
 
 describe('View Container', () => {
-  it('componentDidMount fetchs data', () => {
+  it('componentDidMount fetchs data', async () => {
     const reducer = combineReducers({
       clients,
     });
@@ -30,15 +30,17 @@ describe('View Container', () => {
       { id: '2', name: 'Mary', phone: '9 1111 2222' },
     ];
 
-    fetchMock.mock(API_URLS.CLIENTS, {
-      body: payload,
+    fetchMock.get(API_URLS.CLIENTS, {
+      body: {
+        code: 200,
+        body: payload,
+      },
       headers: { 'content-type': 'application/json' },
     });
 
     mount(<App />);
 
-    setImmediate(() => {
-      expect(store.getState().clients.list).toEqual(payload);
-    });
+    await setImmediate(() => Promise.resolve());
+    expect(store.getState().clients.list).toEqual(payload);
   });
 });
