@@ -39,7 +39,7 @@ describe('Clients acceptance test', () => {
     });
   });
 
-  describe('Using the form to submit', () => {
+  describe('Form submit success case', () => {
     let sut;
     let nameInpt;
     let phoneInpt;
@@ -50,7 +50,7 @@ describe('Clients acceptance test', () => {
       phone: '999',
     };
 
-    beforeAll(async () => {
+    beforeAll(async (done) => {
       fetchMock
         .get(API_URLS.CLIENTS, {
           code: 200,
@@ -74,11 +74,22 @@ describe('Clients acceptance test', () => {
         },
       );
 
+      // Go to Clients page
       sut = await mount(<App />);
       sut.find('a[href="/clients"]').simulate('click', { button: 0 });
 
       await setImmediate(() =>
         Promise.resolve());
+
+      // Fill up form and submit
+      sut.find('input[name="name"]')
+        .simulate('change', { target: { value: clientExample.name } });
+      sut.find('input[name="phone"]')
+        .simulate('change', { target: { value: clientExample.phone } });
+
+      sut.find('form').simulate('submit');
+
+      await setImmediate(() => done());
     });
 
     afterAll(() => {
@@ -96,30 +107,17 @@ describe('Clients acceptance test', () => {
       expect(submitBtn.length).toBe(1);
     });
 
-    describe('Success case', () => {
-      beforeAll((done) => {
-        sut.find('input[name="name"]')
-          .simulate('change', { target: { value: clientExample.name } });
-        sut.find('input[name="phone"]')
-          .simulate('change', { target: { value: clientExample.phone } });
+    it('calls the API with expected data on submit', () => {
+      expect(fetchMock.calls().matched.length).toBe(2);
+    });
 
-        sut.find('form').simulate('submit');
+    it('clears the field on submit', () => {
+      expect(sut.find('input[name="name"]').props().value).toEqual('');
+      expect(sut.find('input[name="phone"]').props().value).toEqual('');
+    });
 
-        setImmediate(() => done());
-      });
-
-      it('calls the API with expected data on submit', () => {
-        expect(fetchMock.calls().matched.length).toBe(2);
-      });
-
-      it('clears the field on submit', () => {
-        expect(sut.find('input[name="name"]').props().value).toEqual('');
-        expect(sut.find('input[name="phone"]').props().value).toEqual('');
-      });
-
-      it('shows the recently added user', () => {
-        expect(sut.text()).toMatch(clientExample.name);
-      });
+    it('shows the recently added user', () => {
+      expect(sut.text()).toMatch(clientExample.name);
     });
   });
 
