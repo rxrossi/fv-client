@@ -59,9 +59,9 @@ describe('Clients acceptance test', () => {
 
       fetchMock.post(
         (url, opts) =>
-          url === API_URLS.CLIENTS
-          && opts
-          && opts.body === JSON.stringify(clientExample)
+        url === API_URLS.CLIENTS
+        && opts
+        && opts.body === JSON.stringify(clientExample)
         ,
         {
           body: {
