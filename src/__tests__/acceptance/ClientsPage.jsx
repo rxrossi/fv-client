@@ -59,9 +59,9 @@ describe('Clients acceptance test', () => {
 
       fetchMock.post(
         (url, opts) =>
-        url === API_URLS.CLIENTS
-        && opts
-        && opts.body === JSON.stringify(clientExample)
+          url === API_URLS.CLIENTS
+          && opts
+          && opts.body === JSON.stringify(clientExample)
         ,
         {
           body: {
@@ -118,6 +118,66 @@ describe('Clients acceptance test', () => {
 
     it('shows the recently added user', () => {
       expect(sut.text()).toMatch(clientExample.name);
+    });
+  });
+
+  describe('Form submit duplicate name', () => {
+    let sut;
+
+    const clientExample = {
+      name: 'John',
+      phone: '999',
+    };
+
+    beforeAll(async (done) => {
+      fetchMock
+        .get(API_URLS.CLIENTS, {
+          code: 200,
+          body: [],
+        });
+
+      fetchMock.post(
+        (url, opts) =>
+          url === API_URLS.CLIENTS
+          && opts
+        ,
+        {
+          body: {
+            body: {
+              errors: [
+                { name: 'NOT_UNIQUE' },
+              ],
+            },
+            code: 409,
+          },
+        },
+      );
+
+      // Go to Clients page
+      sut = await mount(<App />);
+      sut.find('a[href="/clients"]').simulate('click', { button: 0 });
+
+      await setImmediate(() =>
+        Promise.resolve());
+
+      // Fill up form and submit
+      sut.find('input[name="name"]')
+        .simulate('change', { target: { value: clientExample.name } });
+      sut.find('input[name="phone"]')
+        .simulate('change', { target: { value: clientExample.phone } });
+
+      sut.find('form').simulate('submit');
+
+      await setImmediate(() => done());
+    });
+
+    afterAll(() => {
+      fetchMock.restore();
+      fetchMock.reset();
+    });
+
+    it('calls the API with expected data on submit', () => {
+      expect(fetchMock.calls().matched.length).toBe(2);
     });
   });
 

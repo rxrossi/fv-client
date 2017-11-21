@@ -23,7 +23,12 @@ export const addClient = data => (dispatch) => {
   dispatch(addRequest());
   return fetch(urls.CLIENTS, { body: JSON.stringify(data), method: 'POST', headers: jsonHeader })
     .then(res => res.json())
-    .then(json => dispatch(addSuccess(json.body)))
+    .then((json) => {
+      if (json.code === 201) {
+        return dispatch(addSuccess(json.body));
+      }
+      return dispatch(addError(json));
+    })
     .catch(err => dispatch(addError(err)));
 };
 
