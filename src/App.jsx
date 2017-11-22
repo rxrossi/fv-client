@@ -10,6 +10,8 @@ import {
 } from 'react-router-dom';
 import clients from './clients/reducer';
 import Clients from './clients/';
+import Products from './products';
+import products from './products/reducer';
 
 const Home = () => (
   <p>This is home</p>
@@ -18,6 +20,7 @@ const Home = () => (
 export const reducer = combineReducers({
   form: formReducer,
   clients,
+  products,
 });
 
 export const store = createStore(reducer, applyMiddleware(thunk));
@@ -26,12 +29,36 @@ const RouterComponent = () => (
   <Router>
     <div>
       <ul>
-        <li><NavLink exact activeStyle={{ textDecoration: 'none', color: 'black' }} to="/">Home</NavLink></li>
-        <li><NavLink activeStyle={{ textDecoration: 'none', color: 'black' }} to="/clients">Clients</NavLink></li>
+        <li>
+          <NavLink
+            exact
+            activeStyle={{ textDecoration: 'none', color: 'black' }}
+            to="/"
+          >
+            Home
+          </NavLink>
+        </li>
+        <li>
+          <NavLink
+            activeStyle={{ textDecoration: 'none', color: 'black' }}
+            to="/clients"
+          >
+            Clients
+          </NavLink>
+        </li>
+        <li>
+          <NavLink
+            activeStyle={{ textDecoration: 'none', color: 'black' }}
+            to="/products"
+          >
+            Products
+          </NavLink>
+        </li>
       </ul>
 
       <Route exact path="/" component={Home} />
       <Route path="/clients" component={Clients} />
+      <Route path="/products" component={Products} />
     </div>
   </Router>
 );
