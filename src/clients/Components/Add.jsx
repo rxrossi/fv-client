@@ -10,9 +10,17 @@ const Add = ({ handleSubmit, errors }) => (
         errors && errors.name === 'NOT_UNIQUE' &&
           <p>A client with this name already exists</p>
       }
+      {
+        errors && errors.name === 'BLANK' &&
+          <p>Name is required</p>
+      }
     </div>
     <div>
       <Field name="phone" component="input" type="text" />
+      {
+        errors && errors.phone === 'BLANK' &&
+          <p>Phone is required</p>
+      }
     </div>
     <button type="submit">Register</button>
   </form>

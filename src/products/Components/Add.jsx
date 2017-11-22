@@ -8,11 +8,19 @@ const Add = ({ handleSubmit, errors }) => (
       <Field type="text" name="name" component="input" />
       {
         errors && errors.name === 'NOT_UNIQUE' &&
-          <p>A client with this name already exists</p>
+          <p>A product with this name exists</p>
+      }
+      {
+        errors && errors.name === 'BLANK' &&
+          <p>A name is required</p>
       }
     </div>
     <div>
       <Field type="text" name="measure_unit" component="input" />
+      {
+        errors && errors.measure_unit === 'BLANK' &&
+          <p>Measure unit is required</p>
+      }
     </div>
     <button type="submit">Register</button>
   </form>

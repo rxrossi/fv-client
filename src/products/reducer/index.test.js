@@ -27,6 +27,5 @@ describe('Products reducer test', () => {
     };
 
     expect(reducer(undefined, actions.fetchSuccess(productsList))).toEqual(expected);
-
   });
 });

@@ -31,12 +31,21 @@ export default (state = defaultState, action) => {
     case types.ADD_SUCCESS:
       return {
         ...state,
-        fetching: false,
-        fetchError: undefined,
+        addErrors: {},
         list: [
           ...state.list,
           ...underscoreIdtoIdField([action.payload]),
         ],
+      };
+    case types.ADD_ERROR:
+      return {
+        ...state,
+        addErrors: action.errors,
+      };
+    case types.ADD_CLEAR_ERRORS:
+      return {
+        ...state,
+        addErrors: {},
       };
     default:
       return state;
