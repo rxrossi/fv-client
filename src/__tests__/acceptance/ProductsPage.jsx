@@ -117,7 +117,7 @@ describe('Products Page', () => {
       // Fill up form and submit
       sut.find('input[name="name"]')
         .simulate('change', { target: { value: productExample.name } });
-      sut.find('input[name="measure_unit"]')
+      sut.find('select[name="measure_unit"]')
         .simulate('change', { target: { value: productExample.measure_unit } });
 
       sut.find('form').simulate('submit');
@@ -132,11 +132,11 @@ describe('Products Page', () => {
 
     it('has a name and measure unit field', () => {
       const nameInpt = sut.find('input[name="name"]');
-      const phoneInpt = sut.find('input[name="measure_unit"]');
+      const measureUnit = sut.find('select[name="measure_unit"]');
       const submitBtn = sut.find('button[type="submit"]');
 
       expect(nameInpt.length).toBe(1);
-      expect(phoneInpt.length).toBe(1);
+      expect(measureUnit.length).toBe(1);
       expect(submitBtn.length).toBe(1);
     });
 
@@ -146,7 +146,7 @@ describe('Products Page', () => {
 
     it('clears the field on submit', () => {
       expect(sut.find('input[name="name"]').props().value).toEqual('');
-      expect(sut.find('input[name="measure_unit"]').props().value).toEqual('');
+      expect(sut.find('select[name="measure_unit"]').props().value).toEqual('');
     });
 
     it('shows the recently added product', () => {

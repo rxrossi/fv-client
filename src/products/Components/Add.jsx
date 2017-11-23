@@ -16,7 +16,12 @@ const Add = ({ handleSubmit, errors }) => (
       }
     </div>
     <div>
-      <Field type="text" name="measure_unit" component="input" />
+      <Field type="text" name="measure_unit" component="select">
+        <option>Select one</option>
+        <option value="ml">ml</option>
+        <option value="mg">mg</option>
+        <option value="unit">unit</option>
+      </Field>
       {
         errors && errors.measure_unit === 'BLANK' &&
           <p>Measure unit is required</p>
