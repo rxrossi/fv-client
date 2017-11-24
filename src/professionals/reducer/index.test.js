@@ -149,5 +149,31 @@ describe('Professionals Reduce', () => {
       };
       expect(actual).toEqual(expected);
     });
+
+    it('returns the expected state for clearAddErrors', () => {
+      // Prepare
+      const previousState = {
+        ...defaultState,
+        adding: false,
+        addErrors: {
+          name: 'INVALID',
+        },
+      };
+
+      const errors = {
+        name: 'BLANK',
+      };
+
+      // Act
+      const actual = reducer(previousState, actions.clearAddErrors());
+
+      // Assert
+      const expected = {
+        ...previousState,
+        adding: false,
+        addErrors: {},
+      };
+      expect(actual).toEqual(expected);
+    });
   });
 });

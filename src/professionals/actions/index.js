@@ -42,6 +42,10 @@ export const addError = errors => ({
   errors,
 });
 
+export const clearAddErrors = () => ({
+  type: types.CLEAR_ADD_ERROR,
+});
+
 const jsonHeader = {
   'Content-Type': 'application/json',
 };

@@ -1,8 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import { reset } from 'redux-form';
 import AddComponent from '../Components/Add';
-import { addProfessional } from '../actions';
+import { addProfessional, clearAddErrors } from '../actions';
 
 class Add extends React.Component {
   constructor(props) {
@@ -10,8 +11,13 @@ class Add extends React.Component {
     this.submit = this.submit.bind(this);
   }
 
+  componentWillUnmount() {
+    this.props.clearAddErrors();
+  }
+
   submit(values) {
     this.props.addProfessional(values);
+    this.props.reset('professionals');
   }
 
   render() {
@@ -20,7 +26,9 @@ class Add extends React.Component {
 }
 Add.propTypes = {
   addProfessional: PropTypes.func.isRequired,
+  reset: PropTypes.func.isRequired,
   errors: PropTypes.objectOf(PropTypes.string).isRequired,
+  clearAddErrors: PropTypes.func.isRequired,
 };
 
 const mapState = state => ({
@@ -29,6 +37,8 @@ const mapState = state => ({
 
 const mapDispatch = {
   addProfessional,
+  reset,
+  clearAddErrors,
 };
 
 export default connect(mapState, mapDispatch)(Add);

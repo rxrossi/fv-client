@@ -138,6 +138,11 @@ describe('Professionals Page', () => {
         it('shows the recently user (Carl)', () => {
           expect(sut.text()).toMatch(carl.name);
         });
+
+        it('clear the input on submit', () => {
+          const inputNameValue = sut.find('input[name="name"]').props().value;
+          expect(inputNameValue).toEqual('');
+        });
       });
     });
 
@@ -192,6 +197,28 @@ describe('Professionals Page', () => {
 
         it('Shows the error message', () => {
           expect(sut.text()).toMatch(errorMsg);
+        });
+      });
+
+      describe('Duplicated name form submit, then change route, then back', () => {
+        beforeEach(async () => {
+          // Prepare
+          const nameIpnt = sut.find('input[name="name"]');
+          nameIpnt.simulate('change', { target: { value: 'A name that already exists' } });
+
+          // Act
+          sut.find('form').simulate('submit');
+          await setImmediate(() => {});
+
+          sut.find('a[href="/"]').simulate('click', { button: 0 });
+          await setImmediate(() => {});
+
+          sut.find('a[href="/professionals"]').simulate('click', { button: 0 });
+          await setImmediate(() => {});
+        });
+
+        it('does not show error message', () => {
+          expect(sut.text()).not.toMatch(errorMsg);
         });
       });
     });

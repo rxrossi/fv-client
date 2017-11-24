@@ -51,6 +51,12 @@ export default (state = defaultState, action) => {
         adding: false,
         addErrors: action.errors,
       };
+    case types.CLEAR_ADD_ERROR:
+      return {
+        ...state,
+        adding: false,
+        addErrors: {},
+      };
     default:
       return state;
   }
