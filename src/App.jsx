@@ -3,20 +3,14 @@ import { Provider } from 'react-redux';
 import { createStore, combineReducers, applyMiddleware } from 'redux';
 import thunk from 'redux-thunk';
 import { reducer as formReducer } from 'redux-form';
-import {
-  BrowserRouter as Router,
-  Route,
-  NavLink,
-} from 'react-router-dom';
+import { BrowserRouter as Router, Route, NavLink } from 'react-router-dom';
 import clients from './clients/reducer';
 import Clients from './clients/';
 import Products from './products';
 import products from './products/reducer';
 import Professionals from './professionals';
 
-const Home = () => (
-  <p>This is home</p>
-);
+const Home = () => <p>This is home</p>;
 
 export const reducer = combineReducers({
   form: formReducer,

@@ -10,7 +10,7 @@ const mockStore = configureStore(middlewares);
 describe('Professionals Actions', () => {
   const professionalsListExample = [
     { id: '1', name: 'Mary' },
-    { id: '1', name: 'Carl' },
+    { id: '2', name: 'Carl' },
   ];
 
   describe('fetch actions', () => {
@@ -26,14 +26,13 @@ describe('Professionals Actions', () => {
       const store = mockStore(initialState);
 
       // act
-      return store.dispatch(actions.fetchProfessionals())
-        .then(() => {
-          expect(store.getActions()).toEqual([
-
-          ]);
-        });
-
-      // assert
+      return store.dispatch(actions.fetchProfessionals()).then(() => {
+        // assert
+        expect(store.getActions()).toEqual([
+          actions.fetchRequest(),
+          actions.fetchSuccess(professionalsListExample),
+        ]);
+      });
     });
   });
 });
