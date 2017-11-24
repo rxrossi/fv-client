@@ -10,6 +10,10 @@ const Add = ({ handleSubmit, errors }) => (
         errors && errors.name === 'NOT_UNIQUE' &&
           'A professional with this name already exists'
       }
+      {
+        errors && errors.name === 'BLANK' &&
+          'A name is required'
+      }
     </div>
     <button type="submit">Register</button>
   </form>
