@@ -9,18 +9,41 @@ import Add from './Add';
 configure({ adapter: new Adapter() });
 
 describe('Professionals Add Form', () => {
-  it('renders', () => {
+  const errorsObj = {
+    name: 'NOT_UNIQUE',
+  };
+
+  const errorMsg = 'A professional with this name already exists';
+
+  it('renders without error messages', () => {
     const reducer = combineReducers({
       form: formReducer,
     });
     const store = createStore(reducer);
 
     /* eslint-disable */
-    mount(
+    const sut = mount(
       <Provider store={store}>
-        <Add handleSubmit={() => {}} />
+        <Add handleSubmit={() => {}} errors={{}}/>
       </Provider>
     );
     /* eslint-enable */
+    expect(sut.text()).not.toMatch(errorMsg);
+  });
+
+  it('renders error messages if a valid object is passed', () => {
+    const reducer = combineReducers({
+      form: formReducer,
+    });
+    const store = createStore(reducer);
+
+    /* eslint-disable */
+    const sut = mount(
+      <Provider store={store}>
+        <Add handleSubmit={() => {}} errors={errorsObj}/>
+      </Provider>
+    );
+    /* eslint-enable */
+    expect(sut.text()).toMatch(errorMsg);
   });
 });

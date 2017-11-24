@@ -15,15 +15,20 @@ class Add extends React.Component {
   }
 
   render() {
-    return <AddComponent onSubmit={this.submit} />;
+    return <AddComponent onSubmit={this.submit} errors={this.props.errors} />;
   }
 }
 Add.propTypes = {
   addProfessional: PropTypes.func.isRequired,
+  errors: PropTypes.objectOf(PropTypes.string).isRequired,
 };
+
+const mapState = state => ({
+  errors: state.professionals.addErrors,
+});
 
 const mapDispatch = {
   addProfessional,
 };
 
-export default connect(undefined, mapDispatch)(Add);
+export default connect(mapState, mapDispatch)(Add);

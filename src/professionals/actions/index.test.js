@@ -74,5 +74,33 @@ describe('Professionals Actions', () => {
         ]);
       });
     });
+
+    it('works for invalid input', () => {
+      // Prepare
+      const errors = {
+        name: 'NOT_UNIQUE',
+      };
+      fetchMock.post((url, opts) => (
+        url === API_URLS.PROFESSIONALS
+        && opts
+      ), {
+        body: {
+          code: 422,
+          errors,
+        },
+      });
+
+      const initialState = {};
+      const store = mockStore(initialState);
+
+      // act
+      return store.dispatch(actions.addProfessional('')).then(() => {
+        // assert
+        expect(store.getActions()).toEqual([
+          actions.addRequest(),
+          actions.addError(errors),
+        ]);
+      });
+    });
   });
 });
