@@ -9,6 +9,7 @@ import Clients from './clients/';
 import Products from './products';
 import products from './products/reducer';
 import Professionals from './professionals';
+import professionals from './professionals/reducer';
 
 const Home = () => <p>This is home</p>;
 
@@ -16,6 +17,7 @@ export const reducer = combineReducers({
   form: formReducer,
   clients,
   products,
+  professionals,
 });
 
 export const store = createStore(reducer, applyMiddleware(thunk));

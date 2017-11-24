@@ -27,3 +27,34 @@ export const fetchProfessionals = () => (dispatch) => {
       return dispatch(fetchError(json.body));
     });
 };
+
+export const addRequest = () => ({
+  type: types.ADD_REQUEST,
+});
+
+export const addSuccess = payload => ({
+  type: types.ADD_SUCCESS,
+  payload,
+});
+
+export const addError = errors => ({
+  type: types.ADD_ERROR,
+  errors,
+});
+
+const jsonHeader = {
+  'Content-Type': 'application/json',
+};
+
+export const addProfessional = data => (dispatch) => {
+  dispatch(addRequest());
+  return fetch(API_URLS.PROFESSIONALS, { body: JSON.stringify(data), method: 'POST', headers: jsonHeader })
+    .then(res => res.json())
+    .then((json) => {
+      if (json.code === 201) {
+        return dispatch(addSuccess(json.body));
+      }
+      return dispatch(addError(json.errors));
+    })
+    .catch(err => dispatch(addError(err)));
+};

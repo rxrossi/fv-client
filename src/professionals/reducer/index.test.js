@@ -75,16 +75,79 @@ describe('Professionals Reduce', () => {
   });
 
   describe('Add actions', () => {
-    xit('returns the expected state for addRequest', () => {
+    it('returns the expected state for addRequest', () => {
+      // Prepare
+      const previousState = {
+        ...defaultState,
+        adding: false,
+        addErrors: {
+          name: 'INVALID',
+        },
+      };
 
+      // Act
+      const actual = reducer(undefined, actions.addRequest());
+
+      // Assert
+      const expected = {
+        ...defaultState,
+        adding: true,
+        addErrors: {},
+      };
+      expect(actual).toEqual(expected);
     });
 
-    xit('retuns the expected state for addSuccess', () => {
+    it('retuns the expected state for addSuccess', () => {
+      // Prepare
+      const carl = {
+        id: '10',
+        name: 'Carl',
+      };
+      const previousState = {
+        ...defaultState,
+        adding: true,
+        addErrors: {
+          name: 'INVALID',
+        },
+        list: [],
+      };
+      // Act
+      const actual = reducer(previousState, actions.addSuccess(carl));
 
+      // Assert
+      const expected = {
+        ...defaultState,
+        adding: false,
+        addErrors: {},
+        list: [carl],
+      };
+      expect(actual).toEqual(expected);
     });
 
-    xit('returns the expected state for addError', () => {
+    it('returns the expected state for addError', () => {
+      // Prepare
+      const previousState = {
+        ...defaultState,
+        adding: true,
+        addErrors: {
+          name: 'INVALID',
+        },
+      };
 
+      const errors = {
+        name: 'BLANK',
+      };
+
+      // Act
+      const actual = reducer(previousState, actions.addError(errors));
+
+      // Assert
+      const expected = {
+        ...previousState,
+        adding: false,
+        addErrors: errors,
+      };
+      expect(actual).toEqual(expected);
     });
   });
 });

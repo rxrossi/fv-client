@@ -29,6 +29,28 @@ export default (state = defaultState, action) => {
         fetching: false,
         fetchError: action.error,
       };
+    case types.ADD_REQUEST:
+      return {
+        ...state,
+        adding: true,
+        addErrors: {},
+      };
+    case types.ADD_SUCCESS:
+      return {
+        ...state,
+        adding: false,
+        addErrors: {},
+        list: [
+          ...state.list,
+          action.payload,
+        ],
+      };
+    case types.ADD_ERROR:
+      return {
+        ...state,
+        adding: false,
+        addErrors: action.errors,
+      };
     default:
       return state;
   }

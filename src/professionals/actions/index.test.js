@@ -14,6 +14,11 @@ describe('Professionals Actions', () => {
   ];
 
   describe('fetch actions', () => {
+    afterAll(() => {
+      fetchMock.reset();
+      fetchMock.restore();
+    });
+
     it('works when there are professional', () => {
       // prepare
       fetchMock.get(API_URLS.PROFESSIONALS, {
@@ -31,6 +36,41 @@ describe('Professionals Actions', () => {
         expect(store.getActions()).toEqual([
           actions.fetchRequest(),
           actions.fetchSuccess(professionalsListExample),
+        ]);
+      });
+    });
+  });
+
+  describe('add actions', () => {
+    afterAll(() => {
+      fetchMock.reset();
+      fetchMock.restore();
+    });
+
+    it('works with valid inputs', () => {
+      // prepare
+      const carl = { name: 'Carl' };
+
+      fetchMock.post((url, opts) => (
+        url === API_URLS.PROFESSIONALS
+        && opts
+        && opts.body === JSON.stringify(carl)
+      ), {
+        body: {
+          code: 201,
+          body: carl,
+        },
+      });
+
+      const initialState = {};
+      const store = mockStore(initialState);
+
+      // act
+      return store.dispatch(actions.addProfessional(carl)).then(() => {
+        // assert
+        expect(store.getActions()).toEqual([
+          actions.addRequest(),
+          actions.addSuccess(carl),
         ]);
       });
     });
