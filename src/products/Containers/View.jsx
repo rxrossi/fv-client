@@ -1,4 +1,6 @@
 import { connect } from 'react-redux';
+import React from 'react';
+import PropTypes from 'prop-types';
 import ViewComponent from '../Components/View';
 import { fetchProducts } from '../actions';
 
@@ -10,4 +12,28 @@ const mapDispatch = {
   fetchProducts,
 };
 
-export default connect(mapState, mapDispatch)(ViewComponent);
+class View extends React.Component {
+  componentDidMount() {
+    this.props.fetchProducts();
+  }
+
+  render() {
+    return (
+      <ViewComponent products={this.props.products} />
+    );
+  }
+}
+
+View.propTypes = {
+  products: PropTypes.arrayOf(PropTypes.shape({
+    id: PropTypes.string,
+    name: PropTypes.string,
+    measure_unit: PropTypes.string,
+    quantity: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+    price: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+    avgPriceFiveLast: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  })).isRequired,
+  fetchProducts: PropTypes.func.isRequired,
+};
+
+export default connect(mapState, mapDispatch)(View);

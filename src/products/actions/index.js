@@ -49,7 +49,6 @@ export const fetchSuccess = payload => ({
   type: types.FETCH_SUCCESS,
   payload,
 });
-
 export const fetchProducts = () => (dispatch) => {
   dispatch(fetchRequest());
   return fetch(urls.PRODUCTS)
