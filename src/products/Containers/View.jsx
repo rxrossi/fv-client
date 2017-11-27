@@ -1,4 +1,5 @@
 import { connect } from 'react-redux';
+import { withRouter } from 'react-router-dom';
 import React from 'react';
 import PropTypes from 'prop-types';
 import ViewComponent from '../Components/View';
@@ -19,7 +20,7 @@ class View extends React.Component {
 
   render() {
     return (
-      <ViewComponent products={this.props.products} />
+      <ViewComponent products={this.props.products} baseUrl={this.props.location.pathname} />
     );
   }
 }
@@ -34,6 +35,7 @@ View.propTypes = {
     avgPriceFiveLast: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   })).isRequired,
   fetchProducts: PropTypes.func.isRequired,
+  location: PropTypes.objectOf(PropTypes.string).isRequired,
 };
 
-export default connect(mapState, mapDispatch)(View);
+export default withRouter(connect(mapState, mapDispatch)(View));

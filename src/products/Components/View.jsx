@@ -1,12 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 
 export const NO_PRODUCTS_P_CLASS = 'no-products-msg';
 
-const Product = ({ product }) => (
+const Product = ({ product, linkToViewOne }) => (
   <tr>
     <td>
-      {product.name}
+      <Link to={linkToViewOne}>{product.name}</Link>
     </td>
     <td>
       {product.measure_unit}
@@ -22,7 +23,6 @@ const Product = ({ product }) => (
     </td>
   </tr>
 );
-
 Product.propTypes = {
   product: PropTypes.shape({
     id: PropTypes.string,
@@ -32,9 +32,10 @@ Product.propTypes = {
     price: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
     avgPriceFiveLast: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   }).isRequired,
+  linkToViewOne: PropTypes.string.isRequired,
 };
 
-const View = ({ products }) => {
+const View = ({ products, baseUrl }) => {
   if (products.length) {
     return (
       <table>
@@ -49,7 +50,12 @@ const View = ({ products }) => {
         </thead>
         <tbody>
           {
-            products.map(product => <Product key={product.id} product={product} />)
+            products.map(product =>
+              (<Product
+                key={product.id}
+                product={product}
+                linkToViewOne={`${baseUrl}/${product.id}`}
+              />))
           }
         </tbody>
       </table>
@@ -73,6 +79,7 @@ View.propTypes = {
     price: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
     avgPriceFiveLast: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   })),
+  baseUrl: PropTypes.string.isRequired,
 };
 View.defaultProps = {
   products: [],

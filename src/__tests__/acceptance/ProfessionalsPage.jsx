@@ -12,7 +12,7 @@ describe('Professionals Page', () => {
   describe('No professionals yet', () => {
     let sut;
 
-    beforeEach((done) => {
+    beforeEach(async () => {
       fetchMock.get(API_URLS.PROFESSIONALS, {
         body: {
           code: 200,
@@ -21,7 +21,7 @@ describe('Professionals Page', () => {
       });
       sut = mount(<App />);
       sut.find('a[href="/professionals"]').simulate('click', { button: 0 });
-      setImmediate(() => done());
+      await setImmediate(() => {});
     });
 
     afterEach(() => {
@@ -201,23 +201,26 @@ describe('Professionals Page', () => {
       });
 
       describe('Duplicated name form submit, then change route, then back', () => {
-        beforeEach(async () => {
-          // Prepare
+        beforeEach((done) => {
           const nameIpnt = sut.find('input[name="name"]');
           nameIpnt.simulate('change', { target: { value: 'A name that already exists' } });
 
-          // Act
           sut.find('form').simulate('submit');
-          await setImmediate(() => {});
+          setImmediate(() => done());
+        });
 
+        beforeEach((done) => {
           sut.find('a[href="/"]').simulate('click', { button: 0 });
-          await setImmediate(() => {});
+          setImmediate(() => done());
+        });
 
+        beforeEach((done) => {
           sut.find('a[href="/professionals"]').simulate('click', { button: 0 });
-          await setImmediate(() => {});
+          setImmediate(() => done());
         });
 
         it('does not show error message', () => {
+          // console.log(sut.debug());
           expect(sut.text()).not.toMatch(errorMsg);
         });
       });

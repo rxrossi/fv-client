@@ -9,7 +9,7 @@ import { NO_PRODUCTS_P_CLASS } from '../../products/Components/View';
 configure({ adapter: new Adapter() });
 
 describe('Products Page', () => {
-  describe('No products yet', () => {
+  describe('o products yet', () => {
     let sut;
 
     beforeEach((done) => {
@@ -221,7 +221,7 @@ describe('Products Page', () => {
     });
   });
 
-  describe('Going to product detail', () => {
+  describe('Going to product detail (View One)', () => {
     const product = {
       id: '1',
       name: 'Something',
@@ -268,6 +268,30 @@ describe('Products Page', () => {
       ],
     };
     const productsList = [product];
-    xit('check if stock renders');
+
+    let sut;
+    beforeEach((done) => {
+      fetchMock.get(API_URLS.PRODUCTS, {
+        body: {
+          code: 200,
+          body: productsList,
+        },
+      });
+
+      sut = mount(<App />);
+
+      sut.find('a[href="/products"]').simulate('click', { button: 0 });
+      setImmediate(() => done());
+    });
+
+    beforeEach((done) => {
+      sut.update();
+      sut.find(`a[href="/products/${product.id}"]`).simulate('click', { button: 0 });
+      setImmediate(() => done());
+    });
+
+    it('check if stock renders', () => {
+      expect(sut.text()).toMatch(product.stock[0].sourceOrDestination);
+    });
   });
 });

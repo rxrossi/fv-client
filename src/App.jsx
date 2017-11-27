@@ -63,7 +63,7 @@ const RouterComponent = () => (
 
       <Route exact path="/" component={Home} />
       <Route path="/clients" component={Clients} />
-      <Route path="/products" component={Products} />
+      <Route path="/products/:id?" component={Products} />
       <Route path="/professionals" component={Professionals} />
     </div>
   </Router>
