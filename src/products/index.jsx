@@ -8,7 +8,7 @@ import ViewOne from './Components/ViewOne';
 const Products = ({ match, products }) => {
   if (match.params.id) {
     const product = products.find(item => item.id === match.params.id);
-    if (product.name) {
+    if (product) {
       return <ViewOne product={product} />;
     }
     return <p>The product does not exist or could not be found</p>;

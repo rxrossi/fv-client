@@ -50,7 +50,7 @@ const Stock = ({ stock }) => {
           {
             stock.map(entry => (
               <tr key={entry.id}>
-                <td>{entry.quantity}</td>
+                <td>{entry.qty}</td>
                 <td>{entry.price}</td>
                 <td>{entry.date}</td>
                 <td>{entry.sourceOrDestination}</td>
@@ -65,7 +65,7 @@ const Stock = ({ stock }) => {
 Stock.propTypes = {
   stock: PropTypes.arrayOf(PropTypes.shape({
     id: PropTypes.string,
-    quantity: PropTypes.number,
+    qty: PropTypes.number,
     price: PropTypes.number,
     date: PropTypes.string,
     sourceOrDestination: PropTypes.string,
