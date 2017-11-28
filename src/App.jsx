@@ -10,6 +10,7 @@ import Products from './products';
 import products from './products/reducer';
 import Professionals from './professionals';
 import professionals from './professionals/reducer';
+import Purchases from './purchases';
 
 const Home = () => <p>This is home</p>;
 
@@ -59,12 +60,21 @@ const RouterComponent = () => (
             Professionals
           </NavLink>
         </li>
+        <li>
+          <NavLink
+            activeStyle={{ textDecoration: 'none', color: 'black' }}
+            to="/purchases"
+          >
+            Purchases
+          </NavLink>
+        </li>
       </ul>
 
       <Route exact path="/" component={Home} />
       <Route path="/clients" component={Clients} />
       <Route path="/products/:id?" component={Products} />
       <Route path="/professionals" component={Professionals} />
+      <Route path="/purchases" component={Purchases} />
     </div>
   </Router>
 );
