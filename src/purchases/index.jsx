@@ -1,6 +1,10 @@
 import React from 'react';
-import Add from './Components/Add';
+import Add from './Containers/Add';
+import View from './Containers/View';
 
 export default () => (
-  <Add />
+  <div>
+    <Add />
+    <View />
+  </div>
 );

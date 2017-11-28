@@ -3,7 +3,7 @@ import { Field, FieldArray, reduxForm } from 'redux-form';
 
 /* eslint-disable */
 
-const ProductFields = ({ fields, productsForSelect }) => (
+const ProductsFields = ({ fields, productsForSelect }) => (
   <div>
     <button
       type="button"
@@ -20,11 +20,11 @@ const ProductFields = ({ fields, productsForSelect }) => (
             onClick={() => fields.remove(index)}>
             Remove product
           </button>
-          <Field type="text" name={`${product}.name`} component="select">
+          <Field type="text" name={`${product}.id`} component="select">
             <option>Select one</option>
             {
               productsForSelect.map((product) => (
-                <option value={product.id}>{product.name}</option>
+                <option key={product.id} value={product.id}>{product.name}</option>
               ))
             }
           </Field>
@@ -35,15 +35,15 @@ const ProductFields = ({ fields, productsForSelect }) => (
     </ul>
   </div>
 );
-ProductFields.defaultProps = {
+ProductsFields.defaultProps = {
   productsForSelect: [],
 }
 
-const Add = ({ productList, handleSubmit }) => (
+const Add = ({ productsForSelect, handleSubmit }) => (
   <form onSubmit={handleSubmit}>
     <Field component="input" type="text" name="seller" />
     <Field component="input" type="text" name="date" />
-    <FieldArray name="products" component={ProductFields} productList={productList} />
+    <FieldArray name="products" component={ProductsFields} productsForSelect={productsForSelect} />
   </form>
 );
 

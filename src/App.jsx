@@ -11,6 +11,7 @@ import products from './products/reducer';
 import Professionals from './professionals';
 import professionals from './professionals/reducer';
 import Purchases from './purchases';
+import purchases from './purchases/reducer';
 
 const Home = () => <p>This is home</p>;
 
@@ -19,6 +20,7 @@ export const reducer = combineReducers({
   clients,
   products,
   professionals,
+  purchases,
 });
 
 export const store = createStore(reducer, applyMiddleware(thunk));
