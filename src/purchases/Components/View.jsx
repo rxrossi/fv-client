@@ -11,15 +11,7 @@ const View = ({ purchases }) => {
       {
         purchases.map(purchase => (
           <li key={purchase.id}>
-            {purchase.seller} - {purchase.date}
-            <ul>
-              {
-                purchase.products.map(product => (
-                  <li key={`${purchase.id}${product.id}`}>
-                    {product.name} - {purchase.qty} - {purchase.price}
-                  </li>))
-              }
-            </ul>
+            {purchase.seller} - {purchase.date} - {purchase.price}
           </li>))
       }
     </ul>

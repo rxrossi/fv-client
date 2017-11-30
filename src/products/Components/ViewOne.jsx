@@ -31,7 +31,7 @@ Header.propTypes = {
 };
 
 const Stock = ({ stock }) => {
-  if (stock.length === 0) {
+  if (!stock || stock.length === 0) {
     return <p>No entries for this product yet</p>;
   }
 

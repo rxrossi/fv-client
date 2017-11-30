@@ -16,6 +16,7 @@ const purchase = {
   ],
   seller: 'Company one',
   date: '10 27 2017',
+  price: 30,
   id: '1',
 };
 
@@ -36,8 +37,7 @@ describe('Purchases View Component', () => {
     it('shows the purchases and their products', () => {
       const sut = mount(<View purchases={purchases} />);
       expect(sut.text()).toMatch(purchase.seller);
-      expect(sut.text()).toMatch(purchase.products[0].name);
-      expect(sut.text()).toMatch(purchase.products[1].name);
+      expect(sut.text()).toMatch(purchase.price.toString());
     });
   });
 });
