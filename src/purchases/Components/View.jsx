@@ -6,14 +6,15 @@ const View = ({ purchases, baseUrl }) => {
   if (!purchases.length) {
     return <p>No purchases yet</p>;
   }
-
   return (
     <ul>
       {
         purchases.map(purchase => (
           <li key={purchase.id}>
-            {purchase.seller} - {purchase.date} - {purchase.price}
-            <Link to={`${baseUrl}/${purchase.id}`} />
+            <Link to={`${baseUrl}/${purchase.id}`}>
+              {purchase.seller}
+            </Link>
+            - {purchase.date} - {purchase.price}
           </li>))
       }
     </ul>
@@ -24,12 +25,6 @@ View.propTypes = {
     id: PropTypes.string.isRequired,
     seller: PropTypes.string.isRequired,
     date: PropTypes.string.isRequired,
-    products: PropTypes.arrayOf(PropTypes.shape({
-      id: PropTypes.string,
-      name: PropTypes.string,
-      qty: PropTypes.number,
-      price: PropTypes.number,
-    })),
   })).isRequired,
   baseUrl: PropTypes.string.isRequired,
 };

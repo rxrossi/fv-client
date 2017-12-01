@@ -9,17 +9,18 @@ import * as API_URLS from '../../APIInfo';
 configure({ adapter: new Adapter() });
 
 const purchase = {
-  products: [
+  stockEntries: [
     {
-      id: '1', name: 'Product 1', qty: 1, price: 10,
+      id: '1', product: { id: '1', name: 'Product 1' }, qty: 2, price: 20,
     },
     {
-      id: '2', name: 'Product 2', qty: 2, price: 20,
+      id: '2', product: { id: '2', name: 'Product 2' }, qty: 2, price: 20,
     },
   ],
   seller: 'Company one',
   date: '10 27 2017',
   id: '1',
+  price: '90',
 };
 const purchases = [purchase];
 
@@ -116,7 +117,6 @@ describe('Purchases Page', () => {
       },
     });
 
-
     fetchMock.post(
       (url, opts) => (
         url === API_URLS.PURCHASES
@@ -130,10 +130,10 @@ describe('Purchases Page', () => {
             ...expectedPostData,
             products: [
               {
-                id: '1', name: products[0].name, qty: 1, price: 10,
+                id: '1', product: { id: '1', name: products[0].name }, qty: 1, price: 10,
               },
               {
-                id: '2', name: products[1].name, qty: 2, price: 20,
+                id: '2', product: { id: '2', name: products[1].name }, qty: 2, price: 20,
               },
             ],
             id: '4',
@@ -157,6 +157,22 @@ describe('Purchases Page', () => {
   describe('The view purchases thing', () => {
     it('Shows the first purchase', () => {
       expect(sut.text()).toMatch(purchase.seller);
+    });
+  });
+
+  describe('Can go to ViewOne of purchases', () => {
+    beforeEach((done) => {
+      sut.update();
+      const viewOneBtn = sut.find(`a[href="/purchases/${purchase.id}"]`);
+      viewOneBtn.simulate('click', { button: 0 });
+      setImmediate(() => done());
+    });
+
+    it.only('shows the products', () => {
+      const text = sut.text();
+      expect(text).toMatch(purchase.seller);
+      expect(text).toMatch(purchase.stockEntries[0].product.name);
+      expect(text).toMatch(purchase.stockEntries[0].qty.toString());
     });
   });
 

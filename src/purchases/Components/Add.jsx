@@ -44,6 +44,7 @@ const Add = ({ productsForSelect, handleSubmit }) => (
     <Field component="input" type="text" name="seller" />
     <Field component="input" type="text" name="date" />
     <FieldArray name="products" component={ProductsFields} productsForSelect={productsForSelect} />
+    <button type="submit">Submit</button>
   </form>
 );
 

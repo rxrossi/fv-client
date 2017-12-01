@@ -76,7 +76,7 @@ const RouterComponent = () => (
       <Route path="/clients" component={Clients} />
       <Route path="/products/:id?" component={Products} />
       <Route path="/professionals" component={Professionals} />
-      <Route path="/purchases" component={Purchases} />
+      <Route path="/purchases/:id?" component={Purchases} />
     </div>
   </Router>
 );
