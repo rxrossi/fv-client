@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import { withRouter } from 'react-router-dom';
 import ViewComponent from '../Components/View';
 import { fetchPurchases } from '../actions';
 
@@ -10,7 +11,10 @@ class View extends React.Component {
   }
 
   render() {
-    return <ViewComponent purchases={this.props.purchases} />;
+    return (<ViewComponent
+      purchases={this.props.purchases}
+      baseUrl={this.props.location.pathname}
+    />);
   }
 }
 View.propTypes = {
@@ -26,6 +30,7 @@ View.propTypes = {
     id: PropTypes.string.isRequired,
   })).isRequired,
   fetchPurchases: PropTypes.func.isRequired,
+  location: PropTypes.objectOf(PropTypes.string).isRequired,
 };
 
 
@@ -37,4 +42,4 @@ const mapDispatch = {
   fetchPurchases,
 };
 
-export default connect(mapState, mapDispatch)(View);
+export default withRouter(connect(mapState, mapDispatch)(View));

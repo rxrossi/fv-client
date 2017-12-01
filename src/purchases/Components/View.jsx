@@ -1,7 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 
-const View = ({ purchases }) => {
+const View = ({ purchases, baseUrl }) => {
   if (!purchases.length) {
     return <p>No purchases yet</p>;
   }
@@ -12,6 +13,7 @@ const View = ({ purchases }) => {
         purchases.map(purchase => (
           <li key={purchase.id}>
             {purchase.seller} - {purchase.date} - {purchase.price}
+            <Link to={`${baseUrl}/${purchase.id}`} />
           </li>))
       }
     </ul>
@@ -29,6 +31,7 @@ View.propTypes = {
       price: PropTypes.number,
     })),
   })).isRequired,
+  baseUrl: PropTypes.string.isRequired,
 };
 
 export default View;

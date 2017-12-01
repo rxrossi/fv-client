@@ -1,9 +1,13 @@
 import React from 'react';
 import Adapter from 'enzyme-adapter-react-16';
 import { configure, mount } from 'enzyme';
+import { BrowserRouter as Router } from 'react-router-dom';
 import View from './View';
+
 // Configure Enzyme
 configure({ adapter: new Adapter() });
+
+const baseUrl = '/purchases';
 
 const purchase = {
   products: [
@@ -21,23 +25,40 @@ const purchase = {
 };
 
 const purchases = [purchase];
+
+function mountComponent(purchasesList) {
+  const App = () => (
+    <Router>
+      <View purchases={purchasesList || []} baseUrl={baseUrl} />
+    </Router>
+  );
+
+  return mount(<App />);
+}
+
 describe('Purchases View Component', () => {
   it('renders', () => {
-    mount(<View purchases={[]} />);
+    mountComponent();
   });
 
   describe('No purchases yet', () => {
     it('shows a message saying no purchases yet', () => {
-      const sut = mount(<View purchases={[]} />);
+      const sut = mountComponent();
       expect(sut.text()).toMatch('No purchases yet');
     });
   });
 
   describe('With purchases', () => {
     it('shows the purchases and their products', () => {
-      const sut = mount(<View purchases={purchases} />);
+      const sut = mountComponent(purchases);
       expect(sut.text()).toMatch(purchase.seller);
       expect(sut.text()).toMatch(purchase.price.toString());
+    });
+
+    it('shows a link the view one', () => {
+      const sut = mountComponent(purchases);
+      const link = sut.find(`a[href="/purchases/${purchase.id}"]`);
+      expect(link.length).toBe(1);
     });
   });
 });
