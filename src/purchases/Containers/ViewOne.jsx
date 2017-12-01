@@ -28,7 +28,7 @@ View.propTypes = {
       }),
       qty: PropTypes.number.isRequired,
       price: PropTypes.number.isRequired,
-    })).isRequired,
+    })),
     seller: PropTypes.string.isRequired,
     date: PropTypes.string.isRequired,
     id: PropTypes.string.isRequired,

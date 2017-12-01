@@ -168,7 +168,7 @@ describe('Purchases Page', () => {
       setImmediate(() => done());
     });
 
-    it.only('shows the products', () => {
+    it('shows the products', () => {
       const text = sut.text();
       expect(text).toMatch(purchase.seller);
       expect(text).toMatch(purchase.stockEntries[0].product.name);
