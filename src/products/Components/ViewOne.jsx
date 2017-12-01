@@ -69,7 +69,10 @@ Stock.propTypes = {
     price: PropTypes.number,
     date: PropTypes.string,
     sourceOrDestination: PropTypes.string,
-  })).isRequired,
+  })),
+};
+Stock.defaultProps = {
+  stock: undefined,
 };
 
 const ViewOne = ({ product }) => (

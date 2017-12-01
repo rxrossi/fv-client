@@ -9,10 +9,10 @@ const ViewOne = ({ purchase }) => {
     <div>
       <p>{purchase.seller} - {purchase.date}</p>
       {
-        purchase.stockEntries.map(product =>
+        purchase.stockEntries.map(entry =>
           (
-            <li key={product.id}>
-              {product.product.name} - {product.qty} - {product.price}
+            <li key={entry.id}>
+              {entry.product.name} - {entry.qty} - {entry.price}
             </li>))
       }
     </div>
