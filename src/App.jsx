@@ -12,6 +12,8 @@ import Professionals from './professionals';
 import professionals from './professionals/reducer';
 import Purchases from './purchases';
 import purchases from './purchases/reducer';
+import Sales from './sales';
+import sales from './sales/reducer';
 
 const Home = () => <p>This is home</p>;
 
@@ -21,6 +23,7 @@ export const reducer = combineReducers({
   products,
   professionals,
   purchases,
+  sales,
 });
 
 export const store = createStore(reducer, applyMiddleware(thunk));
@@ -69,6 +72,12 @@ const RouterComponent = () => (
           >
             Purchases
           </NavLink>
+          <NavLink
+            activeStyle={{ textDecoration: 'none', color: 'black' }}
+            to="/sales"
+          >
+            Sales
+          </NavLink>
         </li>
       </ul>
 
@@ -77,6 +86,7 @@ const RouterComponent = () => (
       <Route path="/products/:id?" component={Products} />
       <Route path="/professionals" component={Professionals} />
       <Route path="/purchases/:id?" component={Purchases} />
+      <Route path="/sales/:id?" component={Sales} />
     </div>
   </Router>
 );
