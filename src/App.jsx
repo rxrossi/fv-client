@@ -72,6 +72,8 @@ const RouterComponent = () => (
           >
             Purchases
           </NavLink>
+        </li>
+        <li>
           <NavLink
             activeStyle={{ textDecoration: 'none', color: 'black' }}
             to="/sales"
