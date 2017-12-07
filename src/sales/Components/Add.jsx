@@ -45,9 +45,19 @@ const Add = ({
   handleSubmit, paymentOptions, clients, professionals, productsForSelect,
 }) => (
   <form onSubmit={handleSubmit}>
-    <Field component="input" type="text" name="name" />
+    <Field
+      component="input"
+      type="text"
+      name="name"
+      placeholder="Name of the service"
+    />
 
-    <Field component="input" type="number" name="value" />
+    <Field
+      component="input"
+      type="number"
+      name="value"
+      placeholder="Value"
+    />
 
     <Field type="text" name="payment" component="select">
       <option>Select one</option>
