@@ -59,7 +59,7 @@ const Add = ({
       placeholder="Value"
     />
 
-    <Field type="text" name="payment" component="select">
+    <Field type="text" name="payment_method" component="select">
       <option>Select one</option>
       {
         paymentOptions.map(option => (
