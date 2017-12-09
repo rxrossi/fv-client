@@ -102,14 +102,14 @@ const paymentOptions = [
 ];
 
 const expectedPostData = {
-  client: clients[0].id,
   name: 'service one',
-  value: '300',
-  payment_method: 'money',
+  client: clients[0].id,
+  professional: professionals[0].id,
   date: '10 10 2017',
   start_time: '10:00',
   end_time: '16:00',
-  professional: professionals[0].id,
+  payment_method: 'money',
+  value: '300',
   products: [
     { id: '1', qty: 10 },
     { id: '2', qty: 20 },

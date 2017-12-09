@@ -110,36 +110,46 @@ const expectedPostData = {
 
 const sale1 = {
   id: 's1',
-  client: clients[0],
   name: 'service one',
-  value: '300',
-  profit: '180',
-  payment: 'money',
+  client: clients[0],
+  professional: professionals[0],
   date: '10 10 2017',
   start_time: '10:00',
   end_time: '16:00',
-  professional: professionals[0],
-  products: [
-    { id: '1', qty: 10, name: 'OX' },
-    { id: '2', qty: 20, name: 'Shampoo' },
+  payment: {
+    value_total: 300,
+    value_liquid: 300,
+    discount: 'none',
+    method: 'money',
+    available_at: Date.now(),
+  },
+  stockEntries: [
+    { id: '1', qty: 10, product: { name: 'OX' } },
+    { id: '2', qty: 20, product: { name: 'Shampoo' } },
   ],
+  profit: 200,
 };
 
 const sale2 = {
   id: 's2',
-  client: clients[1],
   name: 'service two',
-  value: '320',
-  profit: '180',
-  payment: 'credit',
-  date: '10 11 2017',
-  start_time: '12:00',
-  end_time: '18:00',
+  client: clients[0],
   professional: professionals[0],
-  products: [
-    { id: '1', qty: 40, name: 'OX' },
-    { id: '2', qty: 50, name: 'Shampoo' },
+  date: '11 11 2018',
+  start_time: '11:00',
+  end_time: '15:00',
+  payment: {
+    value_total: 200,
+    value_liquid: 180,
+    discount: '10%',
+    method: 'Credit 3x',
+    available_at: Date.now(),
+  },
+  stockEntries: [
+    { id: '1', qty: 30, product: { name: 'OX' } },
+    { id: '2', qty: 60, product: { name: 'Shampoo' } },
   ],
+  profit: 100,
 };
 
 const sales = [sale1, sale2];
@@ -307,7 +317,7 @@ describe('Sales page', () => {
     });
 
     it('shows the products', () => {
-      expect(sut.text()).toMatch(sale1.products[0].name);
+      expect(sut.text()).toMatch(sale1.stockEntries[0].product.name);
     });
   });
 

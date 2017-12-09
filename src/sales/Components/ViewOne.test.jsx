@@ -18,23 +18,28 @@ const client = {
 
 const sale = {
   id: 's1',
-  client,
   name: 'service one',
-  value: '300',
-  profit: '180',
-  payment: 'money',
+  client,
+  professional,
   date: '10 10 2017',
   start_time: '10:00',
   end_time: '16:00',
-  professional,
-  products: [
+  payment: {
+    value_total: 300,
+    value_liquid: 300,
+    discount: 'none',
+    method: 'money',
+    available_at: Date.now(),
+  },
+  stockEntries: [
     {
-      id: '1', name: 'OX', qty: 10, price: 100,
+      id: '1', qty: 10, product: { name: 'OX' }, price_per_unit: 0.15,
     },
     {
-      id: '2', name: 'Shampoo', qty: 20, price: 150,
+      id: '2', qty: 20, product: { name: 'Shampoo' }, price_per_unit: 0.25,
     },
   ],
+  profit: 200,
 };
 
 describe('ViewOne Component', () => {
@@ -60,10 +65,14 @@ describe('ViewOne Component', () => {
 
     // Assert
     expect(text).toMatch(sale.client.name);
+    expect(text).toMatch(sale.stockEntries[0].product.name);
     expect(text).toMatch(sale.name);
-    expect(text).toMatch(sale.profit);
-    expect(text).toMatch(sale.products[0].qty.toString());
-    expect(text).toMatch(sale.products[0].price.toString());
-    expect(text).toMatch(sale.products[1].price.toString());
+    expect(text).toMatch(sale.profit.toString());
+    expect(text).toMatch(sale.stockEntries[0].qty.toString());
+
+    const costOfProductOne = sale.stockEntries[0].qty * sale.stockEntries[0].price_per_unit;
+    expect(text).toMatch(costOfProductOne.toString());
+    // expect(text).toMatch(sale.stockEntries[0].price.toString());
+    // expect(text).toMatch(sale.stockEntries[1].price.toString());
   });
 });

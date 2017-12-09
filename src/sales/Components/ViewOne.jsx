@@ -11,13 +11,12 @@ const ViewOne = ({ sale }) => {
       <p>{sale.name}</p>
       <p>{sale.client.name}</p>
       <p>{sale.profit}</p>
-      <p>{sale.value}</p>
 
       <ul className="products-list">
         {
-          sale.products.map(product => (
-            <li key={product.id}>
-              {product.name} - {product.qty} - {product.price}
+          sale.stockEntries.map(entry => (
+            <li key={entry.id}>
+              {entry.product.name} - {entry.qty} - {entry.qty * entry.price_per_unit}
             </li>
           ))
         }
@@ -29,11 +28,21 @@ const ViewOne = ({ sale }) => {
 ViewOne.propTypes = {
   sale: PropTypes.shape({
     name: PropTypes.string.isRequired,
-    profit: PropTypes.string.isRequired,
-    value: PropTypes.string.isRequired,
-    products: PropTypes.arrayOf(PropTypes.shape({
+    profit: PropTypes.number.isRequired,
+    payment: PropTypes.shape({
+      method: PropTypes.string,
+      value_total: PropTypes.number,
+      value_liquid: PropTypes.number,
+      discount: PropTypes.string,
+      available_at: PropTypes.number,
+    }).isRequired,
+    stockEntries: PropTypes.arrayOf(PropTypes.shape({
       id: PropTypes.string.isRequired,
-      name: PropTypes.string.isRequired,
+      product: PropTypes.shape({
+        name: PropTypes.string,
+        qty: PropTypes.number,
+        price_per_unit: PropTypes.number,
+      }),
       qty: PropTypes.number.isRequired,
     })),
   }),
