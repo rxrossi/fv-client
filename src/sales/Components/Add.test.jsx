@@ -111,8 +111,8 @@ const expectedPostData = {
   payment_method: 'money',
   value: '300',
   products: [
-    { id: '1', qty: 10 },
-    { id: '2', qty: 20 },
+    { product: '1', qty: 10 },
+    { product: '2', qty: 20 },
   ],
 };
 
@@ -198,11 +198,11 @@ describe('Sales Add Component', () => {
     const qtyInput2 = groupOfFields2.find('input[name="products[1].qty"]');
 
     // First product
-    changeInpt(nameSelect, expectedPostData.products[0].id);
+    changeInpt(nameSelect, expectedPostData.products[0].product);
     changeInpt(qtyInput, expectedPostData.products[0].qty);
 
     // Second product
-    changeInpt(nameSelect2, expectedPostData.products[1].id);
+    changeInpt(nameSelect2, expectedPostData.products[1].product);
     changeInpt(qtyInput2, expectedPostData.products[1].qty);
 
     // Act

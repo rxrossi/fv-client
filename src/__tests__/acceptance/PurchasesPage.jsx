@@ -90,10 +90,10 @@ const products = [
 const expectedPostData = {
   products: [
     {
-      id: '1', qty: 1, price: 10,
+      id: '1', qty: 1, total_price: 10,
     },
     {
-      id: '2', qty: 2, price: 20,
+      id: '2', qty: 2, total_price: 20,
     },
   ],
   seller: 'Company one',
@@ -130,10 +130,10 @@ describe('Purchases Page', () => {
             ...expectedPostData,
             products: [
               {
-                id: '1', product: { id: '1', name: products[0].name }, qty: 1, price: 10,
+                id: '1', product: { id: '1', name: products[0].name }, qty: 1, price_per_unit: 10,
               },
               {
-                id: '2', product: { id: '2', name: products[1].name }, qty: 2, price: 20,
+                id: '2', product: { id: '2', name: products[1].name }, qty: 2, price_per_unit: 10,
               },
             ],
             id: '4',
@@ -188,12 +188,12 @@ describe('Purchases Page', () => {
       const groupOfFields = sut.find('form').find('li').at(0);
       const nameSelect = groupOfFields.find('select');
       const qtyInput = groupOfFields.find('input[name="products[0].qty"]');
-      const valueInput = groupOfFields.find('input[name="products[0].price"]');
+      const valueInput = groupOfFields.find('input[name="products[0].total_price"]');
 
       const groupOfFields2 = sut.find('form').find('li').at(1);
       const nameSelect2 = groupOfFields2.find('select');
       const qtyInput2 = groupOfFields2.find('input[name="products[1].qty"]');
-      const valueInput2 = groupOfFields2.find('input[name="products[1].price"]');
+      const valueInput2 = groupOfFields2.find('input[name="products[1].total_price"]');
 
       // Changing values
       // Header

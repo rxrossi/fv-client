@@ -124,12 +124,12 @@ describe('Purchases Add component', () => {
       const groupOfFields = sut.find('li').at(0);
       const nameSelect = groupOfFields.find('select');
       const qtyInput = groupOfFields.find('input[name="products[0].qty"]');
-      const valueInput = groupOfFields.find('input[name="products[0].price"]');
+      const valueInput = groupOfFields.find('input[name="products[0].total_price"]');
 
       const groupOfFields2 = sut.find('li').at(1);
       const nameSelect2 = groupOfFields2.find('select');
       const qtyInput2 = groupOfFields2.find('input[name="products[1].qty"]');
-      const valueInput2 = groupOfFields2.find('input[name="products[1].price"]');
+      const valueInput2 = groupOfFields2.find('input[name="products[1].total_price"]');
 
       // Changing values
       // Header
@@ -154,8 +154,8 @@ describe('Purchases Add component', () => {
         date: '10 27 2017',
         seller: 'Company one',
         products: [
-          { id: '1', qty: 1, price: 10 },
-          { id: '2', qty: 2, price: 20 },
+          { id: '1', qty: 1, total_price: 10 },
+          { id: '2', qty: 2, total_price: 20 },
         ],
       };
       expect(jestSubmit).toHaveBeenCalledWith(expected);

@@ -29,7 +29,7 @@ const ProductsFields = ({ fields, productsForSelect }) => (
             }
           </Field>
           <Field component="input" type="number" name={`${product}.qty`} />
-          <Field component="input" type="number" name={`${product}.price`} placeholder="Total Value" />
+          <Field component="input" type="number" name={`${product}.total_price`} placeholder="Total Value" />
         </li>
       ))}
     </ul>

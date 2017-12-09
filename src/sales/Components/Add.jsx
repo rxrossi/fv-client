@@ -23,7 +23,7 @@ const ProductsFields = ({ fields, productsForSelect }) => (
           >
             Remove product
           </button>
-          <Field type="text" name={`${product}.id`} component="select">
+          <Field type="text" name={`${product}.product`} component="select">
             <option>Select one</option>
             {
               productsForSelect.map(item => (
