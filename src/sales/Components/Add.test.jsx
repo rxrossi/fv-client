@@ -105,7 +105,7 @@ const expectedPostData = {
   client: clients[0].id,
   name: 'service one',
   value: '300',
-  payment: 'money',
+  payment_method: 'money',
   date: '10 10 2017',
   start_time: '10:00',
   end_time: '16:00',
@@ -140,7 +140,7 @@ function mountComponent(submitFn = () => {}) {
   inpts.name = sut.find('input[name="name"]');
   inpts.client = sut.find('select[name="client"]');
   inpts.professional = sut.find('select[name="professional"]');
-  inpts.payment = sut.find('select[name="payment"]');
+  inpts.payment_method = sut.find('select[name="payment_method"]');
   inpts.value = sut.find('input[name="value"]');
   inpts.date = sut.find('input[name="date"]');
   inpts.startTime = sut.find('input[name="start_time"]');
@@ -178,7 +178,7 @@ describe('Sales Add Component', () => {
     // regular inputs
     changeInpt(inpts.name, expectedPostData.name);
     changeInpt(inpts.value, expectedPostData.value);
-    changeInpt(inpts.payment, expectedPostData.payment);
+    changeInpt(inpts.payment_method, expectedPostData.payment_method);
     changeInpt(inpts.date, expectedPostData.date);
     changeInpt(inpts.startTime, expectedPostData.start_time);
     changeInpt(inpts.endTime, expectedPostData.end_time);
