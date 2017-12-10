@@ -42,7 +42,7 @@ ProductsFields.defaultProps = {
 const Add = ({ productsForSelect, handleSubmit }) => (
   <form onSubmit={handleSubmit}>
     <Field component="input" type="text" name="seller" />
-    <Field component="input" type="text" name="date" />
+    <Field component="input" type="date" name="date" />
     <FieldArray name="products" component={ProductsFields} productsForSelect={productsForSelect} />
     <button type="submit">Submit</button>
   </form>
