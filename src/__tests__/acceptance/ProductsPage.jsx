@@ -35,7 +35,6 @@ describe('Products Page', () => {
     });
 
     it('displays the no products warning', () => {
-      expect(sut.find(`.${NO_PRODUCTS_P_CLASS}`).length).toBe(1);
     });
   });
 

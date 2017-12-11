@@ -4,6 +4,7 @@ import fetchMock from 'fetch-mock';
 import { configure, mount } from 'enzyme';
 import App from '../../App';
 import * as API_URLS from '../../APIInfo';
+import { changeFields } from '../../test_helpers';
 // Configure Enzyme
 
 configure({ adapter: new Adapter() });
@@ -154,6 +155,27 @@ const sale2 = {
 
 const sales = [sale1, sale2];
 
+const BLANK = 'BLANK';
+const NOT_POSITIVE = 'NOT_POSITIVE';
+const exampleOfPostErrorResponse = {
+  name: BLANK,
+  client: BLANK,
+  professional: BLANK,
+  date: BLANK,
+  start_time: BLANK,
+  end_time: BLANK,
+  payment_method: BLANK,
+  value: NOT_POSITIVE,
+  products: [
+    {
+      product: BLANK,
+    },
+    {
+      qty: NOT_POSITIVE,
+    },
+  ],
+};
+
 describe('Sales page', () => {
   let sut;
   beforeEach((done) => {
@@ -193,22 +215,9 @@ describe('Sales page', () => {
       ,
       {
         body: {
-          body: {
-            ...expectedPostData,
-            client: clients[0],
-            professional: professionals[0],
-            products: [
-              {
-                id: '1', product: { id: '1', name: products[0].name }, qty: 1, price: 10,
-              },
-              {
-                id: '2', product: { id: '2', name: products[1].name }, qty: 2, price: 20,
-              },
-            ],
-            id: '4',
-          },
-          code: 201,
+          errors: exampleOfPostErrorResponse,
         },
+        code: 422,
       },
       {
         name: 'post_sales',
@@ -321,7 +330,7 @@ describe('Sales page', () => {
     });
   });
 
-  describe('Using the form', () => {
+  describe('Using the form on Success', () => {
     beforeEach((done) => {
       sut.update();
       sut.find('form').simulate('submit');
@@ -331,6 +340,22 @@ describe('Sales page', () => {
     it('calls fetchMock on submit', () => {
       const mockPostPurchase = fetchMock.calls('post_sales');
       expect(mockPostPurchase.length).toBe(1);
+    });
+  });
+
+  describe('Using the form on submit errors', () => {
+    beforeEach((done) => {
+      sut.find('form').simulate('submit');
+      setImmediate(() => done());
+    });
+
+    it('sends to the Add component props the errors', () => {
+      sut.update();
+      const AddComponent = sut.find('Add');
+      const AddComponentErrors = AddComponent.at(1).props().errors;
+
+      // check props of the form if they contain errors
+      expect(AddComponentErrors).toEqual(exampleOfPostErrorResponse);
     });
   });
 

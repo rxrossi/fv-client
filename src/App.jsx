@@ -14,11 +14,34 @@ import Purchases from './purchases';
 import purchases from './purchases/reducer';
 import Sales from './sales';
 import sales from './sales/reducer';
+import * as salesActions from './sales/actionTypes';
+import * as purchasesActions from './purchases/actionTypes';
 
 const Home = () => <p>This is home</p>;
 
+const salesAddReducer = (state, action) => {
+  switch (action.type) {
+    case salesActions.ADD_SUCCESS:
+      return undefined;
+    default:
+      return state;
+  }
+};
+
+const purchasesAddReducer = (state, action) => {
+  switch (action.type) {
+    case purchasesActions.ADD_SUCCESS:
+      return undefined;
+    default:
+      return state;
+  }
+};
+
 export const reducer = combineReducers({
-  form: formReducer,
+  form: formReducer.plugin({
+    'sales add': salesAddReducer,
+    'purchases add': purchasesAddReducer,
+  }),
   clients,
   products,
   professionals,
@@ -54,7 +77,7 @@ const RouterComponent = () => (
             activeStyle={{ textDecoration: 'none', color: 'black' }}
             to="/products"
           >
-            Products
+      Products
           </NavLink>
         </li>
         <li>
@@ -62,7 +85,7 @@ const RouterComponent = () => (
             activeStyle={{ textDecoration: 'none', color: 'black' }}
             to="/professionals"
           >
-            Professionals
+      Professionals
           </NavLink>
         </li>
         <li>
@@ -70,7 +93,7 @@ const RouterComponent = () => (
             activeStyle={{ textDecoration: 'none', color: 'black' }}
             to="/purchases"
           >
-            Purchases
+      Purchases
           </NavLink>
         </li>
         <li>
@@ -78,7 +101,7 @@ const RouterComponent = () => (
             activeStyle={{ textDecoration: 'none', color: 'black' }}
             to="/sales"
           >
-            Sales
+      Sales
           </NavLink>
         </li>
       </ul>

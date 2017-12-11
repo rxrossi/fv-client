@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { reset } from 'redux-form';
 import AddComponent from '../Components/Add';
 import { fetchProducts } from '../../products/actions';
 import { fetchClients } from '../../clients/actions';
@@ -34,12 +33,12 @@ class Add extends React.Component {
     if (firstInput) {
       firstInput.focus();
     }
-    this.props.reset('sales add');
   }
 
   render() {
     return (<AddComponent
       onSubmit={this.submit}
+      errors={this.props.addErrors}
       paymentOptions={this.props.paymentOptions}
       clients={this.props.clients}
       professionals={this.props.professionals}
@@ -65,13 +64,15 @@ Add.propTypes = {
   fetchProducts: PropTypes.func.isRequired,
   fetchProfessionals: PropTypes.func.isRequired,
   addSale: PropTypes.func.isRequired,
-  reset: PropTypes.func.isRequired,
+  addErrors: PropTypes.objectOf(PropTypes.oneOfType([PropTypes.string, PropTypes.array])).isRequired,
+  // reset: PropTypes.func.isRequired,
 };
 
 const mapState = state => ({
   productsForSelect: state.products.list,
   clients: state.clients.list,
   professionals: state.professionals.list,
+  addErrors: state.sales.addErrors,
   paymentOptions,
 });
 
@@ -80,7 +81,6 @@ const mapDispatch = {
   fetchClients,
   fetchProfessionals,
   addSale,
-  reset,
 };
 
 export default connect(mapState, mapDispatch)(Add);
