@@ -24,6 +24,7 @@ class Add extends React.Component {
   render() {
     return (
       <AddComponent
+        errors={this.props.addErrors}
         onSubmit={this.submit}
         productsForSelect={this.props.productsForSelect}
       />);
@@ -37,6 +38,7 @@ Add.propTypes = {
   })).isRequired,
   addPurchase: PropTypes.func.isRequired,
   fetchProducts: PropTypes.func.isRequired,
+  addErrors: PropTypes.objectOf(PropTypes.oneOfType([PropTypes.string, PropTypes.array])).isRequired,
 };
 
 
@@ -48,6 +50,7 @@ const mapDispatch = {
 
 const mapState = state => ({
   productsForSelect: state.products.list,
+  addErrors: state.purchases.addErrors,
 });
 
 export default connect(mapState, mapDispatch)(Add);

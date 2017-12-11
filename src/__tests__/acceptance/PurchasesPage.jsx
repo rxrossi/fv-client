@@ -142,7 +142,7 @@ describe('Purchases Page', () => {
         },
       },
       {
-        name: 'post_purchases',
+        name: 'post_purchases_success',
       },
     );
     sut = mount(<App />);
@@ -176,7 +176,7 @@ describe('Purchases Page', () => {
     });
   });
 
-  describe('Using the form', () => {
+  describe('Using the form (success case)', () => {
     beforeEach((done) => {
       sut.update();
       sut.find('.add-product').simulate('click');
@@ -222,7 +222,59 @@ describe('Purchases Page', () => {
     });
 
     it('calls fetchMock on submit', () => {
-      const mockPostPurchase = fetchMock.calls('post_purchases');
+      const mockPostPurchase = fetchMock.calls('post_purchases_success');
+      expect(mockPostPurchase.length).toBe(1);
+    });
+  });
+
+  describe('Using the form (blank fields)', () => {
+    const errorsExample = {
+      date: 'adklasjlkdasjkl',
+    };
+
+    beforeEach((done) => {
+      sut = mount(<App />);
+      sut.find('a[href="/purchases"]').simulate('click', { button: 0 });
+      setImmediate(() => done());
+    });
+
+    beforeEach((done) => {
+      sut.update();
+      fetchMock.post(
+        (url, opts) => (
+          url === API_URLS.PURCHASES
+            && opts
+            && opts.body === JSON.stringify({ products: [{}] })
+        )
+        ,
+        {
+          body: {
+            errors: errorsExample,
+            code: 422,
+          },
+        },
+        {
+          name: 'post_purchases_failure',
+        },
+      );
+      sut.update();
+      sut.find('.add-product').simulate('click');
+
+      // Submiting
+      sut.find('form').simulate('submit');
+
+      setImmediate(() => done());
+    });
+
+    it('adds to the purchases add component props the errors', () => {
+      sut.update();
+
+      // check props
+      const addErrorsFromProps = sut.find('Add').at(1).props().errors;
+      expect(addErrorsFromProps).toEqual(errorsExample);
+
+      // check if the right fetch mock was called
+      const mockPostPurchase = fetchMock.calls('post_purchases_failure');
       expect(mockPostPurchase.length).toBe(1);
     });
   });
