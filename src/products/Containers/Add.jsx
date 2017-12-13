@@ -1,13 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { reduxForm, reset } from 'redux-form';
 import { connect } from 'react-redux';
 import Add from '../Components/Add';
 import { addProduct, clearAddErrors } from '../actions/';
-
-const AddReduxForm = reduxForm({
-  form: 'addProducts',
-})(Add);
 
 class AddContainer extends React.Component {
   constructor(props) {
@@ -25,18 +20,16 @@ class AddContainer extends React.Component {
     if (firstInput) {
       firstInput.focus();
     }
-    this.props.reset('addProducts');
   }
 
   render() {
     return (
-      <AddReduxForm onSubmit={this.submit} errors={this.props.errors} />
+      <Add onSubmit={this.submit} errors={this.props.errors} />
     );
   }
 }
 AddContainer.propTypes = {
   addProduct: PropTypes.func.isRequired,
-  reset: PropTypes.func.isRequired,
   errors: PropTypes.objectOf(PropTypes.string),
   clearAddErrors: PropTypes.func.isRequired,
 };
@@ -48,4 +41,4 @@ const mapState = state => ({
   errors: state.products.addErrors,
 });
 
-export default connect(mapState, { addProduct, reset, clearAddErrors })(AddContainer);
+export default connect(mapState, { addProduct, clearAddErrors })(AddContainer);

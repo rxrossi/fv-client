@@ -1,34 +1,38 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Field } from 'redux-form';
+import { Field, reduxForm } from 'redux-form';
+import { Container, Button, Form } from 'reactstrap';
+import renderField from '../../renderField';
+
+/* eslint-disable */
+/* eslint-enable */
 
 const Add = ({ handleSubmit, errors }) => (
-  <form onSubmit={handleSubmit}>
-    <div>
-      <Field type="text" name="name" component="input" />
-      {
-        errors && errors.name === 'NOT_UNIQUE' &&
-          <p>A product with this name exists</p>
-      }
-      {
-        errors && errors.name === 'BLANK' &&
-          <p>A name is required</p>
-      }
-    </div>
-    <div>
-      <Field type="text" name="measure_unit" component="select">
+  <Container className="py-1">
+    <Form onSubmit={handleSubmit}>
+      <Field
+        type="text"
+        name="name"
+        component={renderField}
+        label="Name"
+        placeholder="Enter the product name"
+        error2={errors.name}
+      />
+      <Field
+        type="select"
+        name="measure_unit"
+        label="Measure Unit"
+        component={renderField}
+        error2={errors.measure_unit}
+      >
         <option>Select one</option>
         <option value="ml">ml</option>
         <option value="mg">mg</option>
         <option value="unit">unit</option>
       </Field>
-      {
-        errors && errors.measure_unit === 'BLANK' &&
-          <p>Measure unit is required</p>
-      }
-    </div>
-    <button type="submit">Register</button>
-  </form>
+      <Button type="submit" color="primary" block>Register</Button>
+    </Form>
+  </Container>
 );
 Add.propTypes = {
   handleSubmit: PropTypes.func.isRequired,
@@ -38,4 +42,6 @@ Add.defaultProps = {
   errors: {},
 };
 
-export default Add;
+export default reduxForm({
+  form: 'addProducts form',
+})(Add);

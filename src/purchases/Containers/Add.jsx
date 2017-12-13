@@ -38,7 +38,9 @@ Add.propTypes = {
   })).isRequired,
   addPurchase: PropTypes.func.isRequired,
   fetchProducts: PropTypes.func.isRequired,
+  /*eslint-disable*/
   addErrors: PropTypes.objectOf(PropTypes.oneOfType([PropTypes.string, PropTypes.array])).isRequired,
+  /* eslint-enable */
 };
 
 

@@ -211,6 +211,7 @@ describe('Products Page', () => {
     });
 
     it('clears the field on submit', () => {
+      sut.update();
       expect(sut.find('input[name="name"]').props().value).toEqual('');
       expect(sut.find('select[name="measure_unit"]').props().value).toEqual('');
     });

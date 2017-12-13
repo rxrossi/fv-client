@@ -64,8 +64,9 @@ Add.propTypes = {
   fetchProducts: PropTypes.func.isRequired,
   fetchProfessionals: PropTypes.func.isRequired,
   addSale: PropTypes.func.isRequired,
+  /*eslint-disable*/
   addErrors: PropTypes.objectOf(PropTypes.oneOfType([PropTypes.string, PropTypes.array])).isRequired,
-  // reset: PropTypes.func.isRequired,
+  /* eslint-enable */
 };
 
 const mapState = state => ({

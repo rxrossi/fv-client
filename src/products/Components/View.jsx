@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
+import { Container, Table, Row, Col } from 'reactstrap';
 
 export const NO_PRODUCTS_P_CLASS = 'no-products-msg';
 
@@ -12,13 +13,13 @@ const Product = ({ product, linkToViewOne }) => (
     <td>
       {product.measure_unit}
     </td>
-    <td>
+    <td className="text-right">
       {product.quantity}
     </td>
-    <td>
+    <td className="text-right">
       {product.price}
     </td>
-    <td>
+    <td className="text-right">
       {product.avgPriceFiveLast}
     </td>
   </tr>
@@ -38,35 +39,43 @@ Product.propTypes = {
 const View = ({ products, baseUrl }) => {
   if (products.length) {
     return (
-      <table>
-        <thead>
-          <tr>
-            <th>Name</th>
-            <th>Unit of Measure</th>
-            <th>Quantity</th>
-            <th>price</th>
-            <th>Average price of last five</th>
-          </tr>
-        </thead>
-        <tbody>
-          {
-            products.map(product =>
-              (<Product
-                key={product.id}
-                product={product}
-                linkToViewOne={`${baseUrl}/${product.id}`}
-              />))
-          }
-        </tbody>
-      </table>
+      <Container className="py-1">
+        <Table responsive bordered>
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Unit of Measure</th>
+              <th>Quantity</th>
+              <th>Price per each</th>
+              <th>Average price of last five per each</th>
+            </tr>
+          </thead>
+          <tbody>
+            {
+              products.map(product =>
+                (<Product
+                  key={product.id}
+                  product={product}
+                  linkToViewOne={`${baseUrl}/${product.id}`}
+                />))
+            }
+          </tbody>
+        </Table>
+      </Container>
     );
   }
   return (
-    <p
-      className={NO_PRODUCTS_P_CLASS}
-    >
-      No products registered yet
-    </p>
+    <Container>
+      <Row>
+        <Col>
+          <p
+            className={`${NO_PRODUCTS_P_CLASS} text-center p-3 text-info`}
+          >
+            No products registered yet
+          </p>
+        </Col>
+      </Row>
+    </Container>
   );
 };
 
