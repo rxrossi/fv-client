@@ -4,54 +4,52 @@ import { FormGroup, Label, Input, FormFeedback } from 'reactstrap';
 
 const Field = ({
   children,
-  input,
+  name,
+  value,
   label,
   placeholder,
+  onChange,
   type,
-  meta: { touched, error },
-  // meta: { error },
-  error2,
-}) =>
-  // console.log({ error });
-  (
-    <FormGroup>
-      <Label>{label}</Label>
-      <Input
-        type={type}
-        {...input}
-        placeholder={placeholder}
-        valid={error2 ? false : undefined}
-      >
-        {children}
-      </Input>
-      {touched && error && <span>{error}</span>}
-      {
-      error2 === 'NOT_UNIQUE' &&
+  error,
+}) => (
+  <FormGroup>
+    <Label>{label}</Label>
+    <Input
+      type={type}
+      name={name}
+      onChange={onChange(name)}
+      value={value}
+      placeholder={placeholder}
+      valid={error ? false : undefined}
+    >
+      {children}
+    </Input>
+    {
+      error === 'NOT_UNIQUE' &&
         <FormFeedback>{label} is not unique</FormFeedback>
     }
-      {
-      error2 === 'BLANK' &&
+    {
+      error === 'BLANK' &&
         <FormFeedback>{label} is required</FormFeedback>
     }
-    </FormGroup>
-  );
+  </FormGroup>
+);
 Field.propTypes = {
+  onChange: PropTypes.func.isRequired,
   children: PropTypes.node,
-  input: PropTypes.objectOf(PropTypes.any).isRequired,
   label: PropTypes.string.isRequired,
   placeholder: PropTypes.string,
+  name: PropTypes.string.isRequired,
   type: PropTypes.string.isRequired,
-  meta: PropTypes.shape({
-    touched: PropTypes.Boolen,
-    error: PropTypes.any,
-  }).isRequired,
-  error2: PropTypes.string,
+  value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  error: PropTypes.string,
 };
 
 Field.defaultProps = {
   children: undefined,
   placeholder: undefined,
-  error2: undefined,
+  value: '',
+  error: undefined,
 };
 
 export default Field;

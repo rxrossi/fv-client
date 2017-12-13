@@ -1,20 +1,31 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { reduxForm, Field } from 'redux-form';
 import { Container, Row, Col, Form, Button } from 'reactstrap';
 import InputField from '../../renderField';
 
 /* eslint-disable */
-const Add = (props) => {
-  const { handleSubmit, error } = props;
-  console.log(props);
+const Add = ({ handleSubmit, handleChange, values, errors }) => {
   return (
     <Container>
       <Row>
         <Col>
           <Form onSubmit={handleSubmit}>
-            <Field name="name" component={InputField} type="text" label="Name" />
-            <Field name="phone" component={InputField} type="text" label="Phone" />
+            <InputField
+              type="text"
+              onChange={handleChange}
+              value={values.name}
+              error={errors.name}
+              name="name"
+              label="Enter the client name"
+            />
+            <InputField
+              type="text"
+              value={values.phone}
+              error={errors.phone}
+              onChange={handleChange}
+              name="phone"
+              label="Enter the phone"
+            />
             <Button type="submit" color="primary" block>Register</Button>
           </Form>
         </Col>
@@ -24,10 +35,12 @@ const Add = (props) => {
 };
 Add.propTypes = {
   handleSubmit: PropTypes.func.isRequired,
-  // eslint-disable-next-line
-  error: PropTypes.any.isRequired,
+  fieldValues: PropTypes.objectOf(PropTypes.any),
+  errors: PropTypes.objectOf(PropTypes.any),
 };
+Add.defaultProps = {
+  fieldValues: {},
+  errors: {},
+}
 
-export default reduxForm({
-  form: 'addClients',
-})(Add);
+export default Add;

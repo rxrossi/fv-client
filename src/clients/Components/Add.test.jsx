@@ -8,9 +8,11 @@ configure({ adapter: new Adapter() });
 describe('Add Client', () => {
   it('renders', () => {
     const submitFn = jest.fn();
-    const sut = shallow(<Add const handleSubmit={submitFn} />);
+    const fakeFn = jest.fn();
+    const sut =
+      shallow(<Add handleSubmit={submitFn} handleChange={fakeFn} values={{}} errors={{}} />);
 
-    sut.find('form').simulate('submit');
+    sut.find('Form').simulate('submit');
 
     expect(submitFn.mock.calls.length).toBe(1);
   });

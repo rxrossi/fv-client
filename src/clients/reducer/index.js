@@ -3,6 +3,7 @@ import * as types from '../actionTypes';
 const defaultState = {
   fetchError: undefined,
   addErrors: {},
+  fields: {},
   fetching: false,
   list: [],
 };
@@ -43,6 +44,7 @@ export default (state = defaultState, action) => {
       return {
         ...state,
         addErrors: {},
+        fields: {},
         list: [
           ...state.list,
           ...underscoreIdtoIdField([action.payload]),
@@ -57,6 +59,14 @@ export default (state = defaultState, action) => {
       return {
         ...state,
         addErrors: {},
+      };
+    case types.CHANGE_FIELD:
+      return {
+        ...state,
+        fields: {
+          ...state.fields,
+          [action.field]: action.value,
+        },
       };
     default:
       return state;

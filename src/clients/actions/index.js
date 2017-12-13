@@ -60,3 +60,9 @@ export const fetchClients = () => (dispatch) => {
     .then(json => dispatch(fetchSuccess(json.body)))
     .catch(err => dispatch(fetchError(err)));
 };
+
+export const changeField = (field, value) => ({
+  type: types.CHANGE_FIELD,
+  field,
+  value,
+});

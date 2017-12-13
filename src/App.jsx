@@ -17,7 +17,6 @@ import sales from './sales/reducer';
 import * as salesActions from './sales/actionTypes';
 import * as purchasesActions from './purchases/actionTypes';
 import * as productsActions from './products/actionTypes';
-import * as clientsActions from './clients/actionTypes';
 
 const Home = () => <p>This is home</p>;
 
@@ -48,36 +47,9 @@ const purchasesAddReducer = (state, action) => {
   }
 };
 
-const clientsAddReducer = (state, action) => {
-  switch (action.type) {
-    case clientsActions.ADD_SUCCESS:
-      return undefined;
-    case clientsActions.ADD_ERROR:
-      console.log(state);
-      return {
-        ...state,
-        values: {
-          ...state.values,
-          phone: 999888,
-        },
-        registeredFields: {
-          ...state.registeredFields,
-          phone: {
-            ...state.registeredFields.phone,
-            error: 'sumting',
-          },
-        },
-        // error: action.errors,
-      };
-    default:
-      return state;
-  }
-};
-
 export const reducer = combineReducers({
   form: formReducer.plugin({
     'sales add': salesAddReducer,
-    addClients: clientsAddReducer,
     'purchases add': purchasesAddReducer,
     'addProducts form': productsAddReducer,
   }),

@@ -14,6 +14,7 @@ describe('Clients reducer', () => {
         fetching: false,
         addErrors: {},
         fetchError: undefined,
+        fields: {},
         list: [],
       };
       expect(actual).toEqual(expected);
@@ -30,6 +31,7 @@ describe('Clients reducer', () => {
       const expected = {
         fetching: false,
         fetchError: undefined,
+        fields: {},
         addErrors: {},
         list: [...action.payload],
       };
@@ -49,6 +51,7 @@ describe('Clients reducer', () => {
       const expected = {
         fetching: false,
         fetchError: undefined,
+        fields: {},
         addErrors: {},
         list: [action.payload],
       };
@@ -84,6 +87,53 @@ describe('Clients reducer', () => {
         fetchError: 'Some Error',
         fetching: true,
         list: userListExample,
+      };
+
+      const actual = reducer(previousState, action);
+
+      expect(actual).toEqual(expectedState);
+    });
+
+    it('can change the field phone', () => {
+      const action = actions.changeField('phone', '999');
+      const previousState = {
+        addErrors: {},
+        fetchError: undefined,
+        fetching: false,
+        list: [],
+      };
+      const expectedState = {
+        ...previousState,
+        fields: {
+          phone: '999',
+        },
+      };
+
+      const actual = reducer(previousState, action);
+
+      expect(actual).toEqual(expectedState);
+    });
+
+    it('clears fields on submit success', () => {
+      const fakeUser = {
+        id: '3',
+        name: 'Carl',
+        phone: '9 8877 7474',
+      };
+      const action = actions.addSuccess(fakeUser);
+      const previousState = {
+        addErrors: {},
+        fetchError: undefined,
+        fetching: false,
+        list: [],
+        fields: {
+          phone: '999',
+        },
+      };
+      const expectedState = {
+        ...previousState,
+        list: [fakeUser],
+        fields: {},
       };
 
       const actual = reducer(previousState, action);
