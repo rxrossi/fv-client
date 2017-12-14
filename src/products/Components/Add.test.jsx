@@ -26,7 +26,7 @@ function mountComponent(submitFn = () => {}) {
 }
 
 describe('Products Add Component', () => {
-  it('none', () => {
+  it('mounts', () => {
     mountComponent();
   });
 });

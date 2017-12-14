@@ -5,6 +5,7 @@ import { configure, mount } from 'enzyme';
 import App, { store } from '../../App';
 import * as API_URLS from '../../APIInfo';
 import { NO_CLIENTS_P_CLASS } from '../../clients/Components/View';
+import ClientAddComponent from '../../clients/Components/Add';
 // Configure Enzyme
 configure({ adapter: new Adapter() });
 
@@ -174,6 +175,10 @@ describe('Clients acceptance test', () => {
       await setImmediate(() => done());
     });
 
+    beforeEach(() => {
+      sut.update();
+    });
+
     afterAll(() => {
       fetchMock.restore();
       fetchMock.reset();
@@ -183,16 +188,9 @@ describe('Clients acceptance test', () => {
       expect(fetchMock.calls().matched.length).toBe(2);
     });
 
-    it('clears the field on submit', () => {
-      expect(sut.find('input[name="name"]').props().value).toEqual('');
-      expect(sut.find('input[name="phone"]').props().value).toEqual('');
-    });
-
     it('shows the error message', () => {
-      // sut.update();
-      // console.log(sut.find('form').find('div').at(0).debug())
-      // console.log(store.getState().clients.addErrors);
-      expect(sut.text()).toMatch(/A client with this name already exists/);
+      const props = sut.find(ClientAddComponent).props();
+      expect(props.errors).toEqual({ name: 'NOT_UNIQUE' });
     });
   });
 

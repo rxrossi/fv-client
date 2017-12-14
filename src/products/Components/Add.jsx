@@ -1,29 +1,30 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Field, reduxForm } from 'redux-form';
 import { Container, Button, Form } from 'reactstrap';
 import renderField from '../../renderField';
 
 /* eslint-disable */
 /* eslint-enable */
 
-const Add = ({ handleSubmit, errors }) => (
+const Add = ({ handleSubmit, handleChange values, errors }) => (
   <Container className="py-1">
     <Form onSubmit={handleSubmit}>
       <Field
         type="text"
         name="name"
+        value={values.name}
+        error={errors.name}
         component={renderField}
         label="Name"
         placeholder="Enter the product name"
-        error2={errors.name}
       />
       <Field
         type="select"
         name="measure_unit"
+        value={values.name}
+        error={errors.name}
         label="Measure Unit"
         component={renderField}
-        error2={errors.measure_unit}
       >
         <option>Select one</option>
         <option value="ml">ml</option>
@@ -40,8 +41,7 @@ Add.propTypes = {
 };
 Add.defaultProps = {
   errors: {},
+  values: {},
 };
 
-export default reduxForm({
-  form: 'addProducts form',
-})(Add);
+export default Add;
