@@ -7,6 +7,7 @@ describe('Products reducer test', () => {
       fetching: false,
       fetchError: undefined,
       addErrors: {},
+      fields: {},
       list: [],
     };
     expect(reducer(undefined, {})).toEqual(expected);
@@ -23,6 +24,7 @@ describe('Products reducer test', () => {
       fetching: false,
       fetchError: undefined,
       addErrors: {},
+      fields: {},
       list: productsList,
     };
 

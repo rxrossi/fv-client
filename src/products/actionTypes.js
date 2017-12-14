@@ -5,4 +5,6 @@ export const FETCH_REQUEST = '@products/FETCH_REQUEST';
 export const ADD_REQUEST = '@products/ADD_REQUEST';
 export const ADD_ERROR = '@products/ADD_ERROR';
 export const ADD_SUCCESS = '@products/ADD_SUCCESS';
-export const ADD_CLEAR_ERRORS = '@products/ADD_CLEAR_ERRORS';
+export const CLEAR_ADD_FORM = '@products/CLEAR_ADD_FORM';
+
+export const CHANGE_FIELD = '@products/CHANGE_FIELD';

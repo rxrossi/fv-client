@@ -6,7 +6,12 @@ import InputField from '../../renderField';
 /* eslint-disable */
 const Add = ({ handleSubmit, handleChange, values, errors }) => {
   return (
-    <Container>
+    <Container className="py-1">
+      <Row>
+        <Col>
+          <h2>Add a new</h2>
+        </Col>
+      </Row>
       <Row>
         <Col>
           <Form onSubmit={handleSubmit}>
@@ -16,7 +21,8 @@ const Add = ({ handleSubmit, handleChange, values, errors }) => {
               value={values.name}
               error={errors.name}
               name="name"
-              label="Enter the client name"
+              label="Name"
+              placeholder="Enter the client name"
             />
             <InputField
               type="text"
@@ -24,7 +30,8 @@ const Add = ({ handleSubmit, handleChange, values, errors }) => {
               error={errors.phone}
               onChange={handleChange}
               name="phone"
-              label="Enter the phone"
+              label="Phone"
+              placeholder="Enter the phone"
             />
             <Button type="submit" color="primary" block>Register</Button>
           </Form>

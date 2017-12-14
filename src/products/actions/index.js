@@ -20,8 +20,8 @@ export const addSuccess = payload => ({
   payload,
 });
 
-export const clearAddErrors = () => ({
-  type: types.ADD_CLEAR_ERRORS,
+export const clearAddForm = () => ({
+  type: types.CLEAR_ADD_FORM,
 });
 
 export const addProduct = data => (dispatch) => {
@@ -49,6 +49,7 @@ export const fetchSuccess = payload => ({
   type: types.FETCH_SUCCESS,
   payload,
 });
+
 export const fetchProducts = () => (dispatch) => {
   dispatch(fetchRequest());
   return fetch(urls.PRODUCTS)
@@ -56,3 +57,9 @@ export const fetchProducts = () => (dispatch) => {
     .then(json => dispatch(fetchSuccess(json.body)))
     .catch(err => dispatch(fetchError(err)));
 };
+
+export const changeField = (field, value) => ({
+  type: types.CHANGE_FIELD,
+  field,
+  value,
+});

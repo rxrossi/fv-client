@@ -20,12 +20,6 @@ describe('Clients View component', () => {
     expect(sut.find(SEL_NO_CLIENTS_MSG).length).toBe(1);
   });
 
-  it('calls fetch on mount', () => {
-    fakeFetch.mockClear();
-    shallow(<View fetchClients={fakeFetch} />);
-    expect(fakeFetch).toHaveBeenCalledTimes(1);
-  });
-
   it('renders one client if one is given', () => {
     const sut = shallow(<View fetchClients={fakeFetch} clients={clientsListExample.slice(0, 1)} />);
 

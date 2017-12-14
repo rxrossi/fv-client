@@ -2,6 +2,7 @@ import * as types from '../actionTypes';
 
 const defaultState = {
   fetchError: undefined,
+  fields: {},
   addErrors: {},
   fetching: false,
   list: [],
@@ -32,6 +33,7 @@ export default (state = defaultState, action) => {
       return {
         ...state,
         addErrors: {},
+        fields: {},
         list: [
           ...state.list,
           ...underscoreIdtoIdField([action.payload]),
@@ -42,10 +44,18 @@ export default (state = defaultState, action) => {
         ...state,
         addErrors: action.errors,
       };
-    case types.ADD_CLEAR_ERRORS:
+    case types.CLEAR_ADD_FORM:
       return {
         ...state,
         addErrors: {},
+      };
+    case types.CHANGE_FIELD:
+      return {
+        ...state,
+        fields: {
+          ...state.fields,
+          [action.field]: action.value,
+        },
       };
     default:
       return state;

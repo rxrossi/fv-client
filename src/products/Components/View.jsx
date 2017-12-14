@@ -40,32 +40,41 @@ const View = ({ products, baseUrl }) => {
   if (products.length) {
     return (
       <Container className="py-1">
-        <Table responsive bordered>
-          <thead>
-            <tr>
-              <th>Name</th>
-              <th>Unit of Measure</th>
-              <th>Quantity</th>
-              <th>Price per each</th>
-              <th>Average price of last five per each</th>
-            </tr>
-          </thead>
-          <tbody>
-            {
-              products.map(product =>
-                (<Product
-                  key={product.id}
-                  product={product}
-                  linkToViewOne={`${baseUrl}/${product.id}`}
-                />))
-            }
-          </tbody>
-        </Table>
+        <Row>
+          <Col>
+            <h2>Products List</h2>
+          </Col>
+        </Row>
+        <Row>
+          <Col>
+            <Table responsive hover striped bordered>
+              <thead>
+                <tr>
+                  <th>Name</th>
+                  <th>Unit of Measure</th>
+                  <th>Quantity</th>
+                  <th>Price per each</th>
+                  <th>Average price of last five per each</th>
+                </tr>
+              </thead>
+              <tbody>
+                {
+                  products.map(product =>
+                    (<Product
+                      key={product.id}
+                      product={product}
+                      linkToViewOne={`${baseUrl}/${product.id}`}
+                    />))
+                }
+              </tbody>
+            </Table>
+          </Col>
+        </Row>
       </Container>
     );
   }
   return (
-    <Container>
+    <Container className="py-1">
       <Row>
         <Col>
           <p

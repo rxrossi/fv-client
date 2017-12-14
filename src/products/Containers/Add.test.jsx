@@ -3,13 +3,12 @@ import Adapter from 'enzyme-adapter-react-16';
 import { Provider } from 'react-redux';
 import { createStore, combineReducers } from 'redux';
 import { configure, mount } from 'enzyme';
-import products from '../reducer';
 import Add from './Add';
+import products from '../reducer';
 // Configure Enzyme
 configure({ adapter: new Adapter() });
 
-function mountComponent(submitFn = () => {}) {
-  const fakeFn = () => {};
+function mountComponent() {
   const reducer = combineReducers({
     products,
   });
@@ -17,10 +16,7 @@ function mountComponent(submitFn = () => {}) {
 
   const App = () => (
     <Provider store={store}>
-      <Add
-        handleSubmit={submitFn}
-        handleChange={fakeFn}
-      />
+      <Add />
     </Provider>
   );
 
