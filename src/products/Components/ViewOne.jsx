@@ -1,25 +1,26 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Table, Container, Row, Col } from 'reactstrap';
 
 const Header = ({ product }) => (
-  <table>
+  <Table bordered>
     <thead>
       <tr>
-        <th>Name</th>
-        <th>Quantity</th>
-        <th>Last Price</th>
-        <th>Average price of last five</th>
+        <th width="40%">Name</th>
+        <th className="text-right">Quantity</th>
+        <th className="text-right">Last Price</th>
+        <th className="text-right">Average price of last five</th>
       </tr>
     </thead>
     <tbody>
       <tr>
         <td>{product.name}</td>
-        <td>{product.quantity}</td>
-        <td>{product.price}</td>
-        <td>{product.avgPriceFiveLast}</td>
+        <td className="text-right">{product.quantity}</td>
+        <td className="text-right">{product.price}</td>
+        <td className="text-right">{product.avgPriceFiveLast}</td>
       </tr>
     </tbody>
-  </table>
+  </Table>
 );
 Header.propTypes = {
   product: PropTypes.shape({
@@ -32,33 +33,47 @@ Header.propTypes = {
 
 const Stock = ({ stock }) => {
   if (!stock || stock.length === 0) {
-    return <p>No entries for this product yet</p>;
+    return <p className="text-info">No entries for this product yet</p>;
   }
 
   return (
     <div>
-      <table>
+      <Table responsive hover bordered>
         <thead>
           <tr>
-            <th>Quantity</th>
-            <th>Price</th>
-            <th>Date</th>
-            <th>Source or Destination</th>
+            <th width="40%">Source or Destination</th>
+            <th className="text-right">Quantity</th>
+            <th className="text-right">Price</th>
+            <th className="text-right">Date</th>
           </tr>
         </thead>
         <tbody>
           {
-            stock.map(entry => (
-              <tr key={entry.id}>
-                <td>{entry.qty}</td>
-                <td>{entry.price}</td>
-                <td>{entry.date}</td>
-                <td>{entry.sourceOrDestination}</td>
-              </tr>
-            ))
+            stock.map((entry) => {
+              const date = new Date(entry.date);
+              const day = date.getUTCDate();
+              const month = date.getUTCMonth() + 1;
+              const year = date.getUTCFullYear();
+              const dateToPrint = `${month} ${day} ${year}`;
+              const className = entry.sale ? 'table-success' : 'table-info';
+              return (
+                <tr
+                  key={entry.id}
+                  className={className}
+                >
+                  <td>{entry.sourceOrDestination}</td>
+                  <td className="text-right">
+                    {entry.sale ? '-' : '+'}
+                    {entry.qty}
+                  </td>
+                  <td className="text-right">{entry.price}</td>
+                  <td className="text-right">{dateToPrint}</td>
+                </tr>
+              );
+})
           }
         </tbody>
-      </table>
+      </Table>
     </div>
   );
 };
@@ -76,10 +91,16 @@ Stock.defaultProps = {
 };
 
 const ViewOne = ({ product }) => (
-  <div>
-    <Header product={product} />
-    <Stock stock={product.stock} />
-  </div>
+  <Container>
+    <Row>
+      <Col>
+        <h2>Overall Info</h2>
+        <Header product={product} />
+        <h2>Stock entries</h2>
+        <Stock stock={product.stock} />
+      </Col>
+    </Row>
+  </Container>
 );
 ViewOne.propTypes = {
   product: PropTypes.shape({

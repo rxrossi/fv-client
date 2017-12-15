@@ -77,8 +77,13 @@ const View = ({ products, baseUrl }) => {
     <Container className="py-1">
       <Row>
         <Col>
+          <h2>Products List</h2>
+        </Col>
+      </Row>
+      <Row>
+        <Col>
           <p
-            className={`${NO_PRODUCTS_P_CLASS} text-center p-3 text-info`}
+            className={`${NO_PRODUCTS_P_CLASS} text-center text-info`}
           >
             No products registered yet
           </p>

@@ -60,7 +60,7 @@ const Clients = ({ clients }) => {
       </Row>
       <Row>
         <Col>
-          <p className={`${NO_CLIENTS_P_CLASS} text-center py-2`}>No clients yet, register some</p>
+          <p className={`${NO_CLIENTS_P_CLASS} text-info text-center`}>No clients yet, register some</p>
         </Col>
       </Row>
     </Container>
