@@ -7,16 +7,16 @@ const Header = ({ product }) => (
     <thead>
       <tr>
         <th width="40%">Name</th>
-        <th className="text-right">Quantity</th>
-        <th className="text-right">Last Price</th>
+        <th className="text-right">Quantity ({product.measure_unit})</th>
+        <th className="text-right">Last price per {product.measure_unit}</th>
         <th className="text-right">Average price of last five</th>
       </tr>
     </thead>
     <tbody>
       <tr>
         <td>{product.name}</td>
-        <td className="text-right">{product.quantity}</td>
-        <td className="text-right">{product.price}</td>
+        <th className="text-right">{product.quantity} {product.measure_unit}</th>
+        <td className="text-right">{product.price_per_unit}</td>
         <td className="text-right">{product.avgPriceFiveLast}</td>
       </tr>
     </tbody>
@@ -66,7 +66,7 @@ const Stock = ({ stock }) => {
                     {entry.sale ? '-' : '+'}
                     {entry.qty}
                   </td>
-                  <td className="text-right">{entry.price}</td>
+                  <td className="text-right">{entry.price_per_unit}</td>
                   <td className="text-right">{dateToPrint}</td>
                 </tr>
               );
@@ -90,18 +90,30 @@ Stock.defaultProps = {
   stock: undefined,
 };
 
-const ViewOne = ({ product }) => (
-  <Container>
-    <Row>
-      <Col>
-        <h2>Overall Info</h2>
-        <Header product={product} />
-        <h2>Stock entries</h2>
-        <Stock stock={product.stock} />
-      </Col>
-    </Row>
-  </Container>
-);
+const ViewOne = ({ product }) => {
+  if (!product) {
+    return (
+      <Container className="py-1">
+        <Row>
+          <Col>
+            <p className="text-info text-center">This product could not be found</p>
+          </Col>
+        </Row>
+      </Container>);
+  }
+
+  return (
+    <Container className="py-1">
+      <Row>
+        <Col>
+          <h2>Overall Info</h2>
+          <Header product={product} />
+          <h2>Stock entries</h2>
+          <Stock stock={product.stock} />
+        </Col>
+      </Row>
+    </Container>);
+};
 ViewOne.propTypes = {
   product: PropTypes.shape({
     name: PropTypes.string,
@@ -115,7 +127,10 @@ ViewOne.propTypes = {
       date: PropTypes.string,
       sourceOrDestination: PropTypes.string,
     })),
-  }).isRequired,
+  }),
+};
+ViewOne.defaultProps = {
+  product: undefined,
 };
 
 export default ViewOne;

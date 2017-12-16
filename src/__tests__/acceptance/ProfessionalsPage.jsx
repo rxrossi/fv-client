@@ -221,6 +221,7 @@ describe('Professionals Page', () => {
 
         it('does not show error message', () => {
           // console.log(sut.debug());
+          sut.update();
           expect(sut.text()).not.toMatch(errorMsg);
         });
       });

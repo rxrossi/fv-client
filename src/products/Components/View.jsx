@@ -10,14 +10,11 @@ const Product = ({ product, linkToViewOne }) => (
     <td>
       <Link to={linkToViewOne}>{product.name}</Link>
     </td>
-    <td>
-      {product.measure_unit}
+    <td className="text-right">
+      {product.quantity} {product.measure_unit}
     </td>
     <td className="text-right">
-      {product.quantity}
-    </td>
-    <td className="text-right">
-      {product.price}
+      {product.price_per_unit} per {product.measure_unit}
     </td>
     <td className="text-right">
       {product.avgPriceFiveLast}
@@ -51,9 +48,8 @@ const View = ({ products, baseUrl }) => {
               <thead>
                 <tr>
                   <th>Name</th>
-                  <th>Unit of Measure</th>
                   <th>Quantity</th>
-                  <th>Price per each</th>
+                  <th>Price</th>
                   <th>Average price of last five per each</th>
                 </tr>
               </thead>

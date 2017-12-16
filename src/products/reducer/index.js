@@ -47,6 +47,7 @@ export default (state = defaultState, action) => {
     case types.CLEAR_ADD_FORM:
       return {
         ...state,
+        fields: {},
         addErrors: {},
       };
     case types.CHANGE_FIELD:

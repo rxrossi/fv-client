@@ -4,7 +4,7 @@ import fetchMock from 'fetch-mock';
 import { configure, mount } from 'enzyme';
 import App, { store } from '../../App';
 import * as API_URLS from '../../APIInfo';
-import { NO_PRODUCTS_P_CLASS } from '../../products/Components/View';
+import ProductViewComponent from '../../products/Components/View';
 // Configure Enzyme
 configure({ adapter: new Adapter() });
 
@@ -126,13 +126,9 @@ describe('Products Page', () => {
       expect(actual).toEqual(productsList);
     });
 
-    it('lists the products', () => {
-      expect(sut.text()).toMatch(productsList[0].name);
-      expect(sut.text()).toMatch('850');
-      expect(sut.text()).toMatch(productsList[1].name);
-      expect(sut.text()).toMatch('1950');
-      expect(sut.text()).toMatch(productsList[2].name);
-      expect(sut.text()).toMatch('99');
+    it('receives the correct props', () => {
+      const props = sut.find(ProductViewComponent).props();
+      expect(props.products).toEqual(productsList);
     });
   });
 
@@ -227,7 +223,7 @@ describe('Products Page', () => {
       name: 'Something',
       measure_unit: 'unit',
       quantity: 15,
-      price: 1,
+      price_per_unit: 1,
       avgPriceFiveLast: 3,
       stock: [
         {
