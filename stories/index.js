@@ -60,7 +60,7 @@ storiesOf('Products/View', module)
             name: 'OX',
             measure_unit: 'ml',
             quantity: 850,
-            price: 0.09, // per unit
+            price_per_unit: 0.09,
             avgPriceFiveLast: 0.08, // per unit
           },
           {
@@ -68,7 +68,7 @@ storiesOf('Products/View', module)
             name: 'Shampoo',
             measure_unit: 'ml',
             quantity: 1805,
-            price: 0.01,
+            price_per_unit: 0.01,
             avgPriceFiveLast: 0.02, // per unit
           },
           {
@@ -76,7 +76,7 @@ storiesOf('Products/View', module)
             name: 'Capes',
             measure_unit: 'unit',
             quantity: 99,
-            price: 1,
+            price_per_unit: 1,
             avgPriceFiveLast: 1.2, // per unit
           },
         ]}
@@ -94,8 +94,8 @@ storiesOf('Products/View One', module)
         id: '1',
         name: 'Ox 30v',
         measure_unit: 'ml',
-        quantity: undefined,
-        price: undefined,
+        quantity: 0,
+        price_per_unit: undefined,
         avgPriceFiveLast: undefined,
         stock: [],
       }}
@@ -108,7 +108,7 @@ storiesOf('Products/View One', module)
         name: 'Ox 30v',
         measure_unit: 'ml',
         quantity: '100',
-        price: '5',
+        price_per_unit: '5',
         avgPriceFiveLast: '6',
         stock: [
           {
@@ -116,7 +116,10 @@ storiesOf('Products/View One', module)
             price: 6,
             id: '5',
             sale: 'someId',
-            sourceOrDestination: 'Client X, to do Y',
+            sourceOrDestination: {
+              name: 'Client X, to do Y',
+            },
+            price_per_unit: '5',
             date: '2017-12-10T00:00:00.000Z',
           },
           {
@@ -124,7 +127,10 @@ storiesOf('Products/View One', module)
             price: 6,
             id: '4',
             purchase: 'someId',
-            sourceOrDestination: 'Company two',
+            sourceOrDestination: {
+              seller: 'Company two',
+            },
+            price_per_unit: '5',
             date: '2017-12-10T00:00:00.000Z',
           },
           {
@@ -132,7 +138,10 @@ storiesOf('Products/View One', module)
             price: 6,
             id: '3',
             purchase: 'someId',
-            sourceOrDestination: 'Company one',
+            sourceOrDestination: {
+              seller: 'Company two',
+            },
+            price_per_unit: '5',
             date: '2017-12-10T00:00:00.000Z',
           },
           {
@@ -140,7 +149,10 @@ storiesOf('Products/View One', module)
             price: 6,
             id: '2',
             purchase: 'someId',
-            sourceOrDestination: 'Company two',
+            sourceOrDestination: {
+              seller: 'Company two',
+            },
+            price_per_unit: '5',
             date: '2017-12-10T00:00:00.000Z',
           },
           {
@@ -148,7 +160,10 @@ storiesOf('Products/View One', module)
             price: 6,
             id: '1',
             purchase: 'someId',
-            sourceOrDestination: 'Company one',
+            sourceOrDestination: {
+              seller: 'Company two',
+            },
+            price_per_unit: '5',
             date: '2017-12-10T00:00:00.000Z',
           },
         ],

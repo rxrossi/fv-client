@@ -7,7 +7,7 @@ const Header = ({ product }) => (
     <thead>
       <tr>
         <th width="40%">Name</th>
-        <th className="text-right">Quantity ({product.measure_unit})</th>
+        <th className="text-right">Quantity</th>
         <th className="text-right">Last price per {product.measure_unit}</th>
         <th className="text-right">Average price of last five</th>
       </tr>
@@ -15,7 +15,9 @@ const Header = ({ product }) => (
     <tbody>
       <tr>
         <td>{product.name}</td>
-        <th className="text-right">{product.quantity} {product.measure_unit}</th>
+        <th className="text-right">
+          {product.quantity} { product.quantity > 0 ? product.measure_unit : ''}
+        </th>
         <td className="text-right">{product.price_per_unit}</td>
         <td className="text-right">{product.avgPriceFiveLast}</td>
       </tr>
@@ -61,7 +63,7 @@ const Stock = ({ stock }) => {
                   key={entry.id}
                   className={className}
                 >
-                  <td>{entry.sourceOrDestination}</td>
+                  <td>{entry.sourceOrDestination.name || entry.sourceOrDestination.seller}</td>
                   <td className="text-right">
                     {entry.sale ? '-' : '+'}
                     {entry.qty}
@@ -125,7 +127,7 @@ ViewOne.propTypes = {
       quantity: PropTypes.number,
       price: PropTypes.number,
       date: PropTypes.string,
-      sourceOrDestination: PropTypes.string,
+      sourceOrDestination: PropTypes.objectOf(PropTypes.string),
     })),
   }),
 };
