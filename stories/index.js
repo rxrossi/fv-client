@@ -13,8 +13,27 @@ import ProfessionalsAddComponent from '../src/professionals/Components/Add';
 import ProfessionalsViewComponent from '../src/professionals/Components/View';
 import NavBar from '../src/NavBar';
 
+const dummyFn = () => {};
+
 storiesOf('Professionals/Add', module)
-  .add('clean state', () => <ProfessionalsAddComponent />);
+  .add('clean state', () =>
+    (<ProfessionalsAddComponent
+      handleSubmit={dummyFn}
+      handleChange={dummyFn}
+      values={{}}
+      errors={{}}
+    />))
+  .add('with errors', () =>
+    (<ProfessionalsAddComponent
+      handleSubmit={dummyFn}
+      handleChange={dummyFn}
+      values={{
+        name: 'John',
+      }}
+      errors={{
+        name: 'NOT_UNIQUE',
+      }}
+    />));
 
 storiesOf('Professionals/View', module)
   .add('clean state', () => <ProfessionalsViewComponent />)
