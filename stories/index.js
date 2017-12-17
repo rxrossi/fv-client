@@ -9,7 +9,21 @@ import ClientViewComponent from '../src/clients/Components/View';
 import ProductsViewComponent from '../src/products/Components/View';
 import ProductsViewOneComponent from '../src/products/Components/ViewOne';
 import ProductsAddComponent from '../src/products/Components/Add';
+import ProfessionalsAddComponent from '../src/professionals/Components/Add';
+import ProfessionalsViewComponent from '../src/professionals/Components/View';
 import NavBar from '../src/NavBar';
+
+storiesOf('Professionals/Add', module)
+  .add('clean state', () => <ProfessionalsAddComponent />);
+
+storiesOf('Professionals/View', module)
+  .add('clean state', () => <ProfessionalsViewComponent />)
+  .add('with professionals', () =>
+    (<ProfessionalsViewComponent professionals={[
+      { id: '1', name: 'Mary' },
+      { id: '2', name: 'Carl' },
+    ]}
+    />));
 
 storiesOf('NavBar', module)
   .addDecorator(story => (
@@ -52,34 +66,34 @@ storiesOf('Products/View', module)
     </Router>
   ))
   .add('clean state', () => <ProductsViewComponent />)
-  .add('with clients', () => (
+  .add('with products', () => (
     <ProductsViewComponent
       products={[
-          {
-            id: '1',
-            name: 'OX',
-            measure_unit: 'ml',
-            quantity: 850,
-            price_per_unit: 0.09,
-            avgPriceFiveLast: 0.08, // per unit
-          },
-          {
-            id: '2',
-            name: 'Shampoo',
-            measure_unit: 'ml',
-            quantity: 1805,
-            price_per_unit: 0.01,
-            avgPriceFiveLast: 0.02, // per unit
-          },
-          {
-            id: '3',
-            name: 'Capes',
-            measure_unit: 'unit',
-            quantity: 99,
-            price_per_unit: 1,
-            avgPriceFiveLast: 1.2, // per unit
-          },
-        ]}
+        {
+          id: '1',
+          name: 'OX',
+          measure_unit: 'ml',
+          quantity: 850,
+          price_per_unit: 0.09,
+          avgPriceFiveLast: 0.08, // per unit
+        },
+        {
+          id: '2',
+          name: 'Shampoo',
+          measure_unit: 'ml',
+          quantity: 1805,
+          price_per_unit: 0.01,
+          avgPriceFiveLast: 0.02, // per unit
+        },
+        {
+          id: '3',
+          name: 'Capes',
+          measure_unit: 'unit',
+          quantity: 99,
+          price_per_unit: 1,
+          avgPriceFiveLast: 1.2, // per unit
+        },
+      ]}
     />));
 
 storiesOf('Products/View One', module)

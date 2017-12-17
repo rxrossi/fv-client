@@ -85,7 +85,7 @@ Stock.propTypes = {
     qty: PropTypes.number,
     price: PropTypes.number,
     date: PropTypes.string,
-    sourceOrDestination: PropTypes.string,
+    sourceOrDestination: PropTypes.objectOf(PropTypes.string),
   })),
 };
 Stock.defaultProps = {

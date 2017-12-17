@@ -17,35 +17,50 @@ const product = {
       qty: -3,
       price: 1,
       id: '5',
-      sourceOrDestination: 'Client X, to do Y',
+      sourceOrDestination: {
+        name: 'Client X, to do Y',
+        id: '123',
+      },
       date: '10 25 2017',
     },
     {
       qty: 10,
       price: 1,
       id: '4',
-      sourceOrDestination: 'Company two',
+      sourceOrDestination: {
+        seller: 'Company One',
+        id: '123',
+      },
       date: '10 25 2017',
     },
     {
       qty: 10,
       price: 1,
       id: '3',
-      sourceOrDestination: 'Company one',
+      sourceOrDestination: {
+        seller: 'Company One',
+        id: '123',
+      },
       date: '10 24 2017',
     },
     {
       qty: 10,
       price: 1,
       id: '2',
-      sourceOrDestination: 'Company two',
+      sourceOrDestination: {
+        seller: 'Company One',
+        id: '123',
+      },
       date: '10 23 2017',
     },
     {
       qty: 10,
       price: 1,
       id: '1',
-      sourceOrDestination: 'Company one',
+      sourceOrDestination: {
+        seller: 'Company One',
+        id: '123',
+      },
       date: '10 22 2017',
     },
   ],
@@ -61,7 +76,7 @@ describe('Products ViewOne Component', () => {
     const text = sut.text();
 
     expect(text).toMatch(product.name);
-    expect(text).toMatch(product.stock[0].sourceOrDestination);
+    expect(text).toMatch(product.stock[0].sourceOrDestination.name);
     expect(text).toMatch(product.stock[0].date);
   });
 
