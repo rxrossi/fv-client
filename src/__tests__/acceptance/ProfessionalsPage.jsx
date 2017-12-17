@@ -140,6 +140,7 @@ describe('Professionals Page', () => {
         });
 
         it('clear the input on submit', () => {
+          sut.update();
           const inputNameValue = sut.find('input[name="name"]').props().value;
           expect(inputNameValue).toEqual('');
         });
@@ -148,7 +149,7 @@ describe('Professionals Page', () => {
 
     describe('Error case (duplicated name)', () => {
       let sut;
-      const errorMsg = 'A professional with this name already exists';
+      const errorMsg = 'Name is not unique';
 
       beforeEach((done) => {
         fetchMock.get(API_URLS.PROFESSIONALS, {
@@ -220,7 +221,6 @@ describe('Professionals Page', () => {
         });
 
         it('does not show error message', () => {
-          // console.log(sut.debug());
           sut.update();
           expect(sut.text()).not.toMatch(errorMsg);
         });

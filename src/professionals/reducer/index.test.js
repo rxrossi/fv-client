@@ -5,6 +5,7 @@ describe('Professionals Reduce', () => {
   const defaultState = {
     fetchError: undefined,
     addErrors: {},
+    fields: {},
     fetching: false,
     adding: false,
     list: [],
@@ -60,6 +61,7 @@ describe('Professionals Reduce', () => {
         ...defaultState,
         fetching: true,
         fetchError: undefined,
+        fields: {},
       };
 
       // Act
@@ -93,6 +95,7 @@ describe('Professionals Reduce', () => {
         ...defaultState,
         adding: true,
         addErrors: {},
+        fields: {},
       };
       expect(actual).toEqual(expected);
     });
@@ -150,7 +153,7 @@ describe('Professionals Reduce', () => {
       expect(actual).toEqual(expected);
     });
 
-    it('returns the expected state for clearAddErrors', () => {
+    it('returns the expected state for clearAddForm', () => {
       // Prepare
       const previousState = {
         ...defaultState,
@@ -165,13 +168,14 @@ describe('Professionals Reduce', () => {
       };
 
       // Act
-      const actual = reducer(previousState, actions.clearAddErrors());
+      const actual = reducer(previousState, actions.clearAddForm());
 
       // Assert
       const expected = {
         ...previousState,
         adding: false,
         addErrors: {},
+        fields: {},
       };
       expect(actual).toEqual(expected);
     });

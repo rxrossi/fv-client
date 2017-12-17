@@ -42,8 +42,8 @@ export const addError = errors => ({
   errors,
 });
 
-export const clearAddErrors = () => ({
-  type: types.CLEAR_ADD_ERROR,
+export const clearAddForm = () => ({
+  type: types.CLEAR_ADD_FORM,
 });
 
 const jsonHeader = {
@@ -62,3 +62,9 @@ export const addProfessional = data => (dispatch) => {
     })
     .catch(err => dispatch(addError(err)));
 };
+
+export const changeField = (field, value) => ({
+  type: types.CHANGE_FIELD,
+  field,
+  value,
+});

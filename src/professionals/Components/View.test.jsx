@@ -11,7 +11,7 @@ describe('Component view', () => {
       // Prepare
       const sut = mount(<View />);
       // Assert
-      expect(sut.text()).toMatch('No professionals registered yet');
+      expect(sut.text()).toMatch('No professionals yet, register some');
     });
   });
 
