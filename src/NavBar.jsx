@@ -4,7 +4,6 @@ import {
   Collapse,
   Navbar,
   NavbarToggler,
-  NavbarBrand,
   Nav,
   NavItem,
   Container,
@@ -33,7 +32,7 @@ export default class NavBar extends React.Component {
         <Row>
           <Col>
             <Navbar color="faded" light expand="md">
-              <NavbarBrand href="/">DManager</NavbarBrand>
+              <NavLink className="navbar-brand" to="/">DManager</NavLink>
               <NavbarToggler onClick={this.toggle} />
               <Collapse isOpen={this.state.isOpen} navbar>
                 <Nav className="ml-auto" pills>
