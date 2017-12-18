@@ -11,9 +11,54 @@ import ProductsViewOneComponent from '../src/products/Components/ViewOne';
 import ProductsAddComponent from '../src/products/Components/Add';
 import ProfessionalsAddComponent from '../src/professionals/Components/Add';
 import ProfessionalsViewComponent from '../src/professionals/Components/View';
+import PurchasesAddComponent from '../src/purchases/Components/Add';
 import NavBar from '../src/NavBar';
 
 const dummyFn = () => {};
+
+storiesOf('Purchases/Add', module)
+  .add('clean state', () =>
+    (<PurchasesAddComponent
+      handleSubmit={dummyFn}
+      handleChange={dummyFn}
+      values={{}}
+      errors={{}}
+    />))
+  .add('with a empty product', () =>
+    (<PurchasesAddComponent
+      products={[
+        {
+          id: '1',
+          name: 'OX',
+          measure_unit: 'ml',
+          quantity: 850,
+          price: 0.09, // per unit
+          avgPriceFiveLast: 0.08, // per unit
+        },
+        {
+          id: '2',
+          name: 'Shampoo',
+          measure_unit: 'ml',
+          quantity: 1805,
+          price: 0.01,
+          avgPriceFiveLast: 0.02, // per unit
+        },
+        {
+          id: '3',
+          name: 'Capes',
+          measure_unit: 'unit',
+          quantity: 99,
+          price: 1,
+          avgPriceFiveLast: 1.2, // per unit
+        },
+      ]}
+      handleSubmit={dummyFn}
+      handleChange={dummyFn}
+      values={{
+        products: [{}, {}],
+      }}
+      errors={{}}
+    />));
 
 storiesOf('Professionals/Add', module)
   .add('clean state', () =>
@@ -28,11 +73,11 @@ storiesOf('Professionals/Add', module)
       handleSubmit={dummyFn}
       handleChange={dummyFn}
       values={{
-        name: 'John',
-      }}
+          name: 'John',
+        }}
       errors={{
-        name: 'NOT_UNIQUE',
-      }}
+          name: 'NOT_UNIQUE',
+        }}
     />));
 
 storiesOf('Professionals/View', module)

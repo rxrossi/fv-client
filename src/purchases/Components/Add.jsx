@@ -1,53 +1,111 @@
 import React from 'react';
-import { Field, FieldArray, reduxForm } from 'redux-form';
+import { Container, Row, Col, Form, Button } from 'reactstrap';
+import Input from '../../renderField';
 
 /* eslint-disable */
 
-const ProductsFields = ({ fields, productsForSelect }) => (
+const ProductsFields = ({ fields, products, handleChange, addField, removeField }) => (
   <div>
-    <button
-      type="button"
-      className="add-product"
-      onClick={() => fields.push({})}>
-      Add Product
-    </button>
-    <ul>
-      {fields.map((product, index) => (
-        <li key={index}>
-          <button
-            type="button"
-            className="remove-product"
-            onClick={() => fields.remove(index)}>
-            Remove product
-          </button>
-          <Field type="text" name={`${product}.id`} component="select">
-            <option>Select one</option>
-            {
-              productsForSelect.map((product) => (
-                <option key={product.id} value={product.id}>{product.name}</option>
-              ))
-            }
-          </Field>
-          <Field component="input" type="number" name={`${product}.qty`} />
-          <Field component="input" type="number" name={`${product}.total_price`} placeholder="Total Value" />
-        </li>
-      ))}
-    </ul>
+    <Row>
+      <Col>
+        <Button
+          type="button"
+          block
+          onClick={addField}>
+          Add a product
+        </Button>
+      </Col>
+    </Row>
+    <Row className="text-center">
+      <Col>
+        { fields && fields.map((product, index) => (
+          <Row key={index} className="my-2 p-2 bg-light mx-1">
+            <Col lg={4} md={12} sm={12} xs={12}>
+              <Input
+                type="select"
+                name={`${product}.id`}
+                label={`Select Product`}
+                onChange={handleChange}
+              >
+                <option>Select one</option>
+                {
+                  products.map((product) => (
+                    <option key={product.id} value={product.id}>{product.name}</option>
+                  ))
+                }
+              </Input>
+            </Col>
+            <Col lg={3} md={12} sm={12} xs={12}>
+              <Input
+                component="input"
+                type="number"
+                onChange={handleChange}
+                placeholder={`Quantity`}
+                label={`Quantity`}
+                name={`${product}.qty`}
+              />
+            </Col>
+            <Col lg={3} md={12} sm={12} xs={12}>
+              <Input
+                component="input"
+                type="number"
+                onChange={handleChange}
+                name={`${product}.total_price`}
+                label={`Total Value`}
+                placeholder="Total Value"
+              />
+            </Col>
+            <Col lg={2} md={12} sm={12} xs={12}>
+              <Button
+                color="danger"
+                block
+                type="button"
+                className="remove-product mt-4 pb-3"
+                onClick={removeField}>
+                Remove
+              </Button>
+            </Col>
+          </Row>
+        ))}
+      </Col>
+    </Row>
+
   </div>
 );
 ProductsFields.defaultProps = {
   productsForSelect: [],
 }
 
-const Add = ({ productsForSelect, handleSubmit }) => (
-  <form onSubmit={handleSubmit}>
-    <Field component="input" type="text" name="seller" />
-    <Field component="input" type="date" name="date" />
-    <FieldArray name="products" component={ProductsFields} productsForSelect={productsForSelect} />
-    <button type="submit">Submit</button>
-  </form>
+const Add = ({ handleChange, handleSubmit, errors, values, addField, removeField, products }) => (
+  <Container>
+    <Form onSubmit={handleSubmit}>
+      <Input
+        type="text"
+        value={values.seller}
+        error={errors.seller}
+        onChange={handleChange}
+        name="seller"
+        label="Company"
+        placeholder="The name of the company"
+      />
+      <Input
+        type="date"
+        value={values.date}
+        error={errors.date}
+        onChange={handleChange}
+        name="date"
+        label="Date"
+      />
+      <ProductsFields
+        addField={addField}
+        removeField={removeField}
+        handleChange={handleChange}
+        fields={values.products}
+        products={products}
+      />
+      <Button type="submit" color="primary" block>Save Sale</Button>
+    </Form>
+  </Container>
 );
 
-export default reduxForm({
-  form: 'purchases add',
-})(Add);
+export default Add;

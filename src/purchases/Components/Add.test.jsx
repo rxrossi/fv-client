@@ -8,6 +8,8 @@ import Add from './Add';
 // Configure Enzyme
 configure({ adapter: new Adapter() });
 
+const dummyFn = () => {};
+
 const productsList = [
   {
     id: '1',
@@ -36,17 +38,14 @@ const productsList = [
 ];
 
 describe('Purchases Add component', () => {
-  it('renders', () => {
-    const reducer = combineReducers({
-      form: formReducer,
-    });
-    const store = createStore(reducer);
-    const App = () => (
-      <Provider store={store}>
-        <Add />
-      </Provider>
-    );
-    const sut = mount(<App />);
+  it.only('renders', () => {
+    const values = {
+      products: [
+        {}, {},
+      ],
+    };
+
+    const sut = mount(<Add products={productsList} handleChange={dummyFn} handleSubmit={dummyFn} addField={dummyFn} values={values} errors={{}} />);
 
     expect(sut.length).toBe(1);
   });
