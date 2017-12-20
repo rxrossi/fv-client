@@ -25,6 +25,181 @@ describe('Purchases Reduce', () => {
     expect(actual).toEqual(expected);
   });
 
+  describe('change fields', () => {
+    it('works for a regular field', () => {
+      const sellerName = 'Company ONE';
+
+      const expected = {
+        ...defaultState,
+        fields: {
+          seller: sellerName,
+        },
+      };
+
+      const actual = reducer(undefined, actions.changeField('seller', sellerName));
+
+      expect(actual).toEqual(expected);
+    });
+
+    it('works for an array if fields', () => {
+      const expected = {
+        ...defaultState,
+        fields: {
+          products: [
+            { qty: 10 },
+          ],
+        },
+      };
+
+      const actual = reducer(undefined, actions.changeField(['products', 0, 'qty'], 10));
+
+      expect(actual).toEqual(expected);
+    });
+
+    it('works for an array if fields when the first change is not the first product', () => {
+      const expected = {
+        ...defaultState,
+        fields: {
+          products: [
+            undefined,
+            { qty: 10 },
+          ],
+        },
+      };
+
+      const actual = reducer(undefined, actions.changeField(['products', 1, 'qty'], 10));
+
+      expect(actual).toEqual(expected);
+    });
+
+    it('works when some regular fields are aleardy filled', () => {
+      const previousState = {
+        ...defaultState,
+        fields: {
+          seller: 'wow',
+        },
+      };
+      const expected = {
+        ...defaultState,
+        fields: {
+          seller: 'wow',
+          products: [
+            undefined,
+            { qty: 10 },
+          ],
+        },
+      };
+
+      const actual = reducer(previousState, actions.changeField(['products', 1, 'qty'], 10));
+
+      expect(actual).toEqual(expected);
+    });
+
+    it('works when some regular fields and array fields are aleardy filled', () => {
+      const previousState = {
+        ...defaultState,
+        fields: {
+          seller: 'wow',
+          products: [
+            { qty: 1 },
+            { name: 'name1' },
+            { qty: 2 },
+          ],
+        },
+      };
+      const expected = {
+        ...defaultState,
+        fields: {
+          seller: 'wow',
+          products: [
+            { qty: 1 },
+            { name: 'name1', qty: 10 },
+            { qty: 2 },
+          ],
+        },
+      };
+
+      const actual = reducer(previousState, actions.changeField(['products', 1, 'qty'], 10));
+
+      expect(actual).toEqual(expected);
+    });
+  });
+
+  describe('adding array of fields', () => {
+    it('works when there is nothing yet', () => {
+      const action = actions.appendToArrayOfFields('products', {});
+
+      const actual = reducer(undefined, action);
+
+      const expected = {
+        ...defaultState,
+        fields: {
+          products: [{}],
+        },
+      };
+
+      expect(actual).toEqual(expected);
+    });
+
+    it('works when there is something already', () => {
+      const action = actions.appendToArrayOfFields('products', {});
+
+      const previousState = {
+        ...defaultState,
+        fields: {
+          products: [
+            { name: 'index_zero' },
+          ],
+        },
+      };
+
+      const actual = reducer(previousState, action);
+
+      const expected = {
+        ...defaultState,
+        fields: {
+          products: [
+            { name: 'index_zero' },
+            {},
+          ],
+        },
+      };
+
+      expect(actual).toEqual(expected);
+    });
+  });
+
+  describe('removing item from array of fields', () => {
+    it('works in a basic case', () => {
+      const action = actions.removeFromArrayOfFields('products', 1);
+
+      const previousState = {
+        ...defaultState,
+        fields: {
+          products: [
+            { name: 'index_zero' },
+            { name: 'index_one' },
+            { name: 'index_three' },
+          ],
+        },
+      };
+
+      const actual = reducer(previousState, action);
+
+      const expected = {
+        ...defaultState,
+        fields: {
+          products: [
+            { name: 'index_zero' },
+            { name: 'index_three' },
+          ],
+        },
+      };
+
+      expect(actual).toEqual(expected);
+    });
+  });
+
   describe('Fetch actions', () => {
     it('returns the expected state for fetchRequest', () => {
       // Act
