@@ -37,127 +37,101 @@ const productsList = [
   },
 ];
 
+const defaultValues = {
+  products: [
+    {}, {},
+  ],
+};
+
+// TODO: ADD removeField
+const mountComponent = (
+  values = defaultValues,
+  errors = {},
+  handleChange = dummyFn,
+  handleSubmit = dummyFn,
+  addField = dummyFn,
+  removeField = dummyFn,
+) => mount(<Add
+  products={productsList}
+  handleChange={handleChange}
+  handleSubmit={handleSubmit}
+  addField={addField}
+  removeField={removeField}
+  values={values}
+  errors={errors}
+/>);
+
+
 describe('Purchases Add component', () => {
   it.only('renders', () => {
-    const values = {
-      products: [
-        {}, {},
-      ],
-    };
-
-    const sut = mount(<Add products={productsList} handleChange={dummyFn} handleSubmit={dummyFn} addField={dummyFn} values={values} errors={{}} />);
-
+    const sut = mountComponent();
     expect(sut.length).toBe(1);
   });
 
-  describe('Handling dinamic fields', () => {
-    let sut;
-    beforeEach(() => {
-      const reducer = combineReducers({
-        form: formReducer,
-      });
-      const store = createStore(reducer);
-      const App = () => (
-        <Provider store={store}>
-          <Add />
-        </Provider>
-      );
-      sut = mount(<App />);
-    });
-
-    it('has a button', () => {
-      const addBtn = sut.find('.add-product');
+  describe.only('Handling dinamic fields', () => {
+    it.only('has an add-product button', () => {
+      const sut = mountComponent();
+      const addBtn = sut.find('button.add-product');
       expect(addBtn.length).toBe(1);
     });
 
-    it('can add a new set of product fields', () => {
-      const removeClass = '.remove-product';
-      // Check amount of remove buttons
-      expect(sut.find(removeClass).length).toBe(0);
-
-      // Add one
-      sut.find('.add-product').simulate('click');
-
-      // Check amount of remove buttons
-      expect(sut.find(removeClass).length).toBe(1);
-    });
-  });
-
-  describe('Using submit with the correct values', () => {
-    let sut;
-    const jestSubmit = jest.fn();
-
-    beforeEach(() => {
-      const reducer = combineReducers({
-        form: formReducer,
-      });
-      const store = createStore(reducer);
-
-      class AddContainer extends React.Component {
-        // eslint-disable-next-line
-        submit(values) {
-          jestSubmit(values);
-        }
-        render() {
-          return <Add productsForSelect={productsList} onSubmit={this.submit} />;
-        }
-      }
-
-      const App = () => (
-        <Provider store={store}>
-          <AddContainer />
-        </Provider>
-      );
-      sut = mount(<App />);
-
-      // Add two sets of fields
-      sut.find('.add-product').simulate('click');
-      sut.find('.add-product').simulate('click');
+    it.only('calls the add-product with correct values', () => {
+      const fakeAddProduct = jest.fn();
+      const sut = mountComponent({}, {}, dummyFn, dummyFn, fakeAddProduct);
+      sut.find('button.add-product').simulate('click');
+      expect(fakeAddProduct).toHaveBeenCalled();
     });
 
-    it('calls the submit with expected values', () => {
-      // Selecting inputs
-      const sellerInput = sut.find('input[name="seller"]');
-      const dateInput = sut.find('input[name="date"]');
-
-      const groupOfFields = sut.find('li').at(0);
-      const nameSelect = groupOfFields.find('select');
-      const qtyInput = groupOfFields.find('input[name="products[0].qty"]');
-      const valueInput = groupOfFields.find('input[name="products[0].total_price"]');
-
-      const groupOfFields2 = sut.find('li').at(1);
-      const nameSelect2 = groupOfFields2.find('select');
-      const qtyInput2 = groupOfFields2.find('input[name="products[1].qty"]');
-      const valueInput2 = groupOfFields2.find('input[name="products[1].total_price"]');
-
-      // Changing values
-      // Header
-      sellerInput.simulate('change', { target: { value: 'Company one' } });
-      dateInput.simulate('change', { target: { value: '10 27 2017' } });
-
-      // First product
-      nameSelect.simulate('change', { target: { value: productsList[0].id } });
-      qtyInput.simulate('change', { target: { value: 1 } });
-      valueInput.simulate('change', { target: { value: 10 } });
-
-      // Second product
-      nameSelect2.simulate('change', { target: { value: productsList[1].id } });
-      qtyInput2.simulate('change', { target: { value: 2 } });
-      valueInput2.simulate('change', { target: { value: 20 } });
-
-      // Submiting
-      sut.find('form').simulate('submit');
-
-      // Asserting submit values
-      const expected = {
-        date: '10 27 2017',
-        seller: 'Company one',
+    it.only('calls the remove-product with correct values', () => {
+      const fakeRemoveProduct = jest.fn();
+      const values = {
         products: [
-          { id: '1', qty: 1, total_price: 10 },
-          { id: '2', qty: 2, total_price: 20 },
+          {},
+          {},
         ],
       };
-      expect(jestSubmit).toHaveBeenCalledWith(expected);
+      const sut = mountComponent(values, {}, dummyFn, dummyFn, dummyFn, fakeRemoveProduct);
+      const removeBtns = sut.find('button.remove-product');
+      expect(removeBtns.length).toBe(2);
+
+      removeBtns.at(1).simulate('click');
+      expect(fakeRemoveProduct).toHaveBeenCalledWith('products', 1);
+    });
+
+    it.only('calls the changeField of a dynamic field correctly', () => {
+      const spy = jest.fn();
+
+      const fakeHandleChange = (name, path = []) => (e) => {
+        if (!Array.isArray(path)) {
+          throw new Error('path is not an array', path);
+        }
+        spy([...path, name], e.target.value);
+      };
+
+      const values = {
+        products: [
+          {},
+          {},
+        ],
+      };
+
+      // Mount
+      const sut = mountComponent(values, {}, fakeHandleChange);
+
+      // Assert dynamic field
+      const productRows = sut.find('div.product-row');
+      const qtyField = productRows.at(1).find('input[name="qty"]');
+      qtyField.simulate('change', { target: { value: 10 } });
+      expect(spy).toHaveBeenCalledTimes(1);
+      expect(spy).toHaveBeenCalledWith(['products', 1, 'qty'], 10);
+
+      spy.mockReset();
+
+      // User the same fakeHandleChange in a non dynamic field
+      const sellerField = sut.find('input[name="seller"]');
+      sellerField.simulate('change', { target: { value: 'Company One' } });
+      expect(spy).toHaveBeenCalledTimes(1);
+      expect(spy).toHaveBeenCalledWith(['seller'], 'Company One');
     });
   });
 });

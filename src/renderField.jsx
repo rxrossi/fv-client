@@ -5,6 +5,7 @@ import { FormGroup, Label, Input, FormFeedback } from 'reactstrap';
 const Field = ({
   children,
   name,
+  path,
   value,
   label,
   placeholder,
@@ -17,7 +18,7 @@ const Field = ({
     <Input
       type={type}
       name={name}
-      onChange={onChange(name)}
+      onChange={onChange(name, path)}
       value={value}
       placeholder={placeholder}
       valid={error ? false : undefined}
@@ -40,6 +41,7 @@ Field.propTypes = {
   label: PropTypes.string.isRequired,
   placeholder: PropTypes.string,
   name: PropTypes.string.isRequired,
+  path: PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.string, PropTypes.number])),
   type: PropTypes.string.isRequired,
   value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   error: PropTypes.string,
@@ -49,6 +51,7 @@ Field.defaultProps = {
   children: undefined,
   placeholder: undefined,
   value: '',
+  path: [],
   error: undefined,
 };
 

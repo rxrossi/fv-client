@@ -11,6 +11,7 @@ const ProductsFields = ({ fields, products, handleChange, addField, removeField 
         <Button
           type="button"
           block
+          className="add-product"
           onClick={addField}>
           Add a product
         </Button>
@@ -19,11 +20,12 @@ const ProductsFields = ({ fields, products, handleChange, addField, removeField 
     <Row className="text-center">
       <Col>
         { fields && fields.map((product, index) => (
-          <Row key={index} className="my-2 p-2 bg-light mx-1">
+          <Row key={index} className="my-2 p-2 bg-light mx-1 product-row">
             <Col lg={4} md={12} sm={12} xs={12}>
               <Input
                 type="select"
-                name={`${product}.id`}
+                name="product"
+                path={['products', index]}
                 label={`Select Product`}
                 onChange={handleChange}
               >
@@ -42,7 +44,8 @@ const ProductsFields = ({ fields, products, handleChange, addField, removeField 
                 onChange={handleChange}
                 placeholder={`Quantity`}
                 label={`Quantity`}
-                name={`${product}.qty`}
+                name="qty"
+                path={['products', index]}
               />
             </Col>
             <Col lg={3} md={12} sm={12} xs={12}>
@@ -50,7 +53,8 @@ const ProductsFields = ({ fields, products, handleChange, addField, removeField 
                 component="input"
                 type="number"
                 onChange={handleChange}
-                name={`${product}.total_price`}
+                name="total_price"
+                path={['products', index]}
                 label={`Total Value`}
                 placeholder="Total Value"
               />
@@ -61,7 +65,7 @@ const ProductsFields = ({ fields, products, handleChange, addField, removeField 
                 block
                 type="button"
                 className="remove-product mt-4 pb-3"
-                onClick={removeField}>
+                onClick={removeField('products', index)}>
                 Remove
               </Button>
             </Col>
