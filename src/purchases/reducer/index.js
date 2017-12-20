@@ -14,9 +14,7 @@ function changeObject(obj, value, path, typeOfOperation) {
 
   pathToReduce.reduce((dir, p, i, arr) => {
     if (i + 1 === arr.length) {
-      if (!typeOfOperation) {
-        return dir[p] = value;
-      } else if (typeOfOperation === 'append_to_arr') {
+      if (typeOfOperation === 'append_to_arr') {
         return dir[p] = [
           ...dir[p] || [],
           value,
@@ -27,6 +25,7 @@ function changeObject(obj, value, path, typeOfOperation) {
           ...dir[p].slice(value + 1)
         ]
       }
+      return dir[p] = value;
     }
     if (dir[p]) {
       return dir[p];
