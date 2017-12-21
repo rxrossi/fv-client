@@ -15,6 +15,7 @@ describe('Purchases Reduce', () => {
   const defaultState = {
     fetchError: undefined,
     addErrors: {},
+    fields: {},
     fetching: false,
     adding: false,
     list: [],
@@ -327,7 +328,7 @@ describe('Purchases Reduce', () => {
       expect(actual).toEqual(expected);
     });
 
-    it('returns the expected state for clearAddErrors', () => {
+    it('returns the expected state for clearAddForm', () => {
       // Prepare
       const previousState = {
         ...defaultState,
@@ -338,7 +339,7 @@ describe('Purchases Reduce', () => {
       };
 
       // Act
-      const actual = reducer(previousState, actions.clearAddErrors());
+      const actual = reducer(previousState, actions.clearAddForm());
 
       // Assert
       const expected = {

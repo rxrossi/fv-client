@@ -1,10 +1,11 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { Container, Row, Col, Form, Button } from 'reactstrap';
 import Input from '../../renderField';
 
-/* eslint-disable */
-
-const ProductsFields = ({ fields, products, handleChange, addField, removeField }) => (
+const ProductsFields = ({
+  values, products, handleChange, addField, removeField,
+}) => (
   <div>
     <Row>
       <Col>
@@ -12,27 +13,30 @@ const ProductsFields = ({ fields, products, handleChange, addField, removeField 
           type="button"
           block
           className="add-product"
-          onClick={addField}>
+          onClick={addField}
+        >
           Add a product
         </Button>
       </Col>
     </Row>
     <Row className="text-center">
       <Col>
-        { fields && fields.map((product, index) => (
+        { values && values.map((value, index) => (
+          // eslint-disable-next-line
           <Row key={index} className="my-2 p-2 bg-light mx-1 product-row">
             <Col lg={4} md={12} sm={12} xs={12}>
               <Input
                 type="select"
-                name="product"
+                name="id"
+                value={value.id}
                 path={['products', index]}
-                label={`Select Product`}
+                label="Select Product"
                 onChange={handleChange}
               >
                 <option>Select one</option>
                 {
-                  products.map((product) => (
-                    <option key={product.id} value={product.id}>{product.name}</option>
+                  products.map(item => (
+                    <option key={item.id} value={item.id}>{item.name}</option>
                   ))
                 }
               </Input>
@@ -41,9 +45,10 @@ const ProductsFields = ({ fields, products, handleChange, addField, removeField 
               <Input
                 component="input"
                 type="number"
+                value={value.qty}
                 onChange={handleChange}
-                placeholder={`Quantity`}
-                label={`Quantity`}
+                placeholder="Quantity"
+                label="Quantity"
                 name="qty"
                 path={['products', index]}
               />
@@ -52,10 +57,11 @@ const ProductsFields = ({ fields, products, handleChange, addField, removeField 
               <Input
                 component="input"
                 type="number"
+                value={value.total_price}
                 onChange={handleChange}
                 name="total_price"
                 path={['products', index]}
-                label={`Total Value`}
+                label="Total Value"
                 placeholder="Total Value"
               />
             </Col>
@@ -65,7 +71,8 @@ const ProductsFields = ({ fields, products, handleChange, addField, removeField 
                 block
                 type="button"
                 className="remove-product mt-4 pb-3"
-                onClick={removeField('products', index)}>
+                onClick={() => removeField('products', index)}
+              >
                 Remove
               </Button>
             </Col>
@@ -76,11 +83,31 @@ const ProductsFields = ({ fields, products, handleChange, addField, removeField 
 
   </div>
 );
+ProductsFields.propTypes = {
+  addField: PropTypes.func.isRequired,
+  removeField: PropTypes.func.isRequired,
+  handleChange: PropTypes.func.isRequired,
+  products: PropTypes.arrayOf(PropTypes.shape({
+    id: PropTypes.string,
+    name: PropTypes.string,
+    measure_unit: PropTypes.string,
+    quantity: PropTypes.number,
+    price: PropTypes.number,
+    avgPriceFiveLast: PropTypes.number,
+  })),
+  values: PropTypes.arrayOf(PropTypes.objectOf(PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.number,
+  ]))),
+};
 ProductsFields.defaultProps = {
-  productsForSelect: [],
-}
+  products: [],
+  values: [],
+};
 
-const Add = ({ handleChange, handleSubmit, errors, values, addField, removeField, products }) => (
+const Add = ({
+  handleChange, handleSubmit, errors, values, addField, removeField, products,
+}) => (
   <Container>
     <Form onSubmit={handleSubmit}>
       <Input
@@ -104,12 +131,38 @@ const Add = ({ handleChange, handleSubmit, errors, values, addField, removeField
         addField={addField}
         removeField={removeField}
         handleChange={handleChange}
-        fields={values.products}
+        values={values.products}
         products={products}
       />
       <Button type="submit" color="primary" block>Save Sale</Button>
     </Form>
   </Container>
 );
+Add.propTypes = {
+  addField: PropTypes.func.isRequired,
+  removeField: PropTypes.func.isRequired,
+  handleChange: PropTypes.func.isRequired,
+  handleSubmit: PropTypes.func.isRequired,
+  errors: PropTypes.objectOf(PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.arrayOf(PropTypes.string),
+  ])).isRequired,
+  values: PropTypes.objectOf(PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.number,
+    PropTypes.arrayOf(PropTypes.objectOf(PropTypes.oneOfType([
+      PropTypes.string,
+      PropTypes.number,
+    ]))),
+  ])).isRequired,
+  products: PropTypes.arrayOf(PropTypes.shape({
+    id: PropTypes.string,
+    name: PropTypes.string,
+    measure_unit: PropTypes.string,
+    quantity: PropTypes.number,
+    price: PropTypes.number,
+    avgPriceFiveLast: PropTypes.number,
+  })).isRequired,
+};
 
 export default Add;

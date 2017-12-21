@@ -1,7 +1,4 @@
 import React from 'react';
-import { Provider } from 'react-redux';
-import { createStore, combineReducers } from 'redux';
-import { reducer as formReducer } from 'redux-form';
 import Adapter from 'enzyme-adapter-react-16';
 import { configure, mount } from 'enzyme';
 import Add from './Add';
@@ -63,26 +60,26 @@ const mountComponent = (
 
 
 describe('Purchases Add component', () => {
-  it.only('renders', () => {
+  it('renders', () => {
     const sut = mountComponent();
     expect(sut.length).toBe(1);
   });
 
-  describe.only('Handling dinamic fields', () => {
-    it.only('has an add-product button', () => {
+  describe('Handling dinamic fields', () => {
+    it('has an add-product button', () => {
       const sut = mountComponent();
       const addBtn = sut.find('button.add-product');
       expect(addBtn.length).toBe(1);
     });
 
-    it.only('calls the add-product with correct values', () => {
+    it('calls the add-product with correct values', () => {
       const fakeAddProduct = jest.fn();
       const sut = mountComponent({}, {}, dummyFn, dummyFn, fakeAddProduct);
       sut.find('button.add-product').simulate('click');
       expect(fakeAddProduct).toHaveBeenCalled();
     });
 
-    it.only('calls the remove-product with correct values', () => {
+    it('calls the remove-product with correct values', () => {
       const fakeRemoveProduct = jest.fn();
       const values = {
         products: [
@@ -93,12 +90,13 @@ describe('Purchases Add component', () => {
       const sut = mountComponent(values, {}, dummyFn, dummyFn, dummyFn, fakeRemoveProduct);
       const removeBtns = sut.find('button.remove-product');
       expect(removeBtns.length).toBe(2);
+      expect(fakeRemoveProduct).not.toHaveBeenCalled();
 
       removeBtns.at(1).simulate('click');
       expect(fakeRemoveProduct).toHaveBeenCalledWith('products', 1);
     });
 
-    it.only('calls the changeField of a dynamic field correctly', () => {
+    it('calls the changeField of a dynamic field correctly', () => {
       const spy = jest.fn();
 
       const fakeHandleChange = (name, path = []) => (e) => {

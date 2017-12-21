@@ -4,6 +4,7 @@ const defaultState = {
   fetchError: undefined,
   addErrors: {},
   fetching: false,
+  fields: {},
   adding: false,
   list: [],
 };
@@ -33,7 +34,7 @@ function changeObject(obj, value, path, typeOfOperation) {
     return dir[p] = typeof arr[i + 1] === 'number' ? [] : {};
   }, obj);
 
-  return obj;
+    return obj;
 }
 /* eslint-enable */
 
@@ -104,10 +105,11 @@ export default (state = defaultState, action) => {
         adding: false,
         addErrors: action.errors,
       };
-    case types.CLEAR_ADD_ERROR:
+    case types.CLEAR_ADD_FORM:
       return {
         ...state,
         adding: false,
+        fields: {},
         addErrors: {},
       };
     default:

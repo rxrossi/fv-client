@@ -30,40 +30,16 @@ const products = [
     name: 'OX',
     measure_unit: 'ml',
     quantity: 850,
-    price: 11.11,
-    avgPriceFiveLast: 11.11,
-    stock: [
-      {
-        qty: 1000,
-        price: 11.11,
-        purchase_id: '12',
-      },
-      {
-        qty: -150,
-        price: 11.11,
-        use_id: '14',
-      }, // expect total to be 1000 - 150 = 850
-    ],
+    price: 0.09, // per unit
+    avgPriceFiveLast: 0.08, // per unit
   },
   {
     id: '2',
     name: 'Shampoo',
     measure_unit: 'ml',
-    quantity: 1950,
-    price: 20,
-    avgPriceFiveLast: 20,
-    stock: [
-      {
-        qty: 2000,
-        price: 20,
-        purchase_id: '22',
-      },
-      {
-        qty: -50,
-        price: 20,
-        use_id: '24',
-      }, // expect total to be 2000 - 50 = 1950
-    ],
+    quantity: 1805,
+    price: 0.01,
+    avgPriceFiveLast: 0.02, // per unit
   },
   {
     id: '3',
@@ -71,19 +47,7 @@ const products = [
     measure_unit: 'unit',
     quantity: 99,
     price: 1,
-    avgPriceFiveLast: 1,
-    stock: [
-      {
-        qty: 100,
-        price: 1,
-        purchase_id: '32',
-      },
-      {
-        qty: -1,
-        price: 1,
-        use_id: '34',
-      }, // expect total to be 100 - 1 = 99
-    ],
+    avgPriceFiveLast: 1.2, // per unit
   },
 ];
 
@@ -120,8 +84,8 @@ describe('Purchases Page', () => {
     fetchMock.post(
       (url, opts) => (
         url === API_URLS.PURCHASES
-        && opts
-        && opts.body === JSON.stringify(expectedPostData)
+          && opts
+          && opts.body === JSON.stringify(expectedPostData)
       )
       ,
       {
@@ -154,13 +118,13 @@ describe('Purchases Page', () => {
     expect(sut.find('form').length).toBe(1);
   });
 
-  describe('The view purchases thing', () => {
-    it('Shows the first purchase', () => {
+  describe('Purchases view list of purchases', () => {
+    it('shows the first purchase', () => {
       expect(sut.text()).toMatch(purchase.seller);
     });
   });
 
-  describe('Can go to ViewOne of purchases', () => {
+  describe('ViewOne of purchases', () => {
     beforeEach((done) => {
       sut.update();
       const viewOneBtn = sut.find(`a[href="/purchases/${purchase.id}"]`);
@@ -177,23 +141,30 @@ describe('Purchases Page', () => {
   });
 
   describe('Using the form (success case)', () => {
-    beforeEach((done) => {
+    beforeEach(() => {
       sut.update();
-      sut.find('.add-product').simulate('click');
-      sut.find('.add-product').simulate('click');
+      sut.find('button.add-product').simulate('click');
+    });
+
+    beforeEach(() => {
+      sut.update();
+      sut.find('button.add-product').simulate('click');
+    });
+
+    beforeEach((done) => {
       // Selecting inputs
       const sellerInput = sut.find('input[name="seller"]');
       const dateInput = sut.find('input[name="date"]');
 
-      const groupOfFields = sut.find('form').find('li').at(0);
+      const groupOfFields = sut.find('form').find('div.product-row').at(0);
       const nameSelect = groupOfFields.find('select');
-      const qtyInput = groupOfFields.find('input[name="products[0].qty"]');
-      const valueInput = groupOfFields.find('input[name="products[0].total_price"]');
+      const qtyInput = groupOfFields.find('input[name="qty"]');
+      const valueInput = groupOfFields.find('input[name="total_price"]');
 
-      const groupOfFields2 = sut.find('form').find('li').at(1);
+      const groupOfFields2 = sut.find('form').find('div.product-row').at(1);
       const nameSelect2 = groupOfFields2.find('select');
-      const qtyInput2 = groupOfFields2.find('input[name="products[1].qty"]');
-      const valueInput2 = groupOfFields2.find('input[name="products[1].total_price"]');
+      const qtyInput2 = groupOfFields2.find('input[name="qty"]');
+      const valueInput2 = groupOfFields2.find('input[name="total_price"]');
 
       // Changing values
       // Header
@@ -212,7 +183,6 @@ describe('Purchases Page', () => {
 
       // Submiting
       sut.find('form').simulate('submit');
-
       setImmediate(() => done());
     });
 
@@ -258,7 +228,7 @@ describe('Purchases Page', () => {
         },
       );
       sut.update();
-      sut.find('.add-product').simulate('click');
+      sut.find('button.add-product').simulate('click');
 
       // Submiting
       sut.find('form').simulate('submit');
