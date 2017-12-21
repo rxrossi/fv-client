@@ -24,8 +24,47 @@ storiesOf('Sales/Add', module)
     (<SalesAddComponent
       handleSubmit={dummyFn}
       handleChange={dummyFn}
+      removeField={dummyFn}
+      addField={dummyFn}
       values={{}}
       errors={{}}
+      clients={[
+        { id: '1', name: 'John', phone: '9 9999 9898' },
+        { id: '2', name: 'Mary', phone: '9 1111 2222' },
+      ]}
+      professionals={[
+        { id: '1', name: 'Pro1' },
+        { id: '2', name: 'Pro2' },
+      ]}
+      paymentOptions={[
+        'Money', 'Debit', '1x', '2x', '3x',
+      ]}
+    />))
+  .add('with two product fields', () =>
+    (<SalesAddComponent
+      handleSubmit={dummyFn}
+      handleChange={dummyFn}
+      removeField={dummyFn}
+      addField={dummyFn}
+      productsForSelect={[
+        { id: '1', name: 'Ox', measure_unit: 'ml' },
+        { id: '2', name: 'Shampoo', measure_unit: 'ml' },
+      ]}
+      values={{
+        products: [{}, {}],
+      }}
+      errors={{}}
+      clients={[
+        { id: '1', name: 'John', phone: '9 9999 9898' },
+        { id: '2', name: 'Mary', phone: '9 1111 2222' },
+      ]}
+      professionals={[
+        { id: '1', name: 'Pro1' },
+        { id: '2', name: 'Pro2' },
+      ]}
+      paymentOptions={[
+        'Money', 'Debit', '1x', '2x', '3x',
+      ]}
     />));
 
 storiesOf('Purchases/Add', module)
@@ -39,36 +78,36 @@ storiesOf('Purchases/Add', module)
   .add('with a empty product', () =>
     (<PurchasesAddComponent
       products={[
-        {
-          id: '1',
-          name: 'OX',
-          measure_unit: 'ml',
-          quantity: 850,
-          price: 0.09, // per unit
-          avgPriceFiveLast: 0.08, // per unit
-        },
-        {
-          id: '2',
-          name: 'Shampoo',
-          measure_unit: 'ml',
-          quantity: 1805,
-          price: 0.01,
-          avgPriceFiveLast: 0.02, // per unit
-        },
-        {
-          id: '3',
-          name: 'Capes',
-          measure_unit: 'unit',
-          quantity: 99,
-          price: 1,
-          avgPriceFiveLast: 1.2, // per unit
-        },
-      ]}
+          {
+            id: '1',
+            name: 'OX',
+            measure_unit: 'ml',
+            quantity: 850,
+            price: 0.09, // per unit
+            avgPriceFiveLast: 0.08, // per unit
+          },
+          {
+            id: '2',
+            name: 'Shampoo',
+            measure_unit: 'ml',
+            quantity: 1805,
+            price: 0.01,
+            avgPriceFiveLast: 0.02, // per unit
+          },
+          {
+            id: '3',
+            name: 'Capes',
+            measure_unit: 'unit',
+            quantity: 99,
+            price: 1,
+            avgPriceFiveLast: 1.2, // per unit
+          },
+        ]}
       handleSubmit={dummyFn}
       handleChange={dummyFn}
       values={{
-        products: [{}, {}],
-      }}
+          products: [{}, {}],
+        }}
       errors={{}}
     />));
 

@@ -1,104 +1,202 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Field, reduxForm, FieldArray } from 'redux-form';
+import { Container, Row, Col, Form, Button } from 'reactstrap';
+import Input from '../../renderField';
 
 // eslint-disable-next-line
-const ProductsFields = ({ fields, productsForSelect }) => (
-  <div>
-    <button
-      type="button"
-      name="add-product"
-      onClick={() => fields.push({})}
-    >
-      Add Product
-    </button>
-    <ul>
-      {fields.map((product, index) => (
-        // eslint-disable-next-line
-        <li key={index}>
-          <button
-            type="button"
-            className="remove-product"
-            onClick={() => fields.remove(index)}
-          >
-            Remove product
-          </button>
-          <Field type="text" name={`${product}.product`} component="select">
-            <option>Select one</option>
-            {
-              productsForSelect.map(item => (
-                <option key={item.id} value={item.id}>{item.name}</option>
-              ))
-            }
-          </Field>
-          <Field component="input" type="number" name={`${product}.qty`} />
-        </li>
-      ))}
-    </ul>
-  </div>
+const ProductsFields = ({ values, productsForSelect, addField, removeField, handleChange }) => (
+  <Container>
+    <Row>
+      <Col>
+        <Button
+          type="button"
+          name="add-product"
+          onClick={addField}
+          block
+        >
+          Add Product
+        </Button>
+      </Col>
+    </Row>
+    <Row>
+      <Container>
+        {values.map((value, index) => (
+          // eslint-disable-next-line
+          <Row key={index}>
+            <div className="col-md-4">
+              <Input type="select" name="product" onChange={handleChange} >
+                <option>Select one</option>
+                {
+                  productsForSelect.map(item => (
+                    <option key={item.id} value={item.id}>{item.name}</option>
+                  ))
+                }
+              </Input>
+            </div>
+            <div className="col-md-4">
+              <Input component="input" type="number" name="qty" onChange={handleChange} />
+            </div>
+            <div className="col-md-4">
+              <Button
+                type="button"
+                className="remove-product"
+                onClick={removeField('products', index)}
+              >
+                Remove product
+              </Button>
+            </div>
+          </Row>
+        ))}
+      </Container>
+    </Row>
+  </Container>
 );
 ProductsFields.defaultProps = {
   productsForSelect: [],
+  values: [],
 };
 
 const Add = ({
-  handleSubmit, paymentOptions, clients, professionals, productsForSelect,
+  handleSubmit,
+  handleChange,
+  paymentOptions,
+  clients,
+  professionals,
+  productsForSelect,
+  values,
+  addField,
+  removeField,
 }) => (
-  <form onSubmit={handleSubmit}>
-    <Field
-      component="input"
-      type="text"
-      name="name"
-      placeholder="Name of the service"
-    />
+  <Container>
+    <Row>
+      <Col>
+        <Form onSubmit={handleSubmit}>
+          <Input
+            onChange={handleChange}
+            type="text"
+            name="name"
+            label="Service Name"
+            placeholder="Name of the service"
+          />
 
-    <Field
-      component="input"
-      type="number"
-      name="value"
-      placeholder="Value"
-    />
+          <Row>
+            <div className="col-md-6">
+              <Input
+                onChange={handleChange}
+                type="number"
+                name="value"
+                label="Price Charged"
+                placeholder="Value"
+              />
+            </div>
 
-    <Field type="text" name="payment_method" component="select">
-      <option>Select one</option>
-      {
-        paymentOptions.map(option => (
-          <option key={option} value={option}>{option}</option>
-        ))
-      }
-    </Field>
+            <div className="col-md-6">
+              <Input
+                type="select"
+                name="payment_method"
+                label="Payment Method"
+                onChange={handleChange}
+              >
+                <option>Select one</option>
+                {
+                paymentOptions.map(option => (
+                  <option key={option} value={option}>{option}</option>
+                ))
+              }
+              </Input>
+            </div>
+          </Row>
 
-    <Field component="input" type="date" name="date" />
-    <Field component="input" type="time" name="start_time" />
-    <Field component="input" type="time" name="end_time" />
+          <Row>
+            <div className="col-md-4">
+              <Input
+                component="input"
+                type="date"
+                name="date"
+                label="Date"
+                onChange={handleChange}
+              />
+            </div>
+            <div className="col-md-4">
+              <Input
+                component="input"
+                type="time"
+                name="start_time"
+                label="Start Time"
+                onChange={handleChange}
+              />
+            </div>
+            <div className="col-md-4">
+              <Input
+                component="input"
+                type="time"
+                name="end_time"
+                label="End Time"
+                onChange={handleChange}
+              />
+            </div>
+          </Row>
 
-    <Field type="text" name="client" component="select">
-      <option>Select one</option>
-      {
-        clients.map(option => (
-          <option key={option.id} value={option.id}>{option.name}</option>
-        ))
-      }
-    </Field>
 
+          <Row>
+            <div className="col-md-6">
+              <Input
+                type="select"
+                name="id"
+                value={values.client}
+                label="Select Client"
+                onChange={handleChange}
+              >
+                <option>Pick a Client</option>
+                {
+                clients.map(option => (
+                  <option key={option.id} value={option.id}>{option.name}</option>
+                ))
+              }
+              </Input>
+            </div>
+            <div className="col-md-6">
+              <Input
+                type="select"
+                name="id"
+                value={values.professonal}
+                label="Select Professional"
+                onChange={handleChange}
+              >
+                <option>Pick A Professional</option>
+                {
+                professionals.map(option => (
+                  <option key={option.id} value={option.id}>{option.name}</option>
+                ))
+              }
+              </Input>
+            </div>
+          </Row>
 
-    <Field type="text" name="professional" component="select">
-      <option>Select one</option>
-      {
-        professionals.map(option => (
-          <option key={option.id} value={option.id}>{option.name}</option>
-        ))
-      }
-    </Field>
+          <ProductsFields
+            addField={addField}
+            removeField={removeField}
+            handleChange={handleChange}
+            values={values.products}
+            productsForSelect={productsForSelect}
+          />
 
-    <FieldArray name="products" component={ProductsFields} productsForSelect={productsForSelect} />
-
-    <button type="submit">Save</button>
-  </form>
+          <Button color="primary" block type="submit">Save Sale</Button>
+        </Form>
+      </Col>
+    </Row>
+  </Container>
 );
+
+// const temp = () => (
+//   <FieldArray name="products" component={ProductsFields} productsForSelect={productsForSelect} />
+// );
 
 Add.propTypes = {
   handleSubmit: PropTypes.func.isRequired,
+  handleChange: PropTypes.func.isRequired,
+  addField: PropTypes.func.isRequired,
+  removeField: PropTypes.func.isRequired,
   paymentOptions: PropTypes.arrayOf(PropTypes.string).isRequired,
   clients: PropTypes.arrayOf(PropTypes.shape({
     id: PropTypes.string.isRequired,
@@ -108,13 +206,18 @@ Add.propTypes = {
     id: PropTypes.string.isRequired,
     name: PropTypes.string.isRequired,
   })).isRequired,
+  values: PropTypes.objectOf(PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.number,
+    PropTypes.arrayOf(PropTypes.objectOf(PropTypes.oneOfType([
+      PropTypes.string,
+      PropTypes.number,
+    ]))),
+  ])).isRequired,
   productsForSelect: PropTypes.arrayOf(PropTypes.shape({
     id: PropTypes.string.isRequired,
     name: PropTypes.string.isRequired,
   })).isRequired,
 };
 
-export default reduxForm({
-  form: 'sales add',
-})(Add);
-
+export default Add;
