@@ -12,9 +12,21 @@ import ProductsAddComponent from '../src/products/Components/Add';
 import ProfessionalsAddComponent from '../src/professionals/Components/Add';
 import ProfessionalsViewComponent from '../src/professionals/Components/View';
 import PurchasesAddComponent from '../src/purchases/Components/Add';
+import PurchasesViewComponent from '../src/purchases/Components/View';
+import PurchasesViewOneComponent from '../src/purchases/Components/ViewOne';
+import SalesAddComponent from '../src/sales/Components/Add';
 import NavBar from '../src/NavBar';
 
 const dummyFn = () => {};
+
+storiesOf('Sales/Add', module)
+  .add('clean state', () =>
+    (<SalesAddComponent
+      handleSubmit={dummyFn}
+      handleChange={dummyFn}
+      values={{}}
+      errors={{}}
+    />));
 
 storiesOf('Purchases/Add', module)
   .add('clean state', () =>
@@ -59,6 +71,50 @@ storiesOf('Purchases/Add', module)
       }}
       errors={{}}
     />));
+
+const purchaseEx = {
+  stockEntries: [
+    {
+      id: '1', product: { id: '1', name: 'Product 1' }, qty: 2, price: 20,
+    },
+    {
+      id: '2', product: { id: '2', name: 'Product 2' }, qty: 2, price: 20,
+    },
+  ],
+  seller: 'Company one',
+  date: '2017-10-10T00:00:00.000Z',
+  id: '1',
+  price: '90',
+};
+
+const purchaseEx2 = {
+  stockEntries: [
+    {
+      id: '1', product: { id: '1', name: 'Product 1' }, qty: 2, price: 20,
+    },
+    {
+      id: '2', product: { id: '2', name: 'Product 2' }, qty: 2, price: 20,
+    },
+  ],
+  seller: 'Company Two',
+  date: '2017-10-10T00:00:00.000Z',
+  id: '2',
+  price: '70',
+};
+
+storiesOf('Purchases/View', module)
+  .addDecorator(story => (
+    <Router>
+      {story()}
+    </Router>
+  ))
+  .add('clean state', () => <PurchasesViewComponent purchases={[]} />)
+  .add('with a purchase to list', () =>
+    (<PurchasesViewComponent purchases={[purchaseEx, purchaseEx2]} />));
+
+storiesOf('Purchases/ViewOne', module)
+  .add('empyt data', () => <PurchasesViewOneComponent />)
+  .add('with a purchase', () => <PurchasesViewOneComponent purchase={purchaseEx} />);
 
 storiesOf('Professionals/Add', module)
   .add('clean state', () =>
