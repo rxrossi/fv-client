@@ -7,16 +7,6 @@ import Input from '../../renderField';
 const ProductsFields = ({ values, productsForSelect, addField, removeField, handleChange }) => (
   <Container>
     <Row>
-      <Button
-        type="button"
-        className="add-product"
-        onClick={addField}
-        block
-      >
-        Add Product
-      </Button>
-    </Row>
-    <Row>
       <Col>
         {values.map((value, index) => (
           // eslint-disable-next-line
@@ -60,6 +50,7 @@ const ProductsFields = ({ values, productsForSelect, addField, removeField, hand
                 color="danger"
                 onClick={() => removeField('products', index)}
                 className="remove-product mt-4 pb-3"
+                block
               >
                 Remove
               </Button>
@@ -67,6 +58,16 @@ const ProductsFields = ({ values, productsForSelect, addField, removeField, hand
           </Row>
           ))}
       </Col>
+    </Row>
+    <Row>
+      <Button
+        type="button"
+        className="add-product my-2"
+        onClick={addField}
+        block
+      >
+        Add Product
+      </Button>
     </Row>
   </Container>
 );

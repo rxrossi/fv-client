@@ -7,18 +7,6 @@ const ProductsFields = ({
   values, products, handleChange, addField, removeField,
 }) => (
   <div>
-    <Row>
-      <Col>
-        <Button
-          type="button"
-          block
-          className="add-product"
-          onClick={addField}
-        >
-          Add a product
-        </Button>
-      </Col>
-    </Row>
     <Row className="text-center">
       <Col>
         { values && values.map((value, index) => (
@@ -78,6 +66,18 @@ const ProductsFields = ({
             </Col>
           </Row>
         ))}
+      </Col>
+    </Row>
+    <Row>
+      <Col>
+        <Button
+          type="button"
+          block
+          className="add-product my-2"
+          onClick={addField}
+        >
+          Add a product
+        </Button>
       </Col>
     </Row>
 
