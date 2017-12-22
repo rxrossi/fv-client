@@ -49,7 +49,6 @@ const ProductsFields = ({ values, productsForSelect, addField, removeField, hand
               <Button
                 type="button"
                 color="danger"
-                className="remove-product"
                 onClick={removeField('products', index)}
                 className="remove-product mt-4 pb-3"
               >
