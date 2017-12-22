@@ -25,6 +25,7 @@ const ProductsFields = ({ values, productsForSelect, addField, removeField, hand
               <Input
                 type="select"
                 name="product"
+                value={value.product}
                 path={['products', index]}
                 onChange={handleChange}
                 label="Product"
@@ -42,7 +43,13 @@ const ProductsFields = ({ values, productsForSelect, addField, removeField, hand
                 component="input"
                 type="number"
                 name="qty"
-                label="Quantity"
+                value={value.qty}
+                label={`Quantity ${
+                    (value.product &&
+                    productsForSelect &&
+                    productsForSelect.find(x => x.id === value.product) &&
+                    productsForSelect.find(x => x.id === value.product).measure_unit) || ''
+                }`}
                 path={['products', index]}
                 onChange={handleChange}
               />
@@ -89,12 +96,14 @@ const Add = ({
             name="name"
             label="Service Name"
             placeholder="Name of the service"
+            value={values.name}
           />
 
           <Row>
             <div className="col-md-6">
               <Input
                 onChange={handleChange}
+                value={values.value}
                 type="number"
                 name="value"
                 label="Price Charged"
@@ -105,6 +114,7 @@ const Add = ({
             <div className="col-md-6">
               <Input
                 type="select"
+                value={values.payment_method}
                 name="payment_method"
                 label="Payment Method"
                 onChange={handleChange}
@@ -125,6 +135,7 @@ const Add = ({
                 component="input"
                 type="date"
                 name="date"
+                value={values.date}
                 label="Date"
                 onChange={handleChange}
               />
@@ -133,6 +144,7 @@ const Add = ({
               <Input
                 component="input"
                 type="time"
+                value={values.start_time}
                 name="start_time"
                 label="Start Time"
                 onChange={handleChange}
@@ -143,6 +155,7 @@ const Add = ({
                 component="input"
                 type="time"
                 name="end_time"
+                value={values.end_time}
                 label="End Time"
                 onChange={handleChange}
               />
@@ -171,7 +184,7 @@ const Add = ({
               <Input
                 type="select"
                 name="professional"
-                value={values.professonal}
+                value={values.professional}
                 label="Select Professional"
                 onChange={handleChange}
               >
