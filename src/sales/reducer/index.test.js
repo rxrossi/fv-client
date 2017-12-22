@@ -181,7 +181,7 @@ describe('Sales Reducer', () => {
       };
 
       // Act
-      const actual = reducer(previousState, actions.clearAddErrors());
+      const actual = reducer(previousState, actions.clearAddForm());
 
       // Assert
       const expected = {

@@ -9,7 +9,7 @@ const ProductsFields = ({ values, productsForSelect, addField, removeField, hand
     <Row>
       <Button
         type="button"
-        name="add-product"
+        className="add-product"
         onClick={addField}
         block
       >
@@ -25,6 +25,7 @@ const ProductsFields = ({ values, productsForSelect, addField, removeField, hand
               <Input
                 type="select"
                 name="product"
+                path={['products', index]}
                 onChange={handleChange}
                 label="Product"
               >
@@ -42,6 +43,7 @@ const ProductsFields = ({ values, productsForSelect, addField, removeField, hand
                 type="number"
                 name="qty"
                 label="Quantity"
+                path={['products', index]}
                 onChange={handleChange}
               />
             </div>
@@ -49,7 +51,7 @@ const ProductsFields = ({ values, productsForSelect, addField, removeField, hand
               <Button
                 type="button"
                 color="danger"
-                onClick={removeField('products', index)}
+                onClick={() => removeField('products', index)}
                 className="remove-product mt-4 pb-3"
               >
                 Remove

@@ -5,7 +5,7 @@ import AddComponent from '../Components/Add';
 import { fetchProducts } from '../../products/actions';
 import { fetchClients } from '../../clients/actions';
 import { fetchProfessionals } from '../../professionals/actions';
-import { addSale } from '../../sales/actions';
+import { addSale, changeField, appendToArrayOfFields, removeFromArrayOfFields, clearAddForm } from '../../sales/actions';
 
 const paymentOptions = [
   'Money',
@@ -19,16 +19,29 @@ class Add extends React.Component {
   constructor(props) {
     super(props);
     this.submit = this.submit.bind(this);
+    this.handleChange = this.handleChange.bind(this);
+    this.addProductsField = this.addProductsField.bind(this);
   }
 
   componentDidMount() {
+    this.props.clearAddForm();
     this.props.fetchProducts();
     this.props.fetchClients();
     this.props.fetchProfessionals();
   }
 
-  submit(values) {
-    this.props.addSale(values);
+  handleChange(field, path) {
+    return ({ target: { value } }) => {
+      this.props.changeField([...path, field], value);
+    };
+  }
+
+  addProductsField() {
+    this.props.addField('products', {});
+  }
+
+  submit() {
+    this.props.addSale(this.props.values);
     const firstInput = document.querySelector('input');
     if (firstInput) {
       firstInput.focus();
@@ -37,13 +50,16 @@ class Add extends React.Component {
 
   render() {
     return (<AddComponent
-      onSubmit={this.submit}
+      handleSubmit={this.submit}
+      handleChange={this.handleChange}
       values={this.props.values}
       errors={this.props.addErrors}
       paymentOptions={this.props.paymentOptions}
       clients={this.props.clients}
       professionals={this.props.professionals}
       productsForSelect={this.props.productsForSelect}
+      addField={this.addProductsField}
+      removeField={this.props.removeField}
     />);
   }
 }
@@ -64,6 +80,10 @@ Add.propTypes = {
   fetchClients: PropTypes.func.isRequired,
   fetchProducts: PropTypes.func.isRequired,
   fetchProfessionals: PropTypes.func.isRequired,
+  changeField: PropTypes.func.isRequired,
+  addField: PropTypes.func.isRequired,
+  removeField: PropTypes.func.isRequired,
+  clearAddForm: PropTypes.func.isRequired,
   addSale: PropTypes.func.isRequired,
   values: PropTypes.objectOf(PropTypes.oneOfType([
     PropTypes.string,
@@ -92,6 +112,10 @@ const mapDispatch = {
   fetchClients,
   fetchProfessionals,
   addSale,
+  removeField: removeFromArrayOfFields,
+  addField: appendToArrayOfFields,
+  changeField,
+  clearAddForm,
 };
 
 export default connect(mapState, mapDispatch)(Add);

@@ -94,20 +94,20 @@ const professionals = [
   },
 ];
 
-const expectedPostData = {
-  client: clients[0].id,
-  name: 'service one',
-  value: '300',
-  payment: 'money',
-  date: '10 10 2017',
-  start_time: '10:00',
-  end_time: '16:00',
-  professional: professionals[0].id,
-  products: [
-    { id: '1', qty: 10 },
-    { id: '2', qty: 20 },
-  ],
-};
+// const expectedPostData = {
+//   client: clients[0].id,
+//   name: 'service one',
+//   value: '300',
+//   payment: 'money',
+//   date: '10 10 2017',
+//   start_time: '10:00',
+//   end_time: '16:00',
+//   professional: professionals[0].id,
+//   products: [
+//     { id: '1', qty: 10 },
+//     { id: '2', qty: 20 },
+//   ],
+// };
 
 const sale1 = {
   id: 's1',
@@ -229,7 +229,7 @@ describe('Sales page', () => {
     setImmediate(() => done());
   });
 
-  it.only('renders a form', () => {
+  it('renders a form', () => {
     expect(sut.find('form').length).toBe(1);
   });
 
@@ -332,13 +332,61 @@ describe('Sales page', () => {
   });
 
   describe('Using the form on Success', () => {
+    const expectedPostData = {
+      name: 'service one',
+      client: clients[0].id,
+      professional: professionals[0].id,
+      date: '10 10 2017',
+      start_time: '10:00',
+      end_time: '16:00',
+      payment_method: 'Money',
+      value: '300',
+      products: [
+        { product: '1', qty: 10 },
+        { product: '2', qty: 20 },
+      ],
+    };
+
     beforeEach((done) => {
-      sut.update();
+      const addProductBtn = sut.find('button.add-product');
+
+      // Change Regular Fields
+      const regularFiels = {
+        name: expectedPostData.name,
+        value: expectedPostData.value,
+        payment_method: expectedPostData.payment_method,
+        date: expectedPostData.date,
+        start_time: expectedPostData.start_time,
+        end_time: expectedPostData.end_time,
+        client: expectedPostData.client,
+        professional: expectedPostData.professional,
+      };
+      changeFields(sut, regularFiels);
+
+      addProductBtn.simulate('click');
+
+      const firtRowOfProductsFields = {
+        product: expectedPostData.products[0].product,
+        qty: expectedPostData.products[0].qty,
+      };
+      const firstRow = sut.find('div.product-row');
+      changeFields(firstRow, firtRowOfProductsFields);
+
+      addProductBtn.simulate('click');
+      const secondRowOfProductsFields = {
+        product: expectedPostData.products[1].product,
+        qty: expectedPostData.products[1].qty,
+      };
+      const secondRow = sut.find('div.product-row').at(1);
+      changeFields(secondRow, secondRowOfProductsFields);
+
       sut.find('form').simulate('submit');
       setImmediate(() => done());
     });
 
     it('calls fetchMock on submit', () => {
+      const valuesProps = sut.find('Add').at(1).props().values;
+      expect(valuesProps).toEqual(expectedPostData);
       const mockPostPurchase = fetchMock.calls('post_sales');
       expect(mockPostPurchase.length).toBe(1);
     });

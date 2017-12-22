@@ -2,7 +2,6 @@ import React from 'react';
 import Adapter from 'enzyme-adapter-react-16';
 import { configure, mount } from 'enzyme';
 import Add from './Add';
-import { changeFields } from '../../test_helpers';
 // Configure Enzyme
 configure({ adapter: new Adapter() });
 
@@ -99,21 +98,6 @@ const paymentOptions = [
   'Credit 3x',
 ];
 
-const expectedPostData = {
-  name: 'service one',
-  client: clients[0].id,
-  professional: professionals[0].id,
-  date: '10 10 2017',
-  start_time: '10:00',
-  end_time: '16:00',
-  payment_method: 'Money',
-  value: '300',
-  products: [
-    { product: '1', qty: 10 },
-    { product: '2', qty: 20 },
-  ],
-};
-
 function mountComponent() {
   const App = () => (
     <Add
@@ -140,29 +124,5 @@ describe('Sales Add Component', () => {
   it('has a submit button', () => {
     const sut = mountComponent();
     expect(sut.find('button[type="submit"]').length).toBe(1);
-  });
-
-  it('Filling and submiting', () => {
-    // Prepare
-    const fakeSubmit = jest.fn();
-    const sut = mountComponent(fakeSubmit);
-
-    const addProductBtn = sut.find('button[name="add-product"]');
-    expect(addProductBtn.length).toBe(1);
-
-    // fill the form
-    // regular inputs
-
-    const regularFiels = {
-      name: expectedPostData.name,
-      value: expectedPostData.value,
-      payment_method: expectedPostData.payment_method,
-      date: expectedPostData.date,
-      start_time: expectedPostData.start_time,
-      end_time: expectedPostData.end_time,
-      client: expectedPostData.client,
-      professional: expectedPostData.professional,
-    };
-    changeFields(sut, regularFiels);
   });
 });

@@ -42,8 +42,8 @@ export const addError = errors => ({
   errors,
 });
 
-export const clearAddErrors = () => ({
-  type: types.CLEAR_ADD_ERROR,
+export const clearAddForm = () => ({
+  type: types.CLEAR_ADD_FORM,
 });
 
 const jsonHeader = {
