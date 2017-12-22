@@ -52,7 +52,7 @@ const ProductsFields = ({ values, productsForSelect, addField, removeField, hand
                 onClick={removeField('products', index)}
                 className="remove-product mt-4 pb-3"
               >
-                Remove product
+                Remove
               </Button>
             </div>
           </Row>
