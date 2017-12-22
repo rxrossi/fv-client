@@ -10,7 +10,7 @@ const EntryRow = ({ entry }) => (
   </tr>
 );
 EntryRow.propTypes = {
-  entry: PropTypes.arrayOf(PropTypes.shape({
+  entry: PropTypes.shape({
     id: PropTypes.string.isRequired,
     product: PropTypes.shape({
       id: PropTypes.string.isRequired,
@@ -18,7 +18,7 @@ EntryRow.propTypes = {
     }),
     qty: PropTypes.number.isRequired,
     price: PropTypes.number.isRequired,
-  })).isRequired,
+  }).isRequired,
 };
 
 const ViewOne = ({ purchase }) => {
