@@ -57,9 +57,11 @@ const ViewOne = ({ purchase }) => {
         <Col>
           <Table>
             <thead>
-              <th>Product Name</th>
-              <th>Quantity</th>
-              <th>Value</th>
+              <tr>
+                <th>Product Name</th>
+                <th>Quantity</th>
+                <th>Value</th>
+              </tr>
             </thead>
             <tbody>
               { purchase.stockEntries.map(entry =>
