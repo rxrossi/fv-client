@@ -7,24 +7,27 @@ import Input from '../../renderField';
 const ProductsFields = ({ values, productsForSelect, addField, removeField, handleChange }) => (
   <Container>
     <Row>
-      <Col>
-        <Button
-          type="button"
-          name="add-product"
-          onClick={addField}
-          block
-        >
-          Add Product
-        </Button>
-      </Col>
+      <Button
+        type="button"
+        name="add-product"
+        onClick={addField}
+        block
+      >
+        Add Product
+      </Button>
     </Row>
     <Row>
-      <Container>
+      <Col>
         {values.map((value, index) => (
           // eslint-disable-next-line
-          <Row key={index}>
-            <div className="col-md-4">
-              <Input type="select" name="product" onChange={handleChange} >
+          <Row key={index} className="my-2 p-2 bg-light mx-1 product-row">
+            <div className="col-md-6">
+              <Input
+                type="select"
+                name="product"
+                onChange={handleChange}
+                label="Product"
+              >
                 <option>Select one</option>
                 {
                   productsForSelect.map(item => (
@@ -34,20 +37,28 @@ const ProductsFields = ({ values, productsForSelect, addField, removeField, hand
               </Input>
             </div>
             <div className="col-md-4">
-              <Input component="input" type="number" name="qty" onChange={handleChange} />
+              <Input
+                component="input"
+                type="number"
+                name="qty"
+                label="Quantity"
+                onChange={handleChange}
+              />
             </div>
-            <div className="col-md-4">
+            <div className="col-md-2">
               <Button
                 type="button"
+                color="danger"
                 className="remove-product"
                 onClick={removeField('products', index)}
+                className="remove-product mt-4 pb-3"
               >
                 Remove product
               </Button>
             </div>
           </Row>
-        ))}
-      </Container>
+          ))}
+      </Col>
     </Row>
   </Container>
 );
@@ -99,10 +110,10 @@ const Add = ({
               >
                 <option>Select one</option>
                 {
-                paymentOptions.map(option => (
-                  <option key={option} value={option}>{option}</option>
-                ))
-              }
+                        paymentOptions.map(option => (
+                          <option key={option} value={option}>{option}</option>
+                        ))
+                      }
               </Input>
             </div>
           </Row>
@@ -142,33 +153,33 @@ const Add = ({
             <div className="col-md-6">
               <Input
                 type="select"
-                name="id"
+                name="client"
                 value={values.client}
                 label="Select Client"
                 onChange={handleChange}
               >
                 <option>Pick a Client</option>
                 {
-                clients.map(option => (
-                  <option key={option.id} value={option.id}>{option.name}</option>
-                ))
-              }
+                        clients.map(option => (
+                          <option key={option.id} value={option.id}>{option.name}</option>
+                        ))
+                      }
               </Input>
             </div>
             <div className="col-md-6">
               <Input
                 type="select"
-                name="id"
+                name="professional"
                 value={values.professonal}
                 label="Select Professional"
                 onChange={handleChange}
               >
                 <option>Pick A Professional</option>
                 {
-                professionals.map(option => (
-                  <option key={option.id} value={option.id}>{option.name}</option>
-                ))
-              }
+                        professionals.map(option => (
+                          <option key={option.id} value={option.id}>{option.name}</option>
+                        ))
+                      }
               </Input>
             </div>
           </Row>

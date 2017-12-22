@@ -62,3 +62,21 @@ export const addSale = data => (dispatch) => {
     })
     .catch(err => dispatch(addError(err)));
 };
+
+export const changeField = (path, value) => ({
+  type: types.CHANGE_FIELD,
+  path,
+  value,
+});
+
+export const appendToArrayOfFields = (path, value) => ({
+  type: types.APPEND_FIELD,
+  path,
+  value,
+});
+
+export const removeFromArrayOfFields = (path, index) => ({
+  type: types.REMOVE_FIELD,
+  path,
+  index,
+});

@@ -6,3 +6,8 @@ export const ADD_REQUEST = '@sales/ADD_REQUEST';
 export const ADD_SUCCESS = '@sales/ADD_SUCCESS';
 export const ADD_ERROR = '@sales/ADD_ERROR';
 export const CLEAR_ADD_ERROR = '@sales/CLEAR_ADD_ERROR';
+
+export const CLEAR_ADD_FORM = '@sales/CLEAR_ADD_FORM';
+export const CHANGE_FIELD = '@sales/CHANGE_FIELD';
+export const APPEND_FIELD = '@sales/APPEND_FIELD';
+export const REMOVE_FIELD = '@sales/REMOVE_FIELD';

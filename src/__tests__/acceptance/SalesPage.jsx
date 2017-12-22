@@ -157,6 +157,7 @@ const sales = [sale1, sale2];
 
 const BLANK = 'BLANK';
 const NOT_POSITIVE = 'NOT_POSITIVE';
+
 const exampleOfPostErrorResponse = {
   name: BLANK,
   client: BLANK,
@@ -228,7 +229,7 @@ describe('Sales page', () => {
     setImmediate(() => done());
   });
 
-  it('renders a form', () => {
+  it.only('renders a form', () => {
     expect(sut.find('form').length).toBe(1);
   });
 

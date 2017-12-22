@@ -1,10 +1,8 @@
 import React from 'react';
 import Adapter from 'enzyme-adapter-react-16';
-import { Provider } from 'react-redux';
-import { createStore, combineReducers } from 'redux';
-import { reducer as formReducer } from 'redux-form';
 import { configure, mount } from 'enzyme';
 import Add from './Add';
+import { changeFields } from '../../test_helpers';
 // Configure Enzyme
 configure({ adapter: new Adapter() });
 
@@ -108,7 +106,7 @@ const expectedPostData = {
   date: '10 10 2017',
   start_time: '10:00',
   end_time: '16:00',
-  payment_method: 'money',
+  payment_method: 'Money',
   value: '300',
   products: [
     { product: '1', qty: 10 },
@@ -116,44 +114,22 @@ const expectedPostData = {
   ],
 };
 
-function mountComponent(submitFn = () => {}) {
-  const reducer = combineReducers({
-    form: formReducer,
-  });
-  const store = createStore(reducer);
-
+function mountComponent() {
   const App = () => (
-    <Provider store={store}>
-      <Add
-        onSubmit={submitFn}
-        paymentOptions={paymentOptions}
-        clients={clients}
-        professionals={professionals}
-        productsForSelect={products}
-      />
-    </Provider>
+    <Add
+      clients={clients}
+      productsForSelect={products}
+      professionals={professionals}
+      handleChange={() => {}}
+      handleSubmit={() => {}}
+      paymentOptions={paymentOptions}
+      values={{}}
+      errors={{}}
+      addField={() => {}}
+      removeField={() => {}}
+    />
   );
-
-  const sut = mount(<App />);
-
-  const inpts = {};
-  inpts.name = sut.find('input[name="name"]');
-  inpts.client = sut.find('select[name="client"]');
-  inpts.professional = sut.find('select[name="professional"]');
-  inpts.payment_method = sut.find('select[name="payment_method"]');
-  inpts.value = sut.find('input[name="value"]');
-  inpts.date = sut.find('input[name="date"]');
-  inpts.startTime = sut.find('input[name="start_time"]');
-  inpts.endTime = sut.find('input[name="end_time"]');
-
-  return {
-    sut,
-    inpts,
-  };
-}
-
-function changeInpt(inpt, value) {
-  inpt.simulate('change', { target: { value } });
+  return mount(<App />);
 }
 
 describe('Sales Add Component', () => {
@@ -162,55 +138,31 @@ describe('Sales Add Component', () => {
   });
 
   it('has a submit button', () => {
-    const { sut } = mountComponent();
+    const sut = mountComponent();
     expect(sut.find('button[type="submit"]').length).toBe(1);
   });
 
   it('Filling and submiting', () => {
     // Prepare
     const fakeSubmit = jest.fn();
-    const { sut, inpts } = mountComponent(fakeSubmit);
+    const sut = mountComponent(fakeSubmit);
 
     const addProductBtn = sut.find('button[name="add-product"]');
     expect(addProductBtn.length).toBe(1);
 
     // fill the form
     // regular inputs
-    changeInpt(inpts.name, expectedPostData.name);
-    changeInpt(inpts.value, expectedPostData.value);
-    changeInpt(inpts.payment_method, expectedPostData.payment_method);
-    changeInpt(inpts.date, expectedPostData.date);
-    changeInpt(inpts.startTime, expectedPostData.start_time);
-    changeInpt(inpts.endTime, expectedPostData.end_time);
-    changeInpt(inpts.client, expectedPostData.client);
-    changeInpt(inpts.professional, expectedPostData.professional);
 
-    // products fields
-    addProductBtn.simulate('click');
-    addProductBtn.simulate('click');
-
-    const groupOfFields = sut.find('li').at(0);
-    const nameSelect = groupOfFields.find('select');
-    const qtyInput = groupOfFields.find('input[name="products[0].qty"]');
-
-    const groupOfFields2 = sut.find('li').at(1);
-    const nameSelect2 = groupOfFields2.find('select');
-    const qtyInput2 = groupOfFields2.find('input[name="products[1].qty"]');
-
-    // First product
-    changeInpt(nameSelect, expectedPostData.products[0].product);
-    changeInpt(qtyInput, expectedPostData.products[0].qty);
-
-    // Second product
-    changeInpt(nameSelect2, expectedPostData.products[1].product);
-    changeInpt(qtyInput2, expectedPostData.products[1].qty);
-
-    // Act
-    sut.simulate('submit');
-
-    // Assert
-    expect(fakeSubmit.mock.calls.length).toBe(1);
-    const submitValues = fakeSubmit.mock.calls[0][0];
-    expect(submitValues).toEqual(expectedPostData);
+    const regularFiels = {
+      name: expectedPostData.name,
+      value: expectedPostData.value,
+      payment_method: expectedPostData.payment_method,
+      date: expectedPostData.date,
+      start_time: expectedPostData.start_time,
+      end_time: expectedPostData.end_time,
+      client: expectedPostData.client,
+      professional: expectedPostData.professional,
+    };
+    changeFields(sut, regularFiels);
   });
 });

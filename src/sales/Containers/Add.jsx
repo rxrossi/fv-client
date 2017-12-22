@@ -38,6 +38,7 @@ class Add extends React.Component {
   render() {
     return (<AddComponent
       onSubmit={this.submit}
+      values={this.props.values}
       errors={this.props.addErrors}
       paymentOptions={this.props.paymentOptions}
       clients={this.props.clients}
@@ -64,6 +65,14 @@ Add.propTypes = {
   fetchProducts: PropTypes.func.isRequired,
   fetchProfessionals: PropTypes.func.isRequired,
   addSale: PropTypes.func.isRequired,
+  values: PropTypes.objectOf(PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.number,
+    PropTypes.arrayOf(PropTypes.objectOf(PropTypes.oneOfType([
+      PropTypes.string,
+      PropTypes.number,
+    ]))),
+  ])).isRequired,
   /*eslint-disable*/
   addErrors: PropTypes.objectOf(PropTypes.oneOfType([PropTypes.string, PropTypes.array])).isRequired,
   /* eslint-enable */
@@ -74,6 +83,7 @@ const mapState = state => ({
   clients: state.clients.list,
   professionals: state.professionals.list,
   addErrors: state.sales.addErrors,
+  values: state.sales.fields,
   paymentOptions,
 });
 

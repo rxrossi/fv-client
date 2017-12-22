@@ -31,6 +31,7 @@ describe('Sales Reducer', () => {
   const defaultState = {
     fetchError: undefined,
     addErrors: {},
+    fields: {},
     fetching: false,
     adding: false,
     list: [],
