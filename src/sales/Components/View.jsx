@@ -26,6 +26,7 @@ const Sale = ({ sale }) => {
         </Link>
       </th>
       <th>{sale.client.name}</th>
+      <th>{sale.professional.name}</th>
       <th>{dateToPrint}</th>
       <th>{sale.profit}</th>
       <th>{timeSpent}</th>
@@ -33,7 +34,13 @@ const Sale = ({ sale }) => {
   );
 };
 Sale.propTypes = {
-  sale: PropTypes.objectOf(PropTypes.oneOfType([PropTypes.string, PropTypes.number])).isRequired,
+  sale: PropTypes.shape({
+    client: PropTypes.objectOf(PropTypes.oneOfType([PropTypes.string, PropTypes.number])),
+    professional: PropTypes.objectOf(PropTypes.oneOfType([PropTypes.string, PropTypes.number])),
+    stockEntries: PropTypes.arrayOf(PropTypes.shape({
+      product: PropTypes.objectOf(PropTypes.oneOfType([PropTypes.string, PropTypes.number])),
+    })),
+  }).isRequired,
 };
 
 
@@ -61,6 +68,7 @@ const View = ({ sales }) => {
           <tr>
             <th>Service Name</th>
             <th>Client</th>
+            <th>Professional</th>
             <th>Date</th>
             <th>Profit</th>
             <th>Time Spent</th>
@@ -78,6 +86,11 @@ View.propTypes = {
   sales: PropTypes.arrayOf(PropTypes.shape({
     id: PropTypes.string.isRequired,
     name: PropTypes.string.isRequired,
+    stockEntries: PropTypes.arrayOf(PropTypes.objectOf(PropTypes.oneOfType([
+      PropTypes.string,
+      PropTypes.number,
+      PropTypes.objectOf(PropTypes.oneOfType([PropTypes.string, PropTypes.number])),
+    ]))),
   })),
 };
 

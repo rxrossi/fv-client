@@ -11,7 +11,7 @@ const ViewOne = ({ sale }) => {
         <Row>
           <Col>
             <p className="text-info text-center">
-              This sale could not be found
+              The sale could not be found
             </p>
           </Col>
         </Row>
@@ -83,7 +83,7 @@ const ViewOne = ({ sale }) => {
                   {entry.qty}
                 </td>
                 <td>
-                  {entry.qty * entry.price_per_unit}
+                  {`${entry.qty * entry.price_per_unit}`}
                 </td>
               </tr>
             ))
