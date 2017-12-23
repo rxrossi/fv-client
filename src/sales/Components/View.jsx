@@ -43,7 +43,7 @@ const View = ({ sales }) => {
       <Container className="py-1">
         <Row>
           <Col>
-            <h2>Purchases list</h2>
+            <h2>Sales list</h2>
           </Col>
         </Row>
         <Row>

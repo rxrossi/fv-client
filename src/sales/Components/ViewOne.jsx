@@ -40,11 +40,11 @@ const ViewOne = ({ sale }) => {
             <th>Client name</th>
             <th>Value</th>
             <th>Profit</th>
+            <th>Payment type</th>
             <th>Date</th>
             <th>Start time</th>
             <th>End time</th>
-            <th>Total Time</th>
-            <th>Spent Time</th>
+            <th>Time spent</th>
             <th>Profit per hour</th>
           </tr>
         </thead>
@@ -58,7 +58,6 @@ const ViewOne = ({ sale }) => {
             <td>{sale.start_time}</td>
             <td>{sale.end_time}</td>
             <td>{timeSpent}</td>
-            <td>Spent Time</td>
             <td>Profit per hour</td>
           </tr>
         </tbody>

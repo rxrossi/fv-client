@@ -27,8 +27,8 @@ const Add = ({
           <Field
             type="select"
             name="measure_unit"
-            value={values.name}
-            error={errors.name}
+            value={values.measure_unit}
+            error={errors.measure_unit}
             onChange={handleChange}
             label="Measure Unit"
           >
