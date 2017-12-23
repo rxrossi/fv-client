@@ -15,6 +15,8 @@ import PurchasesAddComponent from '../src/purchases/Components/Add';
 import PurchasesViewComponent from '../src/purchases/Components/View';
 import PurchasesViewOneComponent from '../src/purchases/Components/ViewOne';
 import SalesAddComponent from '../src/sales/Components/Add';
+import SalesViewComponent from '../src/sales/Components/View';
+import SalesViewOneComponent from '../src/sales/Components/ViewOne';
 import NavBar from '../src/NavBar';
 
 const dummyFn = () => {};
@@ -65,6 +67,60 @@ storiesOf('Sales/Add', module)
       paymentOptions={[
         'Money', 'Debit', '1x', '2x', '3x',
       ]}
+    />));
+
+const sale1 = {
+  id: 's1',
+  name: 'service one',
+  client: {
+    id: 'c1',
+    name: 'Ana',
+  },
+  professional: {
+    id: 'p1',
+    name: 'ProOne',
+  },
+  date: '10 10 2017',
+  start_time: '10:00',
+  end_time: '16:00',
+  payment: {
+    value_total: 300,
+    value_liquid: 300,
+    discount: 'none',
+    method: 'money',
+    available_at: Date.now(),
+  },
+  stockEntries: [
+    { id: '1', qty: 10, product: { name: 'OX' } },
+    { id: '2', qty: 20, product: { name: 'Shampoo' } },
+  ],
+  profit: 200,
+};
+const sale2 = {
+  ...sale1,
+  name: 'service two',
+  id: 's2',
+  profit: 1000,
+  stockEntries: [],
+};
+
+const sales = [sale1, sale2];
+
+storiesOf('Sales/ViewOne', module)
+  .add('clean state', () => <SalesViewOneComponent />)
+  .add('with a valid sale', () => <SalesViewOneComponent sale={sale1} />)
+  .add('with a valid sale without products', () => <SalesViewOneComponent sale={sale2} />);
+
+storiesOf('Sales/View', module)
+  .addDecorator(story => (
+    <Router>
+      {story()}
+    </Router>
+  ))
+  .add('clean state', () => <SalesViewComponent />)
+  .add('with sales', () =>
+    (<SalesViewComponent
+      sales={sales}
     />));
 
 storiesOf('Purchases/Add', module)
