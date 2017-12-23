@@ -17,9 +17,13 @@ import PurchasesViewOneComponent from '../src/purchases/Components/ViewOne';
 import SalesAddComponent from '../src/sales/Components/Add';
 import SalesViewComponent from '../src/sales/Components/View';
 import SalesViewOneComponent from '../src/sales/Components/ViewOne';
+import DateTimePicker from '../src/DateTimePicker';
 import NavBar from '../src/NavBar';
 
 const dummyFn = () => {};
+
+storiesOf('DateTimePicker', module)
+  .add('clean state', () => <DateTimePicker />);
 
 storiesOf('Sales/Add', module)
   .add('clean state', () =>
