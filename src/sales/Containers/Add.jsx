@@ -40,7 +40,8 @@ class Add extends React.Component {
     this.props.addField('products', {});
   }
 
-  submit() {
+  submit(e) {
+    e.preventDefault();
     this.props.addSale(this.props.values);
     const firstInput = document.querySelector('input');
     if (firstInput) {
