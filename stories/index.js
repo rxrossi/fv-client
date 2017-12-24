@@ -1,6 +1,7 @@
 /* eslint-disable react/jsx-filename-extension */
 /* eslint-disable import/no-extraneous-dependencies */
 import 'bootstrap/dist/css/bootstrap.min.css';
+import 'font-awesome/css/font-awesome.min.css';
 import React from 'react';
 import { BrowserRouter as Router } from 'react-router-dom';
 import { storiesOf } from '@storybook/react';
@@ -18,10 +19,23 @@ import SalesAddComponent from '../src/sales/Components/Add';
 import SalesViewComponent from '../src/sales/Components/View';
 import SalesViewOneComponent from '../src/sales/Components/ViewOne';
 import Week from '../src/DateTimePicker/Components/Week';
-import Month from '../src/DateTimePicker/Containers/Month';
+import CalendarView from '../src/DateTimePicker/Containers/CalendarView';
+import TimePicker from '../src/DateTimePicker/Containers/TimePickView';
+import { FiveMinutesIntervals, HoursIntervals } from '../src/DateTimePicker/Containers/TimePickView';
 import NavBar from '../src/NavBar';
 
 const dummyFn = () => {};
+
+storiesOf('TimePicker/Index', module)
+  .add('14:30', () => <TimePicker h={14} m={30} />)
+  .add('01:05', () => <TimePicker h={1} m={5} />);
+
+storiesOf('TimePicker/FiveMinutesIntervals', module)
+  .add('clean', () => <FiveMinutesIntervals />);
+
+storiesOf('TimePicker/HoursIntervals', module)
+  .add('less than 12:00 h', () => <HoursIntervals pm={false} />)
+  .add('more than 12:00 h', () => <HoursIntervals pm />);
 
 storiesOf('DateTimePicker/Week Component', module)
   .add('First week of December 2017', () => {
@@ -37,8 +51,13 @@ storiesOf('DateTimePicker/Week Component', module)
 
     return <Week week={week} month={11} />;
   });
+
 storiesOf('DateTimePicker/Month Component', module)
-  .add('December 2017', () => <Month month={11} year={2017} />);
+  .add('December 2017', () => (
+    <div>
+      <CalendarView month={11} year={2017} pickingDay={false} />
+    </div>
+  ));
 
 storiesOf('Sales/Add', module)
   .add('clean state', () =>
@@ -68,24 +87,24 @@ storiesOf('Sales/Add', module)
       removeField={dummyFn}
       addField={dummyFn}
       productsForSelect={[
-        { id: '1', name: 'Ox', measure_unit: 'ml' },
-        { id: '2', name: 'Shampoo', measure_unit: 'ml' },
-      ]}
+          { id: '1', name: 'Ox', measure_unit: 'ml' },
+          { id: '2', name: 'Shampoo', measure_unit: 'ml' },
+        ]}
       values={{
-        products: [{}, {}],
-      }}
+          products: [{}, {}],
+        }}
       errors={{}}
       clients={[
-        { id: '1', name: 'John', phone: '9 9999 9898' },
-        { id: '2', name: 'Mary', phone: '9 1111 2222' },
-      ]}
+          { id: '1', name: 'John', phone: '9 9999 9898' },
+          { id: '2', name: 'Mary', phone: '9 1111 2222' },
+        ]}
       professionals={[
-        { id: '1', name: 'Pro1' },
-        { id: '2', name: 'Pro2' },
-      ]}
+          { id: '1', name: 'Pro1' },
+          { id: '2', name: 'Pro2' },
+        ]}
       paymentOptions={[
-        'Money', 'Debit', '1x', '2x', '3x',
-      ]}
+          'Money', 'Debit', '1x', '2x', '3x',
+        ]}
     />));
 
 const sale1 = {
@@ -169,14 +188,14 @@ storiesOf('Purchases/Add', module)
             price: 0.01,
             avgPriceFiveLast: 0.02, // per unit
           },
-          {
-            id: '3',
-            name: 'Capes',
-            measure_unit: 'unit',
-            quantity: 99,
-            price: 1,
-            avgPriceFiveLast: 1.2, // per unit
-          },
+            {
+              id: '3',
+              name: 'Capes',
+              measure_unit: 'unit',
+              quantity: 99,
+              price: 1,
+              avgPriceFiveLast: 1.2, // per unit
+            },
         ]}
       handleSubmit={dummyFn}
       handleChange={dummyFn}
@@ -319,14 +338,14 @@ storiesOf('Products/View', module)
           price_per_unit: 0.01,
           avgPriceFiveLast: 0.02, // per unit
         },
-        {
-          id: '3',
-          name: 'Capes',
-          measure_unit: 'unit',
-          quantity: 99,
-          price_per_unit: 1,
-          avgPriceFiveLast: 1.2, // per unit
-        },
+          {
+            id: '3',
+            name: 'Capes',
+            measure_unit: 'unit',
+            quantity: 99,
+            price_per_unit: 1,
+            avgPriceFiveLast: 1.2, // per unit
+          },
       ]}
     />));
 
@@ -403,17 +422,17 @@ storiesOf('Products/View One', module)
             price_per_unit: '5',
             date: '2017-12-10T00:00:00.000Z',
           },
-          {
-            qty: 10,
-            price: 6,
-            id: '1',
-            purchase: 'someId',
-            sourceOrDestination: {
-              seller: 'Company two',
-            },
-            price_per_unit: '5',
-            date: '2017-12-10T00:00:00.000Z',
+        {
+          qty: 10,
+          price: 6,
+          id: '1',
+          purchase: 'someId',
+          sourceOrDestination: {
+            seller: 'Company two',
           },
+          price_per_unit: '5',
+          date: '2017-12-10T00:00:00.000Z',
+        },
         ],
       }}
     />

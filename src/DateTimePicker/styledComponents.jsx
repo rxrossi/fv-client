@@ -6,29 +6,57 @@ export const WeekAbbreviation = styled.span`
   color: #bbb;
   font-weight: bolder;
   text-align: center;
-  margin: 0 0.1rem;
-  border-bottom: 1px solid #68a;
+  margin: 0.4rem 0.1rem;
   padding: 0.2rem 0;
   font-size: 0.6rem;
 `;
 
 export const MonthHeader = styled.div`
   color: #eef;
-  background: #68b;
-  width: 17rem;
-  margin: 0.2rem 0 -0.4rem 1rem;
-  border-radius: 1rem 1rem 0 0;
-  padding: 0.3rem 0 0.7rem 0;
+  background: #007bff;
+  height: 3rem;
+  padding-top: 0.5rem;
   text-align: center;
   font-weight: bold;
  `;
 
+export const ToggleBtnWrapper = styled.div`
+  color: #eef;
+  height: 3rem;
+  padding-top: 0.5rem;
+  text-align: center;
+  font-weight: bold;
+ `;
+
+export const ToggleBtn = styled.button`
+  color: #eef;
+  cursor: pointer;
+  font-weight: bold;
+  background: none;
+  border: none;
+`;
+
+export const ClockContainer = styled.div`
+  color: #eef;
+  background: #007bff;
+  text-align: center;
+  font-weight: bold;
+  position: relative;
+  transition: all 0.2s;
+  opacity: 1;
+  bottom: 0;
+  height: 20rem;
+  ${props => !props.closed && `
+    background: #0059dd;
+    height: 20rem;
+    bottom: 17rem;
+    opacity: 0.95;
+  `}
+`;
+
 export const WeeksContainer = styled.div`
-  background: #57a;
-  width: 17rem;
-  border-bottom: 1px solid #146;
-  margin: 0 1rem;
-  padding: 1rem 0;
+  padding: 1rem 0 1.3rem 0;
+  height: 14rem;
 `;
 
 export const WeekRow = styled.div`
@@ -41,7 +69,7 @@ export const DayBtn = styled.button`
   background: none;
   width: 2rem;
   cursor: pointer;
-  color: ${props => (props.belongsToThisMonth ? '#eee' : '#cbe')};
+  color: ${props => (props.belongsToThisMonth ? '#333' : '#ccd')};
   &:hover {
     font-weight: bolder;
   }
