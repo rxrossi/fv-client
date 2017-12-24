@@ -17,13 +17,28 @@ import PurchasesViewOneComponent from '../src/purchases/Components/ViewOne';
 import SalesAddComponent from '../src/sales/Components/Add';
 import SalesViewComponent from '../src/sales/Components/View';
 import SalesViewOneComponent from '../src/sales/Components/ViewOne';
-import DateTimePicker from '../src/DateTimePicker';
+import Week from '../src/DateTimePicker/Components/Week';
+import Month from '../src/DateTimePicker/Containers/Month';
 import NavBar from '../src/NavBar';
 
 const dummyFn = () => {};
 
-storiesOf('DateTimePicker', module)
-  .add('clean state', () => <DateTimePicker />);
+storiesOf('DateTimePicker/Week Component', module)
+  .add('First week of December 2017', () => {
+    const week = [
+      new Date(2017, 10, 26),
+      new Date(2017, 10, 27),
+      new Date(2017, 10, 28),
+      new Date(2017, 10, 29),
+      new Date(2017, 10, 30),
+      new Date(2017, 11, 1),
+      new Date(2017, 11, 2),
+    ];
+
+    return <Week week={week} month={11} />;
+  });
+storiesOf('DateTimePicker/Month Component', module)
+  .add('December 2017', () => <Month month={11} year={2017} />);
 
 storiesOf('Sales/Add', module)
   .add('clean state', () =>

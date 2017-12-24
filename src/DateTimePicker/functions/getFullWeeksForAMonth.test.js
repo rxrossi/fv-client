@@ -6,6 +6,6 @@ describe('getFullWeeksForAMonth', () => {
 
     const NUMBER_OF_WEEKS_DECEMBER_2017 = 6;
 
-    expect(actual.length).toBe(NUMBER_OF_WEEKS_DECEMBER_2017 * 7);
+    expect(actual.length).toBe(NUMBER_OF_WEEKS_DECEMBER_2017);
   });
 });
