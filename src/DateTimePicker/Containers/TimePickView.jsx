@@ -6,8 +6,9 @@ const pad2 = x => (x > 9 ? x : `0${x}`);
 
 const PairOfDigitsContainer = styled.div`
   display: inline-block;
-  width: 5rem;
-  font-size: 3rem;
+  width: 2em;
+  font-size: 2.8em;
+  margin-top: 0.5em;
   text-align: center;
 `;
 
@@ -16,15 +17,15 @@ const MinusPlusBtn = styled.button`
   border: none;
   color: #eee;
   cursor: pointer;
-  font-size: 2rem;
+  font-size: 1em;
 `;
 
 const DigitsBtn = styled.button`
   background: none;
   border: none;
   cursor: pointer;
-  font-size: 1.7rem;
-  margin: 0 0.7rem;
+  font-size: 1.7em;
+  margin: 0 0.7em;
   color: #fff;
 `;
 
@@ -64,7 +65,7 @@ export const FiveMinutesIntervals = ({ handleClick }) => {
   ];
 
   return (
-    <div style={{ marginTop: '2.5rem' }}>
+    <div style={{ marginTop: '2.5em' }}>
       {
         rows.map(row => <RowOfBtns row={row} handleClick={handleClick} />)
       }
@@ -72,13 +73,19 @@ export const FiveMinutesIntervals = ({ handleClick }) => {
   );
 };
 
-export const Toggle = ({ open, handleClick }) => (
+export const Toggle = ({
+  open, handleClick, h, m, day, month, year,
+}) => (
   <ToggleBtnWrapper>
     <ToggleBtn type="button" onClick={handleClick} >
       {
         open ?
-          <i className="fa fa-calendar-o" aria-hidden="true" /> :
-          <i className="fa fa-clock-o" aria-hidden="true" />
+          <span>
+            <i className="fa fa-calendar-o" aria-hidden="true" /> {day} {month} {year}
+          </span> :
+          <span>
+            {pad2(h)}:{pad2(m)} <i className="fa fa-clock-o" aria-hidden="true" />
+          </span>
       }
     </ToggleBtn>
   </ToggleBtnWrapper>

@@ -9,8 +9,8 @@ class TimePicker extends React.Component {
     const currDate = new Date(Date.now());
     this.state = {
       open: this.props.open,
-      h: currDate.getHours(),
-      m: currDate.getMinutes(),
+      h: this.props.h || currDate.getHours(),
+      m: this.props.m || currDate.getMinutes(),
     };
     this.toggleOpen = this.toggleOpen.bind(this);
     this.changeTime = this.changeTime.bind(this);
@@ -31,6 +31,12 @@ class TimePicker extends React.Component {
       } else if (type === 'm' && value < 0) {
         calculatedValue = 59;
       }
+      if (type === 'h') {
+        this.props.onTimeChange(calculatedValue, this.state.m);
+      }
+      if (type === 'm') {
+        this.props.onTimeChange(this.state.h, calculatedValue);
+      }
       this.setState({ [type]: calculatedValue });
     };
   }
@@ -41,9 +47,18 @@ class TimePicker extends React.Component {
 
   render() {
     const { open, h, m } = this.state;
+    const { day, month, year } = this.props;
     return (
       <ClockContainer closed={!open}>
-        <Toggle handleClick={this.toggleOpen} open={open} />
+        <Toggle
+          handleClick={this.toggleOpen}
+          open={open}
+          h={h}
+          m={m}
+          day={day}
+          month={month}
+          year={year}
+        />
         <TimePickView h={h} m={m} closed={!open} handleChange={this.changeTime} />
       </ClockContainer>
     );
@@ -52,6 +67,7 @@ class TimePicker extends React.Component {
 
 TimePicker.propTypes = {
   open: PropTypes.bool,
+  onTimeChange: PropTypes.func.isRequired,
 };
 
 TimePicker.defaultProps = {

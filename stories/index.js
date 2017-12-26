@@ -57,6 +57,11 @@ storiesOf('DateTimePicker/Month Component', module)
     <div>
       <CalendarView month={11} year={2017} pickingDay={false} />
     </div>
+  ))
+  .add('clean state', () => (
+    <div>
+      <CalendarView />
+    </div>
   ));
 
 storiesOf('Sales/Add', module)
