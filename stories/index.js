@@ -18,51 +18,29 @@ import PurchasesViewOneComponent from '../src/purchases/Components/ViewOne';
 import SalesAddComponent from '../src/sales/Components/Add';
 import SalesViewComponent from '../src/sales/Components/View';
 import SalesViewOneComponent from '../src/sales/Components/ViewOne';
-import Week from '../src/DateTimePicker/Components/Week';
-import CalendarView from '../src/DateTimePicker/Containers/CalendarView';
-import TimePicker from '../src/DateTimePicker/Containers/TimePickView';
-import { FiveMinutesIntervals, HoursIntervals } from '../src/DateTimePicker/Containers/TimePickView';
 import NavBar from '../src/NavBar';
+import Wrapper from '../src/DateTimePicker/TimePicker/Components/Wrapper';
+import ClockView from '../src/DateTimePicker/TimePicker/Components/ClockView';
+import HoursPicker from '../src/DateTimePicker/TimePicker/Components/HoursPicker';
+import MinutesPicker from '../src/DateTimePicker/TimePicker/Components/MinutesPicker';
 
 const dummyFn = () => {};
 
-storiesOf('TimePicker/Index', module)
-  .add('14:30', () => <TimePicker h={14} m={30} />)
-  .add('01:05', () => <TimePicker h={1} m={5} />);
-
-storiesOf('TimePicker/FiveMinutesIntervals', module)
-  .add('clean', () => <FiveMinutesIntervals />);
-
-storiesOf('TimePicker/HoursIntervals', module)
-  .add('less than 12:00 h', () => <HoursIntervals pm={false} />)
-  .add('more than 12:00 h', () => <HoursIntervals pm />);
-
-storiesOf('DateTimePicker/Week Component', module)
-  .add('First week of December 2017', () => {
-    const week = [
-      new Date(2017, 10, 26),
-      new Date(2017, 10, 27),
-      new Date(2017, 10, 28),
-      new Date(2017, 10, 29),
-      new Date(2017, 10, 30),
-      new Date(2017, 11, 1),
-      new Date(2017, 11, 2),
-    ];
-
-    return <Week week={week} month={11} />;
-  });
-
-storiesOf('DateTimePicker/Month Component', module)
-  .add('December 2017', () => (
-    <div>
-      <CalendarView month={11} year={2017} pickingDay={false} />
-    </div>
+storiesOf('TimePicker/Components', module)
+  .add('Just the Wrapper', () => <Wrapper />)
+  .addDecorator(story => (
+    <Wrapper>
+      {story()}
+    </Wrapper>
   ))
-  .add('clean state', () => (
-    <div>
-      <CalendarView />
-    </div>
-  ));
+  .add('Clock View', () =>
+    (<ClockView
+      time="09:31"
+      hoursHandleClick={dummyFn}
+      minutesHandleClick={dummyFn}
+    />))
+  .add('HoursPicker View', () => <HoursPicker />)
+  .add('MinutesPicker View', () => <MinutesPicker />);
 
 storiesOf('Sales/Add', module)
   .add('clean state', () =>
