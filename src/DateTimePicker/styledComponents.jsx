@@ -24,8 +24,10 @@ export const MonthHeader = styled.div`
 export const ToggleBtnWrapper = styled.div`
   color: #eef;
   padding-top: 0.8em;
+  height: 3em;
   text-align: center;
   font-weight: bold;
+  background: #007bff;
  `;
 
 export const ToggleBtn = styled.button`
@@ -43,13 +45,15 @@ export const ClockContainer = styled.div`
   font-weight: bold;
   position: relative;
   transition: all 0.2s;
-  opacity: 1;
-  bottom: 0;
-  height: 20em;
+  height: 0;
+  z-index: -1;
   ${props => !props.closed && `
-    background: #0059dd;
+    z-index: 1;
     bottom: 17em;
+    margin-bottom: -17em;
+    height: 17em;
     opacity: 0.95;
+    display: block;
   `}
 `;
 
