@@ -1,16 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { ClockContainer, ToggleBtnWrapper } from '../styledComponents';
+import { ClockContainer } from '../styledComponents';
 import TimePickView, { Toggle } from '../Containers/TimePickView';
 
 class TimePicker extends React.Component {
   constructor(props) {
     super(props);
-    const currDate = new Date(Date.now());
     this.state = {
       open: this.props.open,
-      h: this.props.h || currDate.getHours(),
-      m: this.props.m || currDate.getMinutes(),
     };
     this.toggleOpen = this.toggleOpen.bind(this);
     this.changeTime = this.changeTime.bind(this);
@@ -32,12 +29,11 @@ class TimePicker extends React.Component {
         calculatedValue = 59;
       }
       if (type === 'h') {
-        this.props.onTimeChange(calculatedValue, this.state.m);
+        this.props.onTimeChange(calculatedValue, this.props.date.getMinutes());
       }
       if (type === 'm') {
-        this.props.onTimeChange(this.state.h, calculatedValue);
+        this.props.onTimeChange(this.props.date.getHours(), calculatedValue);
       }
-      this.setState({ [type]: calculatedValue });
     };
   }
 
@@ -46,20 +42,12 @@ class TimePicker extends React.Component {
   }
 
   render() {
-    const { open, h, m } = this.state;
-    const { day, month, year } = this.props;
+    const { open } = this.props;
+    const { date } = this.props;
+    console.log(this.state);
     return (
       <ClockContainer closed={!open}>
-        <Toggle
-          handleClick={this.toggleOpen}
-          open={open}
-          h={h}
-          m={m}
-          day={day}
-          month={month}
-          year={year}
-        />
-        <TimePickView h={h} m={m} closed={!open} handleChange={this.changeTime} />
+        <TimePickView date={date} closed={!open} handleChange={this.changeTime} />
       </ClockContainer>
     );
   }
@@ -67,6 +55,7 @@ class TimePicker extends React.Component {
 
 TimePicker.propTypes = {
   open: PropTypes.bool,
+  date: PropTypes.instanceOf(Date).isRequired,
   onTimeChange: PropTypes.func.isRequired,
 };
 

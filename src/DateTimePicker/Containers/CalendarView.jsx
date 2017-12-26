@@ -5,21 +5,18 @@ import WeeksHeader from '../Components/WeeksHeader';
 import MonthHeader from '../Components/MonthHeader';
 import getWeeks from '../functions/getFullWeeksForAMonth';
 import { WeeksContainer } from '../styledComponents';
+import { Toggle } from '../Containers/TimePickView';
 import TimePicker from '../Containers/TimePicker';
 
 class CalendarView extends React.Component {
   constructor(props) {
     super(props);
-    const currDate = new Date(Date.now());
-    console.log(currDate.toString());
+
+    const currDate = this.props.date;
     this.state = {
-      weeks: getWeeks(this.props.month || currDate.getMonth(), this.props.year || currDate.getFullYear()),
+      weeks: getWeeks(this.props.date.getMonth(), this.props.date.getFullYear()),
       pickingDay: this.props.pickingDay,
-      h: this.props.h,
-      m: this.props.m,
-      day: this.props.day || currDate.getDate(),
-      month: this.props.month || currDate.getMonth(),
-      year: this.props.year || currDate.getFullYear(),
+      date: this.props.date,
       viewMonth: this.props.month || currDate.getMonth(),
       viewYear: this.props.year || currDate.getFullYear(),
     };
@@ -27,10 +24,20 @@ class CalendarView extends React.Component {
     this.addMonth = this.addMonth.bind(this);
     this.subMonth = this.subMonth.bind(this);
     this.pickDay = this.pickDay.bind(this);
+    this.togglePickingDay = this.togglePickingDay.bind(this);
+  }
+
+  togglePickingDay() {
+    this.setState({
+      pickingDay: !this.state.pickingDay,
+    });
   }
 
   receiveTime(h, m) {
-    this.setState({ h, m });
+    const { year, month, day } = this.state;
+    this.setState({
+      date: new Date(year, month, day, h, m),
+    });
   }
 
   pickDay(date) {
@@ -38,6 +45,7 @@ class CalendarView extends React.Component {
     const newDate = new Date(date);
     this.setState({
       day: newDate.getDate(),
+      date: new Date(date.getFullYear(), date.getMonth(), date.getDate(), this.state.date.getHours(), this.state.date.getMinutes()),
       month: newDate.getMonth(),
       viewMonth: newDate.getMonth(),
       year: newDate.getFullYear(),
@@ -70,7 +78,7 @@ class CalendarView extends React.Component {
 
   render() {
     const {
-      weeks, pickingDay, h, m, viewMonth, viewYear, day, month, year,
+      weeks, pickingDay, h, m, viewMonth, viewYear, day, month, year, date,
     } = this.state;
     return (
       <div style={{ fontSize: '1em' }} >
@@ -81,7 +89,7 @@ class CalendarView extends React.Component {
           background: '#fff',
           margin: '1em',
           width: '17em',
-          height: '20em',
+          // height: '20em',
         }}
         >
           <div>
@@ -108,12 +116,13 @@ class CalendarView extends React.Component {
           </div>
           <TimePicker
             open={!pickingDay}
-            h={h}
-            m={m}
-            day={day}
-            month={month}
-            year={year}
+            date={date}
             onTimeChange={this.receiveTime}
+          />
+          <Toggle
+            handleClick={this.togglePickingDay}
+            open={!pickingDay}
+            date={this.props.date}
           />
         </div>
       </div>
@@ -121,20 +130,12 @@ class CalendarView extends React.Component {
   }
 }
 CalendarView.propTypes = {
-  h: PropTypes.number,
-  m: PropTypes.number,
-  day: PropTypes.number,
-  month: PropTypes.number,
-  year: PropTypes.number,
   pickingDay: PropTypes.bool,
+  date: PropTypes.instanceOf(Date),
 };
 CalendarView.defaultProps = {
   pickingDay: true,
-  h: new Date(Date.now()).getHours(),
-  m: new Date(Date.now()).getMinutes(),
-  day: undefined,
-  month: undefined,
-  year: undefined,
+  date: new Date(Date.now()),
 };
 
 export default CalendarView;

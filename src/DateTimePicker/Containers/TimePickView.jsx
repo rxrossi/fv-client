@@ -8,7 +8,7 @@ const PairOfDigitsContainer = styled.div`
   display: inline-block;
   width: 2em;
   font-size: 2.8em;
-  margin-top: 0.5em;
+  margin-top: 0.9em;
   text-align: center;
 `;
 
@@ -74,17 +74,17 @@ export const FiveMinutesIntervals = ({ handleClick }) => {
 };
 
 export const Toggle = ({
-  open, handleClick, h, m, day, month, year,
+  open, handleClick, date,
 }) => (
   <ToggleBtnWrapper>
     <ToggleBtn type="button" onClick={handleClick} >
       {
         open ?
           <span>
-            <i className="fa fa-calendar-o" aria-hidden="true" /> {day} {month} {year}
+            <i className="fa fa-calendar-o" aria-hidden="true" /> {date.getFullYear()}  {pad2(date.getMonth() + 1)} {pad2(date.getDate())}
           </span> :
           <span>
-            {pad2(h)}:{pad2(m)} <i className="fa fa-clock-o" aria-hidden="true" />
+            {pad2(date.getHours())}:{pad2(date.getMinutes())} <i className="fa fa-clock-o" aria-hidden="true" />
           </span>
       }
     </ToggleBtn>
@@ -147,9 +147,7 @@ class TimePickView extends React.Component {
   }
 
   render() {
-    const {
-      h, m, closed, handleChange,
-    } = this.props;
+    const { closed, handleChange, date } = this.props;
     const { display } = this.state;
 
     if (display === 'minutesIntervals') {
@@ -165,14 +163,14 @@ class TimePickView extends React.Component {
     }
 
     return (
-      <div style={{ display: closed && 'none' }}>
+      <div>
         <PairOfDigits
-          digits={h}
+          digits={date.getHours()}
           handleChange={handleChange('h')}
           handleClick={this.displayHoursIntervals}
         />
         <PairOfDigits
-          digits={m}
+          digits={date.getMinutes()}
           handleChange={handleChange('m')}
           handleClick={this.displayMinutesIntervals}
         />
