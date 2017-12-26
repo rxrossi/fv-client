@@ -15,7 +15,7 @@ const Main = styled.div`
   color: ${({ theme }) => theme.color};
   text-align: center;
   width: 17em;
-  height: 20em;
+  height: 17em;
 `;
 
 const Wrapper = ({ children }) => (

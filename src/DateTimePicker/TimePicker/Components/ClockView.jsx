@@ -8,7 +8,7 @@ const Set = styled.div`
   background: none;
   display: inline-block;
   width: 50%;
-  margin-top: 2.5em;
+  margin-top: 1.5em;
 `;
 
 const ArrowBtn = styled(BasicBtn)`

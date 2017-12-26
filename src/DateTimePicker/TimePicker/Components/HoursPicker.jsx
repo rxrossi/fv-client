@@ -5,12 +5,12 @@ import pad2 from '../../helpers/pad2';
 import BasicBtn from '../Components/BasicBtn';
 
 const Container = styled.div`
-  padding: 1.4em 0;
+  padding: 1.1em 0;
 `;
 
 const Digit = styled(BasicBtn)`
   font-weight: bolder;
-  font-size: 1.4em;
+  font-size: 1.2em;
   width: 4em;
 `;
 

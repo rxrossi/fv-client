@@ -5,7 +5,7 @@ import pad2 from '../../helpers/pad2';
 import BasicBtn from '../Components/BasicBtn';
 
 const Container = styled.div`
-  padding: 5.2em 0;
+  padding: 4em 0;
 `;
 
 const Digit = styled(BasicBtn)`
