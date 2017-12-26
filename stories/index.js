@@ -23,8 +23,12 @@ import Wrapper from '../src/DateTimePicker/TimePicker/Components/Wrapper';
 import ClockView from '../src/DateTimePicker/TimePicker/Components/ClockView';
 import HoursPicker from '../src/DateTimePicker/TimePicker/Components/HoursPicker';
 import MinutesPicker from '../src/DateTimePicker/TimePicker/Components/MinutesPicker';
+import TimePicker from '../src/DateTimePicker/TimePicker/TimePicker';
 
 const dummyFn = () => {};
+
+storiesOf('TimePicker/Container', module)
+  .add('at 10:05', () => <TimePicker time="10:30" onChange={value => console.log(value)} />);
 
 storiesOf('TimePicker/Components', module)
   .add('Just the Wrapper', () => <Wrapper />)
