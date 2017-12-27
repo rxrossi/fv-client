@@ -1,7 +1,7 @@
 import React from 'react';
 import Adapter from 'enzyme-adapter-react-16';
 import { configure, mount } from 'enzyme';
-import TimePicker from './TimePicker';
+import TimePicker from './index';
 import ClockView from './Components/ClockView';
 import HoursPicker from './Components/HoursPicker';
 import MinutesPicker from './Components/MinutesPicker';

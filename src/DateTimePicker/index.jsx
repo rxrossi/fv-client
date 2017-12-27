@@ -1,10 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import DatePicker from '../DatePicker/Container/DatePicker';
-import TimePicker from '../TimePicker/TimePicker';
-import Toggler from '../Toggler/Components/Toggler';
-import pad2 from '../helpers/pad2';
-import fromDate from '../helpers/fromDate';
+import DatePicker from './DatePicker/';
+import TimePicker from './TimePicker/';
+import Toggler from './Toggler/';
+import pad2 from './helpers/pad2';
+import fromDate from './helpers/fromDate.js';
 
 class DateTimePicker extends React.Component {
   constructor(props) {

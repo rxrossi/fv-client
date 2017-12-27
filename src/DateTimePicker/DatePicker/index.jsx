@@ -1,9 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Wrapper from '../../sharedComponents/Wrapper';
-import DaysComponent from '../Components/Days';
-import Header from '../Components/Header';
-import getDays from '../../helpers/getDays';
+import Wrapper from '../sharedComponents/Wrapper';
+import DaysComponent from './Components/Days';
+import Header from './Components/Header';
+import getDays from '../helpers/getDays';
 
 class DatePicker extends React.Component {
   constructor(props) {

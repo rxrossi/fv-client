@@ -1,9 +1,9 @@
 import React from 'react';
 import Adapter from 'enzyme-adapter-react-16';
 import { configure, mount } from 'enzyme';
-import DatePicker from './DatePicker';
-import DaysHeader from '../Components/Header';
-import DayBtn from '../Components/Day';
+import DatePicker from './index';
+import DaysHeader from './Components/Header';
+import DayBtn from './Components/Day';
 // Configure Enzyme
 configure({ adapter: new Adapter() });
 

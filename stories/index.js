@@ -23,17 +23,17 @@ import Wrapper from '../src/DateTimePicker/sharedComponents/Wrapper';
 import ClockView from '../src/DateTimePicker/TimePicker/Components/ClockView';
 import HoursPicker from '../src/DateTimePicker/TimePicker/Components/HoursPicker';
 import MinutesPicker from '../src/DateTimePicker/TimePicker/Components/MinutesPicker';
-import TimePicker from '../src/DateTimePicker/TimePicker/TimePicker';
+import TimePicker from '../src/DateTimePicker/TimePicker';
 import DaysComponent from '../src/DateTimePicker/DatePicker/Components/Days';
 import DatePickerHeader from '../src/DateTimePicker/DatePicker/Components/Header';
-import Toggler from '../src/DateTimePicker/Toggler/Components/Toggler';
-import DatePicker from '../src/DateTimePicker/DatePicker/Container/DatePicker';
+import Toggler from '../src/DateTimePicker/Toggler/';
+import DatePicker from '../src/DateTimePicker/DatePicker/';
 import getDays from '../src/DateTimePicker/helpers/getDays';
-import DateTimePicker from '../src/DateTimePicker/Container/DateTimePicker';
+import DateTimePicker from '../src/DateTimePicker/';
 
 const dummyFn = () => {};
 
-storiesOf('DateTimePicker/DateTimePicker', module)
+storiesOf('DateTimePicker/index', module)
   .add('default', () => {
     class TestComponent extends React.Component {
       constructor(props) {
@@ -47,20 +47,21 @@ storiesOf('DateTimePicker/DateTimePicker', module)
         this.setState({ date });
       }
       render() {
-        return (<div>
-          {this.state.date.toString()}
-          <DateTimePicker date={this.state.date} onChange={this.onChange} />
-        </div>);
+        return (
+          <div>
+            {this.state.date.toString()}
+            <DateTimePicker date={this.state.date} onChange={this.onChange} />
+          </div>);
       }
     }
 
     return (<TestComponent />);
   });
-storiesOf('DateTimePicker/DatePicker/Container')
+storiesOf('DateTimePicker/DatePicker/index')
   .add('2017 12 30 ', () =>
     <DatePicker date={new Date(2017, 11, 30)} onChange={v => console.log(v)} />);
 
-storiesOf('DateTimePicker/Toggler/Components', module)
+storiesOf('DateTimePicker/Toggler', module)
   .addDecorator(story => (
     <Wrapper>
       {story()}
@@ -100,7 +101,7 @@ storiesOf('DateTimePicker/DatePicker/Components/Without Wrapper decorator', modu
     );
   });
 
-storiesOf('DateTimePicker/TimePicker/Container', module)
+storiesOf('DateTimePicker/TimePicker/index', module)
   .add('at 10:05', () => <TimePicker time="10:05" onChange={value => console.log(value)} />);
 
 storiesOf('DateTimePicker/TimePicker/Components', module)
@@ -512,12 +513,12 @@ storiesOf('Clients/Add', module)
   .add('with errors', () => (
     <ClientAddComponent
       values={{
-      name: 'John',
-    }}
+        name: 'John',
+      }}
       errors={{
-      name: 'NOT_UNIQUE',
+        name: 'NOT_UNIQUE',
         phone: 'BLANK',
-    }}
+      }}
       handleSubmit={() => {}}
       handleChange={() => {}}
     />))

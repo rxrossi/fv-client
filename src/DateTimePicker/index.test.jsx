@@ -1,7 +1,7 @@
 import React from 'react';
 import Adapter from 'enzyme-adapter-react-16';
 import { configure, mount } from 'enzyme';
-import DateTimePicker from './DateTimePicker';
+import DateTimePicker from './index';
 // Configure Enzyme
 configure({ adapter: new Adapter() });
 
