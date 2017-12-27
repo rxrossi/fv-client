@@ -26,11 +26,12 @@ describe('DatePicker Header Component', () => {
   });
 
   it('shows the correct view month', () => {
-    const viewMonth = 0;
+    const viewMonth = 0; // January
     const viewYear = 2017;
     const sut = mountComponent({ viewMonth, viewYear });
-    const date = new Date(2017, viewMonth + 1);
-    const monthName = date.toLocaleString('en-us', { month: 'long' });
+
+    const date = new Date(2017, viewMonth);
+    const monthName = date.toLocaleString('en-us', { month: 'long' }); // January
 
     expect(sut.text()).toMatch(monthName);
     expect(sut.text()).toMatch('2017');

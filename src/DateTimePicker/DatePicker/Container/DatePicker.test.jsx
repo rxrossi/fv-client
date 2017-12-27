@@ -23,6 +23,7 @@ describe('DatePicker', () => {
       const sut = mountContainer(date);
       const Header = sut.find(DaysHeader);
       expect(Header.props().viewMonth).toEqual(11);
+      expect(Header.text()).toMatch('December');
     });
 
     describe('next viewMonth', () => {

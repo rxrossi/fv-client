@@ -36,7 +36,8 @@ const MonthYear = styled.p`
 `;
 
 const Header = ({ viewMonth, viewYear, handleClick }) => {
-  const monthName = new Date(0, viewMonth + 1).toLocaleString('en-us', { month: 'long' });
+  const date = new Date(viewYear, viewMonth);
+  const monthName = date.toLocaleString('en-us', { month: 'long' });
   return (
     <Wrapper>
       <IncDecBtns
