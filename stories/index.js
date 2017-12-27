@@ -29,9 +29,33 @@ import DatePickerHeader from '../src/DateTimePicker/DatePicker/Components/Header
 import Toggler from '../src/DateTimePicker/Toggler/Components/Toggler';
 import DatePicker from '../src/DateTimePicker/DatePicker/Container/DatePicker';
 import getDays from '../src/DateTimePicker/helpers/getDays';
+import DateTimePicker from '../src/DateTimePicker/Container/DateTimePicker';
 
 const dummyFn = () => {};
 
+storiesOf('DateTimePicker/DateTimePicker', module)
+  .add('default', () => {
+    class TestComponent extends React.Component {
+      constructor(props) {
+        super(props);
+        this.state = {
+          date: new Date(),
+        };
+        this.onChange = this.onChange.bind(this);
+      }
+      onChange(date) {
+        this.setState({ date });
+      }
+      render() {
+        return (<div>
+          {this.state.date.toString()}
+          <DateTimePicker date={this.state.date} onChange={this.onChange} />
+        </div>);
+      }
+    }
+
+    return (<TestComponent />);
+  });
 storiesOf('DateTimePicker/DatePicker/Container')
   .add('2017 12 30 ', () =>
     <DatePicker date={new Date(2017, 11, 30)} onChange={v => console.log(v)} />);
@@ -436,17 +460,17 @@ storiesOf('Products/View One', module)
             price_per_unit: '5',
             date: '2017-12-10T00:00:00.000Z',
           },
-        {
-          qty: 10,
-          price: 6,
-          id: '3',
-          purchase: 'someId',
-          sourceOrDestination: {
-            seller: 'Company two',
+          {
+            qty: 10,
+            price: 6,
+            id: '3',
+            purchase: 'someId',
+            sourceOrDestination: {
+              seller: 'Company two',
+            },
+            price_per_unit: '5',
+            date: '2017-12-10T00:00:00.000Z',
           },
-          price_per_unit: '5',
-          date: '2017-12-10T00:00:00.000Z',
-        },
           {
             qty: 10,
             price: 6,

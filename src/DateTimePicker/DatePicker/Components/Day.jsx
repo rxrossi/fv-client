@@ -14,7 +14,7 @@ const DayBtn = styled.button`
   background: ${props => props.selected && '#adf'};
   &:focus {
     outline: none;
-    color: #79c;
+    color: ${props => !props.selected && '#79c'};
   };
   &:hover {
     outline: none;
@@ -28,7 +28,12 @@ const Day = ({
   <DayBtn
     type="button"
     belongsToThisMonth={date.getMonth() === viewMonth}
-    selected={date === selectedDay}
+    selected={
+      selectedDay instanceof Date &&
+      date.getDate() === selectedDay.getDate() &&
+      date.getMonth() === selectedDay.getMonth() &&
+      date.getFullYear() === selectedDay.getFullYear()
+    }
     onClick={() => handleClick(date)}
   >
     {date.getDate()}

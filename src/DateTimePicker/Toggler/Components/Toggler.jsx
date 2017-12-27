@@ -5,13 +5,14 @@ import fromDate from '../../helpers/fromDate';
 import pad2 from '../../helpers/pad2';
 
 const Button = styled.button`
-  color: ${({ theme }) => theme.color};
-  background: none;
+  color: #eee;
+  background: blue;
   border: none;
   cursor: pointer;
   font-weight: bold;
-  font-size: 1.2em;
+  width: 17em;
   height: 3em;
+
   &:focus {
     outline: none;
     color: ${({ theme }) => theme.hoveredColor};
