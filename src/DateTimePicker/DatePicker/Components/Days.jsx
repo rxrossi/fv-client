@@ -4,7 +4,9 @@ import styled from 'styled-components';
 import Day from './Day';
 
 const DaysContainerWrapper = styled.div`
+  padding-top: 0.5em;
   background: #fafeff;
+  border-bottom: 0.05em solid blue;
   height: 14em;
   text-align: right;
 `;

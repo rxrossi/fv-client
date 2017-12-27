@@ -25,12 +25,33 @@ import HoursPicker from '../src/DateTimePicker/TimePicker/Components/HoursPicker
 import MinutesPicker from '../src/DateTimePicker/TimePicker/Components/MinutesPicker';
 import TimePicker from '../src/DateTimePicker/TimePicker/TimePicker';
 import DaysComponent from '../src/DateTimePicker/DatePicker/Components/Days';
+import DatePickerHeader from '../src/DateTimePicker/DatePicker/Components/Header';
+import Toggler from '../src/DateTimePicker/Toggler/Components/Toggler';
+import DatePicker from '../src/DateTimePicker/DatePicker/Container/DatePicker';
 import getDays from '../src/DateTimePicker/helpers/getDays';
 
 const dummyFn = () => {};
 
-storiesOf('DatePicker/Components', module)
-  .add('Just the Wrapper', () => <Wrapper />)
+storiesOf('DateTimePicker/DatePicker/Container')
+  .add('2017 12 30 ', () =>
+    <DatePicker date={new Date(2017, 11, 30)} onChange={v => console.log(v)} />);
+
+storiesOf('DateTimePicker/Toggler/Components', module)
+  .addDecorator(story => (
+    <Wrapper>
+      {story()}
+    </Wrapper>
+  ))
+  .add('Toggler Clock 2017 12 30 09:05', () => {
+    const date = new Date(2017, 11, 30, 9, 5);
+    return <Toggler date={date} show="clock" handleClick={() => {}} />;
+  })
+  .add('Toggler Date 2017 12 30 09:05', () => {
+    const date = new Date(2017, 11, 30, 9, 5);
+    return <Toggler date={date} show="date" handleClick={() => {}} />;
+  });
+
+storiesOf('DateTimePicker/DatePicker/Components/With Wrapper decorator', module)
   .addDecorator(story => (
     <Wrapper>
       {story()}
@@ -39,12 +60,26 @@ storiesOf('DatePicker/Components', module)
   .add('DaysComponent for December 2017, selected 2017-12-06', () => {
     const days = getDays(11, 2017);
     return <DaysComponent days={days} selectedDay={days[10]} viewMonth={11} />;
+  })
+  .add('Header December 2017', () =>
+    <DatePickerHeader viewMonth={11} viewYear={2017} handleClick={() => {}} />);
+
+storiesOf('DateTimePicker/DatePicker/Components/Without Wrapper decorator', module)
+  .add('Just the Wrapper', () => <Wrapper />)
+  .add('Days with DatePickerHeader on Wrapper', () => {
+    const days = getDays(11, 2017);
+    return (
+      <Wrapper>
+        <DatePickerHeader viewMonth={11} viewYear={2017} handleClick={() => {}} />
+        <DaysComponent days={days} selectedDay={days[10]} viewMonth={11} />
+      </Wrapper>
+    );
   });
 
-storiesOf('TimePicker/Container', module)
+storiesOf('DateTimePicker/TimePicker/Container', module)
   .add('at 10:05', () => <TimePicker time="10:05" onChange={value => console.log(value)} />);
 
-storiesOf('TimePicker/Components', module)
+storiesOf('DateTimePicker/TimePicker/Components', module)
   .add('Just the Wrapper', () => <Wrapper />)
   .addDecorator(story => (
     <Wrapper>
@@ -189,14 +224,14 @@ storiesOf('Purchases/Add', module)
             price: 0.01,
             avgPriceFiveLast: 0.02, // per unit
           },
-            {
-              id: '3',
-              name: 'Capes',
-              measure_unit: 'unit',
-              quantity: 99,
-              price: 1,
-              avgPriceFiveLast: 1.2, // per unit
-            },
+          {
+            id: '3',
+            name: 'Capes',
+            measure_unit: 'unit',
+            quantity: 99,
+            price: 1,
+            avgPriceFiveLast: 1.2, // per unit
+          },
         ]}
       handleSubmit={dummyFn}
       handleChange={dummyFn}
@@ -339,14 +374,14 @@ storiesOf('Products/View', module)
           price_per_unit: 0.01,
           avgPriceFiveLast: 0.02, // per unit
         },
-          {
-            id: '3',
-            name: 'Capes',
-            measure_unit: 'unit',
-            quantity: 99,
-            price_per_unit: 1,
-            avgPriceFiveLast: 1.2, // per unit
-          },
+        {
+          id: '3',
+          name: 'Capes',
+          measure_unit: 'unit',
+          quantity: 99,
+          price_per_unit: 1,
+          avgPriceFiveLast: 1.2, // per unit
+        },
       ]}
     />));
 
@@ -401,17 +436,17 @@ storiesOf('Products/View One', module)
             price_per_unit: '5',
             date: '2017-12-10T00:00:00.000Z',
           },
-          {
-            qty: 10,
-            price: 6,
-            id: '3',
-            purchase: 'someId',
-            sourceOrDestination: {
-              seller: 'Company two',
-            },
-            price_per_unit: '5',
-            date: '2017-12-10T00:00:00.000Z',
+        {
+          qty: 10,
+          price: 6,
+          id: '3',
+          purchase: 'someId',
+          sourceOrDestination: {
+            seller: 'Company two',
           },
+          price_per_unit: '5',
+          date: '2017-12-10T00:00:00.000Z',
+        },
           {
             qty: 10,
             price: 6,
@@ -423,17 +458,17 @@ storiesOf('Products/View One', module)
             price_per_unit: '5',
             date: '2017-12-10T00:00:00.000Z',
           },
-        {
-          qty: 10,
-          price: 6,
-          id: '1',
-          purchase: 'someId',
-          sourceOrDestination: {
-            seller: 'Company two',
+          {
+            qty: 10,
+            price: 6,
+            id: '1',
+            purchase: 'someId',
+            sourceOrDestination: {
+              seller: 'Company two',
+            },
+            price_per_unit: '5',
+            date: '2017-12-10T00:00:00.000Z',
           },
-          price_per_unit: '5',
-          date: '2017-12-10T00:00:00.000Z',
-        },
         ],
       }}
     />
@@ -453,12 +488,12 @@ storiesOf('Clients/Add', module)
   .add('with errors', () => (
     <ClientAddComponent
       values={{
-        name: 'John',
-      }}
+      name: 'John',
+    }}
       errors={{
-        name: 'NOT_UNIQUE',
+      name: 'NOT_UNIQUE',
         phone: 'BLANK',
-      }}
+    }}
       handleSubmit={() => {}}
       handleChange={() => {}}
     />))

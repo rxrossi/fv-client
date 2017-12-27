@@ -5,8 +5,14 @@ import Header from './Header';
 // Configure Enzyme
 configure({ adapter: new Adapter() });
 
-function mountComponent({ viewMonth, viewYear } = {}) {
-  return mount(<Header viewMonth={viewMonth} viewYear={viewYear} />);
+function mountComponent({ viewMonth, viewYear, handleClick = () => {} } = {
+  handleClick: () => {},
+}) {
+  return mount(<Header
+    viewMonth={viewMonth}
+    viewYear={viewYear}
+    handleClick={handleClick}
+  />);
 }
 
 /*
@@ -16,14 +22,14 @@ function mountComponent({ viewMonth, viewYear } = {}) {
 
 describe('DatePicker Header Component', () => {
   it('mounts', () => {
-    mountComponent({ viewMonth: 0 });
+    mountComponent({ viewMonth: 0, viewYear: 0 });
   });
 
   it('shows the correct view month', () => {
     const viewMonth = 0;
     const viewYear = 2017;
     const sut = mountComponent({ viewMonth, viewYear });
-    const date = new Date(2017, viewMonth);
+    const date = new Date(2017, viewMonth + 1);
     const monthName = date.toLocaleString('en-us', { month: 'long' });
 
     expect(sut.text()).toMatch(monthName);
@@ -31,10 +37,26 @@ describe('DatePicker Header Component', () => {
   });
 
   it('calls handleClick correctly when clicking increment viewMonth button', () => {
-
+    const mockFn = jest.fn();
+    const viewMonth = 0;
+    const viewYear = 2017;
+    const sut = mountComponent({ viewMonth, viewYear, handleClick: mockFn });
+    // Act
+    sut.find('button.inc-view-month').simulate('click');
+    // Assert
+    expect(mockFn).toHaveBeenCalledTimes(1);
+    expect(mockFn).toHaveBeenCalledWith('incMonth');
   });
 
   it('calls handleClick correctly when clicking decrement viewMonth button', () => {
-
+    const mockFn = jest.fn();
+    const viewMonth = 0;
+    const viewYear = 2017;
+    const sut = mountComponent({ viewMonth, viewYear, handleClick: mockFn });
+    // Act
+    sut.find('button.dec-view-month').simulate('click');
+    // Assert
+    expect(mockFn).toHaveBeenCalledTimes(1);
+    expect(mockFn).toHaveBeenCalledWith('decMonth');
   });
 });

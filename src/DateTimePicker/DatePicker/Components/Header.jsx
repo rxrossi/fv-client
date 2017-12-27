@@ -1,15 +1,64 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import styled from 'styled-components';
 
-const Header = ({ viewMonth, viewYear }) => {
-  const monthName = new Date(0, viewMonth).toLocaleString('en-us', { month: 'long' });
+const Wrapper = styled.div`
+  height: 3m;
+  overflow: none;
+  background: blue;
+`;
+
+const IncDecBtns = styled.button`
+  color: #ddd;
+  border: none;
+  border-radius: 0.2em;
+  margin: 0.5em;
+  padding: 0.3em;
+  text-align: center;
+  display: inline-block;
+  cursor: pointer;
+  background: #006bef;
+  width: 2em;
+  &:focus {
+    outline: none;
+    color: #eee;
+  };
+  &:hover {
+    outline: none;
+    color: #fff;
+  };
+`;
+
+const MonthYear = styled.p`
+  display: inline-block;
+  width: 11em;
+  font-weight: bold;
+`;
+
+const Header = ({ viewMonth, viewYear, handleClick }) => {
+  const monthName = new Date(0, viewMonth + 1).toLocaleString('en-us', { month: 'long' });
   return (
-    <p>{monthName} {viewYear}</p>
+    <Wrapper>
+      <IncDecBtns
+        type="button"
+        className="dec-view-month"
+        onClick={() => handleClick('decMonth')}
+      > <i className="fa fa-arrow-left" aria-hidden="true" />
+      </IncDecBtns>
+      <MonthYear>{monthName} {viewYear}</MonthYear>
+      <IncDecBtns
+        type="button"
+        className="inc-view-month"
+        onClick={() => handleClick('incMonth')}
+      > <i className="fa fa-arrow-right" aria-hidden="true" />
+      </IncDecBtns>
+    </Wrapper>
   );
 };
 Header.propTypes = {
   viewMonth: PropTypes.number.isRequired,
   viewYear: PropTypes.number.isRequired,
+  handleClick: PropTypes.func.isRequired,
 };
 
 export default Header;
