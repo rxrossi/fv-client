@@ -32,7 +32,7 @@ describe('Toggle Component', () => {
   it('shows the time if the correct prop is passed', () => {
     const date = new Date(2017, 11, 30, 9, 1);
     const sut = mountComponent(date, 'date');
-    expect(sut.text()).toMatch('2017 12 30');
+    expect(sut.text()).toMatch('2017/12/30');
   });
 
   it('clicking the date calls the handleClick', () => {

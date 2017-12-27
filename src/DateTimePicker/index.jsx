@@ -4,7 +4,7 @@ import DatePicker from './DatePicker/';
 import TimePicker from './TimePicker/';
 import Toggler from './Toggler/';
 import pad2 from './helpers/pad2';
-import fromDate from './helpers/fromDate.js';
+import fromDate from './helpers/fromDate';
 
 class DateTimePicker extends React.Component {
   constructor(props) {
@@ -68,7 +68,7 @@ DateTimePicker.propTypes = {
 };
 DateTimePicker.defaultProps = {
   date: new Date(),
-  picking: 'time',
+  picking: 'date',
 };
 
 export default DateTimePicker;

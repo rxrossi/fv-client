@@ -36,7 +36,9 @@ const Toggler = ({ date, show, handleClick }) => {
         type="button"
         onClick={handleClick}
       >
-        {pad2(year)} {pad2(month + 1)} {pad2(day)}
+        <i className="fa fa-calendar" aria-hidden="true" />
+        {' '}
+        {pad2(year)}/{pad2(month + 1)}/{pad2(day)}
       </Button>
     );
   }
@@ -46,7 +48,7 @@ const Toggler = ({ date, show, handleClick }) => {
       type="button"
       onClick={handleClick}
     >
-      {pad2(hours)}:{pad2(minutes)}
+      <i className="fa fa-clock-o" aria-hidden="true" /> {pad2(hours)}:{pad2(minutes)}
     </Button>
   );
 };
