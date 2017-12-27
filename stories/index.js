@@ -19,16 +19,30 @@ import SalesAddComponent from '../src/sales/Components/Add';
 import SalesViewComponent from '../src/sales/Components/View';
 import SalesViewOneComponent from '../src/sales/Components/ViewOne';
 import NavBar from '../src/NavBar';
-import Wrapper from '../src/DateTimePicker/TimePicker/Components/Wrapper';
+import Wrapper from '../src/DateTimePicker/sharedComponents/Wrapper';
 import ClockView from '../src/DateTimePicker/TimePicker/Components/ClockView';
 import HoursPicker from '../src/DateTimePicker/TimePicker/Components/HoursPicker';
 import MinutesPicker from '../src/DateTimePicker/TimePicker/Components/MinutesPicker';
 import TimePicker from '../src/DateTimePicker/TimePicker/TimePicker';
+import DaysComponent from '../src/DateTimePicker/DatePicker/Components/Days';
+import getDays from '../src/DateTimePicker/helpers/getDays';
 
 const dummyFn = () => {};
 
+storiesOf('DatePicker/Components', module)
+  .add('Just the Wrapper', () => <Wrapper />)
+  .addDecorator(story => (
+    <Wrapper>
+      {story()}
+    </Wrapper>
+  ))
+  .add('DaysComponent for December 2017, selected 2017-12-06', () => {
+    const days = getDays(11, 2017);
+    return <DaysComponent days={days} selectedDay={days[10]} viewMonth={11} />;
+  });
+
 storiesOf('TimePicker/Container', module)
-  .add('at 10:05', () => <TimePicker time="10:30" onChange={value => console.log(value)} />);
+  .add('at 10:05', () => <TimePicker time="10:05" onChange={value => console.log(value)} />);
 
 storiesOf('TimePicker/Components', module)
   .add('Just the Wrapper', () => <Wrapper />)

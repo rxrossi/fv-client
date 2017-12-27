@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Wrapper from './Components/Wrapper';
+import Wrapper from '../sharedComponents/Wrapper';
 import ClockView from './Components/ClockView';
 import HoursPicker from './Components/HoursPicker';
 import MinutesPicker from './Components/MinutesPicker';

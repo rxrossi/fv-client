@@ -7,8 +7,14 @@ import getDays from '../../helpers/getDays/';
 // Configure Enzyme
 configure({ adapter: new Adapter() });
 
-function mountComponent(days = [], handleClick = () => {}, selectedDay) {
-  return mount(<Days days={days} handleClick={handleClick} selectedDay={selectedDay} />);
+function mountComponent(days = [], handleClick = () => {}, selectedDay, viewMonth) {
+  // Month 14 is invalid on purpose
+  return mount(<Days
+    days={days}
+    viewMonth={viewMonth || 14}
+    handleClick={handleClick}
+    selectedDay={selectedDay}
+  />);
 }
 
 describe('Days Component', () => {
@@ -58,5 +64,21 @@ describe('Days Component', () => {
 
     // Assert
     expect(day3SelectedProp).toBe(true);
+  });
+
+  it('adds belongsToThisMonth to the correct buttons', () => {
+    const days = getDays(11, 2017);
+    const mockFn = jest.fn();
+    const sut = mountComponent(days, mockFn, days[6], 11);
+
+    const DayComponents = sut.find(Day);
+
+    // Button at index 0 is 2017-11-26 (November)
+    const DayButton0 = DayComponents.at(0).children();
+    expect(DayButton0.props().belongsToThisMonth).toBe(false);
+
+    // Button at index 5 is 2017-12-01
+    const DayButton5 = DayComponents.at(5).children();
+    expect(DayButton5.props().belongsToThisMonth).toBe(true);
   });
 });
