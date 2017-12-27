@@ -7,11 +7,10 @@ import getDays from '../../helpers/getDays/';
 // Configure Enzyme
 configure({ adapter: new Adapter() });
 
-function mountComponent(days = [], handleClick = () => {}, selectedDay, viewMonth) {
-  // Month 14 is invalid on purpose
+function mountComponent(days = [], handleClick = () => {}, selectedDay, viewMonth = 14) {
   return mount(<Days
     days={days}
-    viewMonth={viewMonth || 14}
+    viewMonth={viewMonth}
     handleClick={handleClick}
     selectedDay={selectedDay}
   />);

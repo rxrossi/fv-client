@@ -19,7 +19,7 @@ const WeekAbbreviation = styled.span`
   width: 3.46em;
 `;
 
-const DaysHeader = () => (
+const WeeksAbbreviations = () => (
   <div>
     <WeekAbbreviation>Sun</WeekAbbreviation>
     <WeekAbbreviation>Mon</WeekAbbreviation>
@@ -35,7 +35,7 @@ const DaysContainer = ({
   days, handleClick, selectedDay, viewMonth,
 }) => (
   <DaysContainerWrapper>
-    <DaysHeader />
+    <WeeksAbbreviations />
     { days.map(date =>
       (<Day
         key={date}
