@@ -94,21 +94,6 @@ const professionals = [
   },
 ];
 
-// const expectedPostData = {
-//   client: clients[0].id,
-//   name: 'service one',
-//   value: '300',
-//   payment: 'money',
-//   date: '10 10 2017',
-//   start_time: '10:00',
-//   end_time: '16:00',
-//   professional: professionals[0].id,
-//   products: [
-//     { id: '1', qty: 10 },
-//     { id: '2', qty: 20 },
-//   ],
-// };
-
 const sale1 = {
   id: 's1',
   name: 'service one',
@@ -336,9 +321,8 @@ describe('Sales page', () => {
       name: 'service one',
       client: clients[0].id,
       professional: professionals[0].id,
-      date: '10 10 2017',
-      start_time: '10:00',
-      end_time: '16:00',
+      start_time: new Date(2017, 10, 10, 10, 0),
+      end_time: new Date(2017, 10, 10, 16, 0),
       payment_method: 'Money',
       value: '300',
       products: [
@@ -355,7 +339,6 @@ describe('Sales page', () => {
         name: expectedPostData.name,
         value: expectedPostData.value,
         payment_method: expectedPostData.payment_method,
-        date: expectedPostData.date,
         start_time: expectedPostData.start_time,
         end_time: expectedPostData.end_time,
         client: expectedPostData.client,
