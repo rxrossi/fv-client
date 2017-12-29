@@ -95,8 +95,8 @@ export default (state = defaultState, action) => {
         adding: false,
         addErrors: {},
         list: [
-          ...state.list,
           action.payload,
+          ...state.list,
         ],
       };
     case types.ADD_ERROR:

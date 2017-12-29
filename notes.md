@@ -12,15 +12,18 @@ Can't add unit when registering products, for some reason...
 + [ ] Add actions of clients, professionals, products, sales and purchases should add the server response to the start of the list, currently they are being added last
 
 ## Sales
-+ [x] Sale Add should sent startime and endtime on datetime format, using two fields instead of three
++ [ ] on view one, date field shows start and end is being shown on start
++ [ ] on view all, date and time spent shows NaN NaN NaN and NaN:NaN h
 + [ ] Value (total) is not being shown on sales
-+ [X] Sales Add is refreshing the page
 + [ ] Sales is not showing errors
 + [ ] it is being possible to sell a product without stock
 + [ ] Sales form does not need to clear on page leave
++ [ ] Sales form does not clear the form on success
++ [ ] Seems like it is not possible to add a sale without a stock entry
 
 ## Purchases
 + [ ] Not clearing the form after a successful submit
++ [ ] It seems possible to submit a purchase without stock entries
 
 ## Professionals
 + [ ] Show the total profit
