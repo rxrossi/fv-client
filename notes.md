@@ -19,7 +19,7 @@ Can't add unit when registering products, for some reason...
 + [ ] it is being possible to sell a product without stock
 + [X] Sales form does not need to clear on page leave
 + [X] Sales form does not clear the form on success
-+ [ ] Seems like it is not possible to add a sale without a stock entry
++ [X] Seems like it is not possible to add a sale without a stock entry
 
 ## Purchases
 + [ ] Not clearing the form after a successful submit
