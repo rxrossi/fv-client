@@ -4,11 +4,12 @@ import { Container, Row, Col, Form, Button } from 'reactstrap';
 import Input from '../../renderField';
 
 // eslint-disable-next-line
-const ProductsFields = ({ values, productsForSelect, addField, removeField, handleChange }) => (
-  <Container>
-    <Row>
-      <Col>
-        {values.map((value, index) => (
+const ProductsFields = ({ values, productsForSelect, addField, removeField, handleChange }) => {
+  return (
+    <Container>
+      <Row>
+        <Col>
+          {values.map((value, index) => (
           // eslint-disable-next-line
           <Row key={index} className="my-2 p-2 bg-light mx-1 product-row">
             <div className="col-md-6">
@@ -57,20 +58,21 @@ const ProductsFields = ({ values, productsForSelect, addField, removeField, hand
             </div>
           </Row>
           ))}
-      </Col>
-    </Row>
-    <Row>
-      <Button
-        type="button"
-        className="add-product my-2"
-        onClick={addField}
-        block
-      >
+        </Col>
+      </Row>
+      <Row>
+        <Button
+          type="button"
+          className="add-product my-2"
+          onClick={addField}
+          block
+        >
         Add Product
-      </Button>
-    </Row>
-  </Container>
-);
+        </Button>
+      </Row>
+    </Container>
+  );
+};
 ProductsFields.defaultProps = {
   productsForSelect: [],
   values: [],
@@ -131,30 +133,18 @@ const Add = ({
           </Row>
 
           <Row>
-            <div className="col-md-4">
+            <div className="col-md-6">
               <Input
-                component="input"
-                type="date"
-                name="date"
-                value={values.date}
-                label="Date"
-                onChange={handleChange}
-              />
-            </div>
-            <div className="col-md-4">
-              <Input
-                component="input"
-                type="time"
+                type="datetime-local"
                 value={values.start_time}
                 name="start_time"
                 label="Start Time"
                 onChange={handleChange}
               />
             </div>
-            <div className="col-md-4">
+            <div className="col-md-6">
               <Input
-                component="input"
-                type="time"
+                type="datetime-local"
                 name="end_time"
                 value={values.end_time}
                 label="End Time"
@@ -214,10 +204,6 @@ const Add = ({
   </Container>
 );
 
-// const temp = () => (
-//   <FieldArray name="products" component={ProductsFields} productsForSelect={productsForSelect} />
-// );
-
 Add.propTypes = {
   handleSubmit: PropTypes.func.isRequired,
   handleChange: PropTypes.func.isRequired,
@@ -234,6 +220,7 @@ Add.propTypes = {
   })).isRequired,
   values: PropTypes.objectOf(PropTypes.oneOfType([
     PropTypes.string,
+    PropTypes.instanceOf(Date),
     PropTypes.number,
     PropTypes.arrayOf(PropTypes.objectOf(PropTypes.oneOfType([
       PropTypes.string,

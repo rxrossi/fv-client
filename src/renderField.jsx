@@ -43,7 +43,7 @@ Field.propTypes = {
   name: PropTypes.string.isRequired,
   path: PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.string, PropTypes.number])),
   type: PropTypes.string.isRequired,
-  value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  value: PropTypes.oneOfType([PropTypes.string, PropTypes.number, PropTypes.instanceOf(Date)]),
   error: PropTypes.string,
 };
 

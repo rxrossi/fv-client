@@ -87,6 +87,7 @@ Add.propTypes = {
   clearAddForm: PropTypes.func.isRequired,
   addSale: PropTypes.func.isRequired,
   values: PropTypes.objectOf(PropTypes.oneOfType([
+    PropTypes.instanceOf(Date),
     PropTypes.string,
     PropTypes.number,
     PropTypes.arrayOf(PropTypes.objectOf(PropTypes.oneOfType([
