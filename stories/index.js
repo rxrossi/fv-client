@@ -179,9 +179,10 @@ const sale1 = {
     id: 'p1',
     name: 'ProOne',
   },
-  date: '10 10 2017',
-  start_time: '10:00',
-  end_time: '16:00',
+  start_time: new Date(2017, 11, 30, 10, 0),
+  end_time: new Date(2017, 11, 30, 16, 0),
+  time_spent: '4:00',
+  profit_per_hour: 39.17,
   payment: {
     value_total: 300,
     value_liquid: 300,

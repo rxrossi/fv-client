@@ -3,33 +3,25 @@ import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { Container, Row, Col, Table } from 'reactstrap';
 
-const pad2 = number => (number < 10 ? '0' : '') + number;
-
 const Sale = ({ sale }) => {
-  const start = sale.start_time.split(':');
-  const end = sale.end_time.split(':');
-  const d1 = new Date(0, 0, 0, start[0], start[1]);
-  const d2 = new Date(0, 0, 0, end[0], end[1]);
-  const diff = new Date(d2 - d1);
-  const timeSpent = `${diff.getHours()}:${pad2(diff.getMinutes())} h`;
-
-  const date = new Date(sale.date);
+  const date = new Date(sale.start_time);
   const day = date.getUTCDate();
   const month = date.getUTCMonth() + 1;
   const year = date.getUTCFullYear();
-  const dateToPrint = `${month} ${day} ${year}`;
+  const dateToPrint = `${month}/${day}/${year}`;
   return (
     <tr>
-      <th>
+      <td>
         <Link to={`/sales/${sale.id}`}>
           {sale.name}
         </Link>
-      </th>
-      <th>{sale.client.name}</th>
-      <th>{sale.professional.name}</th>
-      <th>{dateToPrint}</th>
-      <th>{sale.profit}</th>
-      <th>{timeSpent}</th>
+      </td>
+      <td>{sale.client.name}</td>
+      <td>{sale.professional.name}</td>
+      <td>{dateToPrint}</td>
+      <td align="right">{parseInt(sale.profit, 10).toFixed(2)}</td>
+      <td align="right">{sale.profit_per_hour}</td>
+      <td align="right">{sale.time_spent}</td>
     </tr>
   );
 };
@@ -70,8 +62,9 @@ const View = ({ sales }) => {
             <th>Client</th>
             <th>Professional</th>
             <th>Date</th>
-            <th>Profit</th>
-            <th>Time Spent</th>
+            <th className="text-right">Profit</th>
+            <th className="text-right">Profit p/h</th>
+            <th className="text-right">Time Spent</th>
           </tr>
         </thead>
         <tbody>

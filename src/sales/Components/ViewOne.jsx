@@ -2,7 +2,17 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Container, Row, Col, Table } from 'reactstrap';
 
-const pad2 = number => (number < 10 ? '0' : '') + number;
+const getReadableDateWithTime = (y) => {
+  const pad2 = x => (x > 9 ? x : `0${x}`);
+
+  const date = new Date(y);
+  const day = date.getUTCDate();
+  const month = date.getUTCMonth() + 1;
+  const year = date.getUTCFullYear();
+  const hours = date.getUTCHours() + 1;
+  const minutes = date.getUTCMinutes();
+  return `${month} ${day} ${year} - ${pad2(hours)}:${pad2(minutes)}`;
+};
 
 const ViewOne = ({ sale }) => {
   if (!sale) {
@@ -18,18 +28,7 @@ const ViewOne = ({ sale }) => {
       </Container>
     );
   }
-  const start = sale.start_time.split(':');
-  const end = sale.end_time.split(':');
-  const d1 = new Date(0, 0, 0, start[0], start[1]);
-  const d2 = new Date(0, 0, 0, end[0], end[1]);
-  const diff = new Date(d2 - d1);
-  const timeSpent = `${diff.getHours()}:${pad2(diff.getMinutes())} h`;
 
-  const date = new Date(sale.date);
-  const day = date.getUTCDate();
-  const month = date.getUTCMonth() + 1;
-  const year = date.getUTCFullYear();
-  const dateToPrint = `${month} ${day} ${year}`;
 
   return (
     <Container>
@@ -40,8 +39,7 @@ const ViewOne = ({ sale }) => {
             <th>Client name</th>
             <th>Value</th>
             <th>Profit</th>
-            <th>Payment type</th>
-            <th>Date</th>
+            <th>Payment Method</th>
             <th>Start time</th>
             <th>End time</th>
             <th>Time spent</th>
@@ -52,13 +50,13 @@ const ViewOne = ({ sale }) => {
           <tr>
             <td>{sale.name}</td>
             <td>{sale.client.name}</td>
-            <td>{sale.value}</td>
-            <td>{sale.profit}</td>
-            <td>{dateToPrint}</td>
-            <td>{sale.start_time}</td>
-            <td>{sale.end_time}</td>
-            <td>{timeSpent}</td>
-            <td>Profit per hour</td>
+            <td>{parseInt(sale.payment.value_total, 10).toFixed(2)}</td>
+            <td>{parseInt(sale.profit, 10).toFixed(2)}</td>
+            <td>{sale.payment.method}</td>
+            <td align="right">{getReadableDateWithTime(sale.start_time)}</td>
+            <td align="right">{getReadableDateWithTime(sale.end_time)}</td>
+            <td align="right">{sale.time_spent} h</td>
+            <td align="right">{sale.profit_per_hour}</td>
           </tr>
         </tbody>
       </Table>
@@ -68,26 +66,26 @@ const ViewOne = ({ sale }) => {
         <thead>
           <tr>
             <th>Product name</th>
-            <th>Quantity</th>
-            <th>Price</th>
+            <th className="text-right">Quantity</th>
+            <th className="text-right">Price</th>
           </tr>
         </thead>
         <tbody>
           {
-            sale.stockEntries.map(entry => (
-              <tr key={entry.id}>
-                <td>
-                  {entry.product.name}
-                </td>
-                <td>
-                  {entry.qty}
-                </td>
-                <td>
-                  {`${entry.qty * entry.price_per_unit}`}
-                </td>
-              </tr>
-            ))
-          }
+                sale.stockEntries.map(entry => (
+                  <tr key={entry.id}>
+                    <td>
+                      {entry.product.name}
+                    </td>
+                    <td align="right">
+                      {entry.qty}
+                    </td>
+                    <td align="right">
+                      {`${(entry.qty * entry.price_per_unit).toFixed(2)}`}
+                    </td>
+                  </tr>
+              ))
+              }
         </tbody>
 
       </Table>
