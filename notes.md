@@ -12,7 +12,7 @@ Can't add unit when registering products, for some reason...
 + [ ] Add actions of clients, professionals, products, sales and purchases should add the server response to the start of the list, currently they are being added last
 
 ## Sales
-+ [-] Sale Add should sent startime and endtime on datetime format, using two fields instead of three
++ [x] Sale Add should sent startime and endtime on datetime format, using two fields instead of three
 + [ ] Value (total) is not being shown on sales
 + [X] Sales Add is refreshing the page
 + [ ] Sales is not showing errors
