@@ -65,6 +65,7 @@ const ProductsFields = ({ values, productsForSelect, addField, removeField, hand
           type="button"
           className="add-product my-2"
           onClick={addField}
+          color="info"
           block
         >
         Add Product
@@ -79,6 +80,7 @@ ProductsFields.defaultProps = {
 };
 
 const Add = ({
+  handleClear,
   handleSubmit,
   handleChange,
   paymentOptions,
@@ -197,7 +199,14 @@ const Add = ({
             productsForSelect={productsForSelect}
           />
 
-          <Button color="primary" block type="submit">Save Sale</Button>
+          <Row>
+            <Col xs={8}>
+              <Button color="primary" block type="submit">Save Sale</Button>
+            </Col>
+            <Col xs={4}>
+              <Button color="danger" block type="button" onClick={handleClear}>Clear Form</Button>
+            </Col>
+          </Row>
         </Form>
       </Col>
     </Row>
@@ -209,6 +218,7 @@ Add.propTypes = {
   handleChange: PropTypes.func.isRequired,
   addField: PropTypes.func.isRequired,
   removeField: PropTypes.func.isRequired,
+  handleClear: PropTypes.func.isRequired,
   paymentOptions: PropTypes.arrayOf(PropTypes.string).isRequired,
   clients: PropTypes.arrayOf(PropTypes.shape({
     id: PropTypes.string.isRequired,

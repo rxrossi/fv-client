@@ -94,6 +94,7 @@ export default (state = defaultState, action) => {
         ...state,
         adding: false,
         addErrors: {},
+        fields: {},
         list: [
           action.payload,
           ...state.list,

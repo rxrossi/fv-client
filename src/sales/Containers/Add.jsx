@@ -24,7 +24,6 @@ class Add extends React.Component {
   }
 
   componentDidMount() {
-    this.props.clearAddForm();
     this.props.fetchProducts();
     this.props.fetchClients();
     this.props.fetchProfessionals();
@@ -51,6 +50,7 @@ class Add extends React.Component {
 
   render() {
     return (<AddComponent
+      handleClear={this.props.clearAddForm}
       handleSubmit={this.submit}
       handleChange={this.handleChange}
       values={this.props.values}
