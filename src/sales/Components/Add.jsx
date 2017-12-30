@@ -25,7 +25,7 @@ const ProductsFields = ({ values, errors = [], productsForSelect, addField, remo
                 <option>Select one</option>
                 {
                   productsForSelect
-                    .filter(x => x.quantity)
+                    .filter(x => x.quantity > 0)
                     .map(item => (
                       <option key={item.id} value={item.id}>{item.name}</option>
                   ))
