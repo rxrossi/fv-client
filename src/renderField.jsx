@@ -30,6 +30,10 @@ const Field = ({
         <FormFeedback>{label} is not unique</FormFeedback>
     }
     {
+      error === 'NOT_POSITIVE' &&
+        <FormFeedback>{label} must be greater than zero</FormFeedback>
+    }
+    {
       error === 'BLANK' &&
         <FormFeedback>{label} is required</FormFeedback>
     }

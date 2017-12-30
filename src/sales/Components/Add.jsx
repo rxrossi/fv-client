@@ -4,7 +4,7 @@ import { Container, Row, Col, Form, Button } from 'reactstrap';
 import Input from '../../renderField';
 
 // eslint-disable-next-line
-const ProductsFields = ({ values, productsForSelect, addField, removeField, handleChange }) => {
+const ProductsFields = ({ values, errors = [], productsForSelect, addField, removeField, handleChange }) => {
   return (
     <Container>
       <Row>
@@ -17,6 +17,7 @@ const ProductsFields = ({ values, productsForSelect, addField, removeField, hand
                 type="select"
                 name="product"
                 value={value.product}
+                error={errors[index] && errors[index].product}
                 path={['products', index]}
                 onChange={handleChange}
                 label="Product"
@@ -35,6 +36,7 @@ const ProductsFields = ({ values, productsForSelect, addField, removeField, hand
                 type="number"
                 name="qty"
                 value={value.qty}
+                error={errors[index] && errors[index].qty}
                 label={`Quantity ${
                     (value.product &&
                     productsForSelect &&
@@ -88,6 +90,7 @@ const Add = ({
   professionals,
   productsForSelect,
   values,
+  errors,
   addField,
   removeField,
 }) => (
@@ -102,6 +105,7 @@ const Add = ({
             label="Service Name"
             placeholder="Name of the service"
             value={values.name}
+            error={errors.name}
           />
 
           <Row>
@@ -109,6 +113,7 @@ const Add = ({
               <Input
                 onChange={handleChange}
                 value={values.value}
+                error={errors.value}
                 type="number"
                 name="value"
                 label="Price Charged"
@@ -120,6 +125,7 @@ const Add = ({
               <Input
                 type="select"
                 value={values.payment_method}
+                error={errors.payment_method}
                 name="payment_method"
                 label="Payment Method"
                 onChange={handleChange}
@@ -139,6 +145,7 @@ const Add = ({
               <Input
                 type="datetime-local"
                 value={values.start_time}
+                error={errors.start_time}
                 name="start_time"
                 label="Start Time"
                 onChange={handleChange}
@@ -149,6 +156,7 @@ const Add = ({
                 type="datetime-local"
                 name="end_time"
                 value={values.end_time}
+                error={errors.end_time}
                 label="End Time"
                 onChange={handleChange}
               />
@@ -162,6 +170,7 @@ const Add = ({
                 type="select"
                 name="client"
                 value={values.client}
+                error={errors.client}
                 label="Select Client"
                 onChange={handleChange}
               >
@@ -178,6 +187,7 @@ const Add = ({
                 type="select"
                 name="professional"
                 value={values.professional}
+                error={errors.professional}
                 label="Select Professional"
                 onChange={handleChange}
               >
@@ -196,6 +206,7 @@ const Add = ({
             removeField={removeField}
             handleChange={handleChange}
             values={values.products}
+            errors={errors.products}
             productsForSelect={productsForSelect}
           />
 
@@ -236,6 +247,9 @@ Add.propTypes = {
       PropTypes.string,
       PropTypes.number,
     ]))),
+  ])).isRequired,
+  errors: PropTypes.objectOf(PropTypes.oneOfType([
+    PropTypes.string, PropTypes.arrayOf(PropTypes.string),
   ])).isRequired,
   productsForSelect: PropTypes.arrayOf(PropTypes.shape({
     id: PropTypes.string.isRequired,
