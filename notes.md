@@ -12,12 +12,12 @@ Can't add unit when registering products, for some reason...
 + [X] Add actions of clients, professionals, products, sales and purchases should add the server response to the start of the list, currently they are being added last
 
 ## Sales
++ [X] it is being possible to sell a product without stock
++ [ ] view one does not show measure unit
 + [X] on view one, date field shows start and end is being shown on start
 + [X] on view all, date and time spent shows NaN NaN NaN and NaN:NaN h
-+ [ ] view one does not show measure unit
 + [X] Value (total) is not being shown on sales
-+ [ ] Sales add is not showing errors
-+ [ ] it is being possible to sell a product without stock
++ [X] Sales add is not showing errors
 + [X] Sales form does not need to clear on page leave
 + [X] Sales form does not clear the form on success
 + [X] Seems like it is not possible to add a sale without a stock entry

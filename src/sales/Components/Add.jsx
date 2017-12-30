@@ -24,8 +24,10 @@ const ProductsFields = ({ values, errors = [], productsForSelect, addField, remo
               >
                 <option>Select one</option>
                 {
-                  productsForSelect.map(item => (
-                    <option key={item.id} value={item.id}>{item.name}</option>
+                  productsForSelect
+                    .filter(x => x.quantity)
+                    .map(item => (
+                      <option key={item.id} value={item.id}>{item.name}</option>
                   ))
                 }
               </Input>
