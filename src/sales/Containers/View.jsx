@@ -17,8 +17,8 @@ View.propTypes = {
   fetchSales: PropTypes.func.isRequired,
   sales: PropTypes.arrayOf(PropTypes.shape({
     name: PropTypes.string,
-    client: PropTypes.objectOf(PropTypes.string),
-    professional: PropTypes.objectOf(PropTypes.string),
+    client: PropTypes.objectOf(PropTypes.oneOfType([PropTypes.string, PropTypes.number])),
+    professional: PropTypes.objectOf(PropTypes.oneOfType([PropTypes.string, PropTypes.number])),
   })).isRequired,
 };
 

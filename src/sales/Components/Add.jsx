@@ -4,7 +4,7 @@ import { Container, Row, Col, Form, Button } from 'reactstrap';
 import Input from '../../renderField';
 
 // eslint-disable-next-line
-const ProductsFields = ({ values, errors = [], productsForSelect, addField, removeField, handleChange }) => {
+const ProductsFields = ({ values, errors, productsForSelect, addField, removeField, handleChange }) => {
   return (
     <Container>
       <Row>
@@ -81,6 +81,7 @@ const ProductsFields = ({ values, errors = [], productsForSelect, addField, remo
 ProductsFields.defaultProps = {
   productsForSelect: [],
   values: [],
+  errors: [],
 };
 
 const Add = ({
