@@ -9,11 +9,12 @@ Can't add unit when registering products, for some reason...
 + [ ] Fuzzy filter for Clients
 + [ ] Fuzzy filter for Clients and Products on Sales and Purchases
 + [ ] implement no more tables
-+ [ ] Add actions of clients, professionals, products, sales and purchases should add the server response to the start of the list, currently they are being added last
++ [X] Add actions of clients, professionals, products, sales and purchases should add the server response to the start of the list, currently they are being added last
 
 ## Sales
 + [X] on view one, date field shows start and end is being shown on start
 + [X] on view all, date and time spent shows NaN NaN NaN and NaN:NaN h
++ [ ] view one does not show measure unit
 + [X] Value (total) is not being shown on sales
 + [ ] Sales add is not showing errors
 + [ ] it is being possible to sell a product without stock
