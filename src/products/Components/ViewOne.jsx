@@ -1,9 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Table, Container, Row, Col } from 'reactstrap';
+import { Container, Row, Col } from 'reactstrap';
+import Table from '../../NoMoreTables';
+import { getReadableDate, formatMoney } from '../../displayHelpers';
 
 const Header = ({ product }) => (
-  <Table bordered>
+  <Table>
     <thead>
       <tr>
         <th width="40%">Name</th>
@@ -14,12 +16,16 @@ const Header = ({ product }) => (
     </thead>
     <tbody>
       <tr>
-        <td>{product.name}</td>
-        <th className="text-right">
+        <td data-title="Name">{product.name}</td>
+        <td align="right" data-title="Total in stock">
           {product.quantity} { product.quantity > 0 ? product.measure_unit : ''}
-        </th>
-        <td className="text-right">{product.price_per_unit}</td>
-        <td className="text-right">{product.avgPriceFiveLast}</td>
+        </td>
+        <td align="right" data-title={`Price per ${product.measure_unit}`}>
+          {formatMoney(product.price_per_unit)}
+        </td>
+        <td align="right" data-title={`Avg price (5) per ${product.measure_unit}`}>
+          {formatMoney(product.avgPriceFiveLast)}
+        </td>
       </tr>
     </tbody>
   </Table>
@@ -33,43 +39,44 @@ Header.propTypes = {
   }).isRequired,
 };
 
-const Stock = ({ stock }) => {
-  if (!stock || stock.length === 0) {
-    return <p className="text-info">No entries for this product yet</p>;
+const Stock = ({ product }) => {
+  if (!product || !product.stock || product.stock.length === 0) {
+    return <p className="text-info py-3">No entries for this product yet</p>;
   }
 
   return (
     <div>
-      <Table responsive hover bordered>
+      <Table>
         <thead>
           <tr>
             <th width="40%">Source or Destination</th>
             <th className="text-right">Quantity</th>
-            <th className="text-right">Price</th>
+            <th className="text-right">Price per {product.measure_unit}</th>
             <th className="text-right">Date</th>
           </tr>
         </thead>
         <tbody>
           {
-            stock.map((entry) => {
-              const date = new Date(entry.date);
-              const day = date.getUTCDate();
-              const month = date.getUTCMonth() + 1;
-              const year = date.getUTCFullYear();
-              const dateToPrint = `${month} ${day} ${year}`;
+            product.stock.map((entry) => {
               const className = entry.sale ? 'table-success' : 'table-info';
               return (
                 <tr
                   key={entry.id}
                   className={className}
                 >
-                  <td>{entry.sourceOrDestination.name || entry.sourceOrDestination.seller}</td>
-                  <td className="text-right">
+                  <td data-title="Source or used at">
+                    {entry.sourceOrDestination.name || entry.sourceOrDestination.seller}
+                  </td>
+                  <td align="right" data-title="Quantity">
                     {entry.sale ? '-' : '+'}
                     {entry.qty}
                   </td>
-                  <td className="text-right">{entry.price_per_unit}</td>
-                  <td className="text-right">{dateToPrint}</td>
+                  <td align="right" data-title={`price per ${product.measure_unit}`}>
+                    {formatMoney(entry.price_per_unit)}
+                  </td>
+                  <td align="right" data-title="Date">
+                    {getReadableDate(entry.date)}
+                  </td>
                 </tr>
               );
 })
@@ -80,13 +87,17 @@ const Stock = ({ stock }) => {
   );
 };
 Stock.propTypes = {
-  stock: PropTypes.arrayOf(PropTypes.shape({
-    id: PropTypes.string,
-    qty: PropTypes.number,
-    price: PropTypes.number,
-    date: PropTypes.string,
-    sourceOrDestination: PropTypes.objectOf(PropTypes.string),
-  })),
+  product: PropTypes.objectOf(PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.number,
+    PropTypes.arrayOf(PropTypes.shape({
+      id: PropTypes.string,
+      qty: PropTypes.number,
+      price: PropTypes.number,
+      date: PropTypes.string,
+      sourceOrDestination: PropTypes.objectOf(PropTypes.string),
+    })),
+  ])).isRequired,
 };
 Stock.defaultProps = {
   stock: undefined,
@@ -110,8 +121,8 @@ const ViewOne = ({ product }) => {
         <Col>
           <h2>Overall Info</h2>
           <Header product={product} />
-          <h2>Stock entries</h2>
-          <Stock stock={product.stock} />
+          <h2 className="pt-4">Stock entries</h2>
+          <Stock product={product} />
         </Col>
       </Row>
     </Container>);
