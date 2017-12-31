@@ -8,7 +8,7 @@ Can't add unit when registering products, for some reason...
 ## General
 + [ ] Fuzzy filter for Clients
 + [ ] Fuzzy filter for Clients and Products on Sales and Purchases
-+ [-] implement no more tables
++ [X] implement no more tables
   + [X] sales
   + [X] purchases
 + [X] Add actions of clients, professionals, products, sales and purchases should add the server response to the start of the list, currently they are being added last
@@ -25,8 +25,8 @@ Can't add unit when registering products, for some reason...
 + [X] Seems like it is not possible to add a sale without a stock entry
 
 ## Purchases
-+ [ ] submiting with date blank causes crash
-+ [ ] Not clearing the form after a successful submit
++ [X] submiting with date blank causes crash
++ [X] Not clearing the form after a successful submit
 + [ ] It seems possible to submit a purchase without stock entries
 
 ## Professionals
