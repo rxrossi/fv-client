@@ -41,18 +41,22 @@ const ViewOne = ({ sale }) => {
           <tr>
             <td data-title="Service name">{sale.name}</td>
             <td data-title="Client name">{sale.client.name}</td>
-            <td data-title="Value charged" align="right">{formatMoney(sale.payment.value_total)}</td>
+            <td data-title="Value charged" align="right">
+              {formatMoney(sale.payment.value_total)}
+            </td>
             <td data-title="Profit" align="right">{formatMoney(sale.profit)}</td>
             <td data-title="Payment method" align="right">{sale.payment.method}</td>
-            <td data-title="Start time" align="right">{getReadableDateWithTime(sale.start_time)}</td>
+            <td data-title="Start time" align="right">
+              {getReadableDateWithTime(sale.start_time)}
+            </td>
             <td data-title="End time" align="right">{getReadableDateWithTime(sale.end_time)}</td>
             <td data-title="Time spent" align="right">{sale.time_spent} h</td>
             <td data-title="Profit per hour" align="right">{formatMoney(sale.profit_per_hour)}</td>
           </tr>
         </tbody>
       </Table>
-      <h2>Products used</h2>
       { sale.stockEntries.length > 0 &&
+      <h2>Products used</h2> &&
       <Table mutateAt="0">
         <thead>
           <tr>
