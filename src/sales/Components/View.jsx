@@ -34,7 +34,7 @@ Sale.propTypes = {
 const View = ({ sales }) => {
   if (!sales || sales.length === 0) {
     return (
-      <Container className="py-1">
+      <Container className="py-5">
         <Row>
           <Col>
             <h2>Sales list</h2>
@@ -49,7 +49,8 @@ const View = ({ sales }) => {
     );
   }
   return (
-    <Container>
+    <Container className="py-5">
+      <h2>List of sale</h2>
       <Table>
         <thead>
           <tr>
