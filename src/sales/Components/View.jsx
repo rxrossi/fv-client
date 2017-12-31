@@ -1,30 +1,25 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
-import { Container, Row, Col, Table } from 'reactstrap';
+import { Container, Row, Col } from 'reactstrap';
+import { getReadableDate, formatMoney } from '../../displayHelpers';
+import Table from '../../NoMoreTables';
 
-const Sale = ({ sale }) => {
-  const date = new Date(sale.start_time);
-  const day = date.getUTCDate();
-  const month = date.getUTCMonth() + 1;
-  const year = date.getUTCFullYear();
-  const dateToPrint = `${month}/${day}/${year}`;
-  return (
-    <tr>
-      <td>
-        <Link to={`/sales/${sale.id}`}>
-          {sale.name}
-        </Link>
-      </td>
-      <td>{sale.client.name}</td>
-      <td>{sale.professional.name}</td>
-      <td>{dateToPrint}</td>
-      <td align="right">{parseInt(sale.profit, 10).toFixed(2)}</td>
-      <td align="right">{sale.profit_per_hour}</td>
-      <td align="right">{sale.time_spent}</td>
-    </tr>
-  );
-};
+const Sale = ({ sale }) => (
+  <tr>
+    <td data-title="Service name">
+      <Link to={`/sales/${sale.id}`}>
+        {sale.name}
+      </Link>
+    </td>
+    <td data-title="Client">{sale.client.name}</td>
+    <td data-title="Professional">{sale.professional.name}</td>
+    <td data-title="Start time">{getReadableDate(sale.start_time)}</td>
+    <td data-title="Profit" align="right">{formatMoney(sale.profit)}</td>
+    <td data-title="Profit p/h" align="right">{formatMoney(sale.profit_per_hour)}</td>
+    <td data-title="Time spent" align="right">{sale.time_spent}</td>
+  </tr>
+);
 Sale.propTypes = {
   sale: PropTypes.shape({
     client: PropTypes.objectOf(PropTypes.oneOfType([PropTypes.string, PropTypes.number])),

@@ -1,6 +1,14 @@
-export const getReadableDateWithTime = (y) => {
-  const pad2 = x => (x > 9 ? x : `0${x}`);
+const pad2 = x => (x > 9 ? x : `0${x}`);
 
+export const getReadableDate = (y) => {
+  const date = new Date(y);
+  const day = date.getUTCDate();
+  const month = date.getUTCMonth() + 1;
+  const year = date.getUTCFullYear();
+  return `${month}/${day}/${year}`;
+};
+
+export const getReadableDateWithTime = (y) => {
   const date = new Date(y);
   const day = date.getUTCDate();
   const month = date.getUTCMonth() + 1;

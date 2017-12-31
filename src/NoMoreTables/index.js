@@ -6,10 +6,17 @@ export default styled.table`
     padding: 5px;
   }
   td + td, th + th {
-    border-left: 5px solid white;
+    border-left: 3px solid white;
   }
-  tbody > tr:nth-child(odd) {
-    background: #f8f8f8;
+  thead > tr {
+    background: #fbfbfb;
+  }
+  tr {
+    padding-bottom: 5px;
+    border-bottom: 2px solid #eee;
+  }
+  tr:nth-child(even) {
+    background: #fbfbfb;
   }
   @media (max-width: ${props => (props.mutateAt || '800px')}) {
     & > thead > tr > th ,
@@ -20,9 +27,6 @@ export default styled.table`
       position: absolute;
       top: -9999px;
       left: -9999px;
-    }
-    & > tbody > tr {
-      border: 2px solid #f5f5f5;
     }
     & > tbody > tr > td {
       border: none;
