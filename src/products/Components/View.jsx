@@ -38,7 +38,7 @@ Product.propTypes = {
 const View = ({ products, baseUrl }) => {
   if (products.length) {
     return (
-      <Container className="py-1">
+      <Container className="py-5">
         <Row>
           <Col>
             <h2>Products List</h2>
