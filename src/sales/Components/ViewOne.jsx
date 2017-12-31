@@ -56,7 +56,7 @@ const ViewOne = ({ sale }) => {
         </tbody>
       </Table>
       { sale.stockEntries.length > 0 &&
-      <Container>
+      <Container className="py-4">
         <Row>
           <h2>Products used</h2>
         </Row>
