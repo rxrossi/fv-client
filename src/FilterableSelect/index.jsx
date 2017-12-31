@@ -69,7 +69,9 @@ class FilterableSelect extends React.Component {
     return (e) => {
       const visibleOpts =
         fuzzysort.go(e.target.value, this.props.options, { key: 'name' })
-          .map(x => x.obj);
+          .map(x => x.obj)
+          .slice(0, this.props.maxOptsToShow);
+
 
       this.setState({
         [name]: e.target.value,
@@ -89,7 +91,11 @@ class FilterableSelect extends React.Component {
   }
   backToFilter() {
     if (this.state.visibleOpts.length === 1) {
-      this.changeFilter('filter')({ target: { value: 'aa' } });
+      this.changeFilter('filter')({
+        target: {
+          value: this.state.filter.substring(0, this.state.filter.length - 1),
+        },
+      });
     }
     return this.setState({ selected: false });
   }
