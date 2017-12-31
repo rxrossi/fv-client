@@ -1,6 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Container, Row, Col, Table } from 'reactstrap';
+import { Container, Row, Col } from 'reactstrap';
+import Table from '../../NoMoreTables';
+import { getReadableDate } from '../../displayHelpers';
 
 const EntryRow = ({ entry }) => (
   <tr>
@@ -39,23 +41,17 @@ const ViewOne = ({ purchase }) => {
     );
   }
 
-  const date = new Date(purchase.date);
-  const day = date.getUTCDate();
-  const month = date.getUTCMonth() + 1;
-  const year = date.getUTCFullYear();
-  const dateToPrint = `${month} ${day} ${year}`;
-
   return (
     <Container>
       <Row>
         <Col>
           <h2 className="text-info text-center">Seller: {purchase.seller} </h2>
-          <p className="text-center">Date: {dateToPrint}</p>
+          <p className="text-center">Date: {getReadableDate(purchase.date)}</p>
         </Col>
       </Row>
       <Row>
         <Col>
-          <Table>
+          <Table mutateAt="0">
             <thead>
               <tr>
                 <th>Product Name</th>

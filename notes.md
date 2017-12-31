@@ -9,8 +9,8 @@ Can't add unit when registering products, for some reason...
 + [ ] Fuzzy filter for Clients
 + [ ] Fuzzy filter for Clients and Products on Sales and Purchases
 + [-] implement no more tables
-  + [ ] sales
-  + [ ] purchases
+  + [X] sales
+  + [-] purchases
 + [X] Add actions of clients, professionals, products, sales and purchases should add the server response to the start of the list, currently they are being added last
 
 ## Sales

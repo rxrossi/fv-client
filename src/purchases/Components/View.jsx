@@ -1,27 +1,22 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
-import { Container, Row, Col, Table } from 'reactstrap';
+import { Container, Row, Col } from 'reactstrap';
+import Table from '../../NoMoreTables';
+import { getReadableDate, formatMoney } from '../../displayHelpers';
 
-const PurchaseRow = ({ purchase, baseUrl }) => {
-  const date = new Date(purchase.date);
-  const day = date.getUTCDate();
-  const month = date.getUTCMonth() + 1;
-  const year = date.getUTCFullYear();
-  const dateToPrint = `${month} ${day} ${year}`;
-  return (
-    <tr>
-      <td>{purchase.seller}</td>
-      <td>{dateToPrint}</td>
-      <td>{purchase.price}</td>
-      <td>
-        <Link to={`${baseUrl}/${purchase.id}`}>
+const PurchaseRow = ({ purchase, baseUrl }) => (
+  <tr>
+    <td data-title="Seller">{purchase.seller}</td>
+    <td data-title="Date" align="right">{getReadableDate(purchase.date)}</td>
+    <td data-title="Total value" align="right">{formatMoney(purchase.price)}</td>
+    <td data-title="Options">
+      <Link to={`${baseUrl}/${purchase.id}`}>
           See details
-        </Link>
-      </td>
-    </tr>
-  );
-};
+      </Link>
+    </td>
+  </tr>
+);
 PurchaseRow.propTypes = {
   purchase: PropTypes.shape({
     id: PropTypes.string.isRequired,
@@ -50,12 +45,13 @@ const View = ({ purchases, baseUrl }) => {
   }
   return (
     <Container className="py-1">
+      <h2>Purchases List</h2>
       <Table responsive striped bordered>
         <thead>
           <tr>
             <th>Seller</th>
-            <th>Date</th>
-            <th>Total Value</th>
+            <th className="text-right">Date</th>
+            <th className="text-right">Total Value</th>
             <th>Options</th>
           </tr>
         </thead>
