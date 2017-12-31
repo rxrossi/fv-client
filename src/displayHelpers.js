@@ -15,7 +15,7 @@ export const getReadableDateWithTime = (y) => {
   const year = date.getUTCFullYear();
   const hours = date.getUTCHours() + 1;
   const minutes = date.getUTCMinutes();
-  return `${month} ${day} ${year} - ${pad2(hours)}:${pad2(minutes)}`;
+  return `${month}/${day}/${year} - ${pad2(hours)}:${pad2(minutes)}`;
 };
 
 export const formatMoney = x => parseFloat(x, 10).toFixed(2);

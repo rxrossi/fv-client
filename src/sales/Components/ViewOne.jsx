@@ -56,35 +56,41 @@ const ViewOne = ({ sale }) => {
         </tbody>
       </Table>
       { sale.stockEntries.length > 0 &&
-      <h2>Products used</h2> &&
-      <Table mutateAt="0">
-        <thead>
-          <tr>
-            <th>Product name</th>
-            <th className="text-right">Quantity</th>
-            <th className="text-right">Price</th>
-          </tr>
-        </thead>
-        <tbody>
-          {
-              sale.stockEntries.map(entry => (
-                <tr key={entry.id}>
-                  <td data-title="Name">
-                    {entry.product.name}
-                  </td>
-                  <td data-title="Measure Unit" align="right">
-                    {entry.qty} {entry.product.measure_unit}
-                  </td>
-                  <td data-title="Total Price" align="right">
-                    {`${(entry.qty * entry.price_per_unit).toFixed(2)}`}
-                  </td>
-                </tr>
-              ))
-            }
-        </tbody>
+      <Container>
+        <Row>
+          <h2>Products used</h2>
+        </Row>
+        <Row>
+          <Table mutateAt="0">
+            <thead>
+              <tr>
+                <th>Product name</th>
+                <th className="text-right">Quantity</th>
+                <th className="text-right">Price</th>
+              </tr>
+            </thead>
+            <tbody>
+              {
+                    sale.stockEntries.map(entry => (
+                      <tr key={entry.id}>
+                        <td data-title="Name">
+                          {entry.product.name}
+                        </td>
+                        <td data-title="Measure Unit" align="right">
+                          {entry.qty} {entry.product.measure_unit}
+                        </td>
+                        <td data-title="Total Price" align="right">
+                          {`${(entry.qty * entry.price_per_unit).toFixed(2)}`}
+                        </td>
+                      </tr>
+                    ))
+                  }
+            </tbody>
 
-      </Table>
-      }
+          </Table>
+        </Row>
+      </Container>
+          }
     </Container>
   );
 };
