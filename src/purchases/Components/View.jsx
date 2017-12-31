@@ -29,7 +29,7 @@ PurchaseRow.propTypes = {
 const View = ({ purchases, baseUrl }) => {
   if (!purchases.length) {
     return (
-      <Container className="py-1">
+      <Container className="py-5">
         <Row>
           <Col>
             <h2>Purchases list</h2>
@@ -44,7 +44,7 @@ const View = ({ purchases, baseUrl }) => {
     );
   }
   return (
-    <Container className="py-1">
+    <Container className="py-5">
       <h2>Purchases List</h2>
       <Table responsive striped bordered>
         <thead>
