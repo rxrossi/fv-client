@@ -14,6 +14,7 @@ class View extends React.Component {
     const { purchaseId } = this.props;
     const purchase = this.props.purchases
       .find(item => item.id === purchaseId);
+
     return (<ViewOneComponent purchase={purchase} />);
   }
 }

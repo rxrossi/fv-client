@@ -2,13 +2,13 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Container, Row, Col } from 'reactstrap';
 import Table from '../../NoMoreTables';
-import { getReadableDate } from '../../displayHelpers';
+import { getReadableDate, formatMoney } from '../../displayHelpers';
 
 const EntryRow = ({ entry }) => (
   <tr>
     <td>{entry.product.name}</td>
     <td>{entry.qty}</td>
-    <td>{entry.price}</td>
+    <td>{formatMoney(entry.price_per_unit)} per {entry.product.measure_unit}</td>
   </tr>
 );
 EntryRow.propTypes = {
