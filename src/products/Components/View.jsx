@@ -1,23 +1,25 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
-import { Container, Table, Row, Col } from 'reactstrap';
+import { Container, Row, Col } from 'reactstrap';
+import Table from '../../NoMoreTables';
+import { formatMoney } from '../../displayHelpers';
 
 export const NO_PRODUCTS_P_CLASS = 'no-products-msg';
 
 const Product = ({ product, linkToViewOne }) => (
   <tr>
-    <td>
+    <td data-title="Name">
       <Link to={linkToViewOne}>{product.name}</Link>
     </td>
-    <td className="text-right">
+    <td align="right" data-title="Quantity">
       {product.quantity} {product.measure_unit}
     </td>
-    <td className="text-right">
-      {product.price_per_unit} per {product.measure_unit}
+    <td align="right" data-title="Price">
+      {formatMoney(product.price_per_unit)} per {product.measure_unit}
     </td>
-    <td className="text-right">
-      {product.avgPriceFiveLast}
+    <td align="right" data-title="Avg Price (5)">
+      {formatMoney(product.avgPriceFiveLast)} per {product.measure_unit}
     </td>
   </tr>
 );
@@ -44,13 +46,13 @@ const View = ({ products, baseUrl }) => {
         </Row>
         <Row>
           <Col>
-            <Table responsive hover striped bordered>
+            <Table>
               <thead>
                 <tr>
                   <th>Name</th>
-                  <th>Quantity</th>
-                  <th>Price</th>
-                  <th>Average price of last five per each</th>
+                  <th className="text-right">Quantity</th>
+                  <th className="text-right">Price</th>
+                  <th className="text-right">Average price of last five per each</th>
                 </tr>
               </thead>
               <tbody>
