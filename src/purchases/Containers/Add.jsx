@@ -40,7 +40,6 @@ class Add extends React.Component {
 
 
   render() {
-    // console.log(this.props.addErrors);
     return (
       <AddComponent
         errors={this.props.addErrors}

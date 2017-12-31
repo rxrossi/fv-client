@@ -25,6 +25,7 @@ Can't add unit when registering products, for some reason...
 + [X] Seems like it is not possible to add a sale without a stock entry
 
 ## Purchases
++ [ ] submiting with date blank causes crash
 + [ ] Not clearing the form after a successful submit
 + [ ] It seems possible to submit a purchase without stock entries
 

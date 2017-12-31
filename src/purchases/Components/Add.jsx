@@ -4,7 +4,7 @@ import { Container, Row, Col, Form, Button } from 'reactstrap';
 import Input from '../../renderField';
 
 const ProductsFields = ({
-  values, products, handleChange, addField, removeField,
+  values, errors, products, handleChange, addField, removeField,
 }) => (
   <div>
     <Row className="text-center">
@@ -17,6 +17,7 @@ const ProductsFields = ({
                 type="select"
                 name="id"
                 value={value.id}
+                error={errors[index] && errors[index].id}
                 path={['products', index]}
                 label="Select Product"
                 onChange={handleChange}
@@ -34,6 +35,7 @@ const ProductsFields = ({
                 component="input"
                 type="number"
                 value={value.qty}
+                error={errors[index] && errors[index].qty}
                 onChange={handleChange}
                 placeholder="Quantity"
                 label="Quantity"
@@ -46,6 +48,7 @@ const ProductsFields = ({
                 component="input"
                 type="number"
                 value={value.total_price}
+                error={errors[index] && errors[index].total_price}
                 onChange={handleChange}
                 name="total_price"
                 path={['products', index]}
@@ -99,10 +102,12 @@ ProductsFields.propTypes = {
     PropTypes.string,
     PropTypes.number,
   ]))),
+  errors: PropTypes.arrayOf(PropTypes.objectOf(PropTypes.string)),
 };
 ProductsFields.defaultProps = {
   products: [],
   values: [],
+  errors: [],
 };
 
 const Add = ({
@@ -132,6 +137,7 @@ const Add = ({
         removeField={removeField}
         handleChange={handleChange}
         values={values.products}
+        errors={errors.products}
         products={products}
       />
       <Button type="submit" color="primary" block>Save Sale</Button>
