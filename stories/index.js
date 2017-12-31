@@ -191,8 +191,8 @@ const sale1 = {
     available_at: Date.now(),
   },
   stockEntries: [
-    { id: '1', qty: 10, product: { name: 'OX' } },
-    { id: '2', qty: 20, product: { name: 'Shampoo' } },
+    { id: '1', qty: 10, product: { name: 'OX', measure_unit: 'ml' } },
+    { id: '2', qty: 20, product: { name: 'Shampoo', measure_unit: 'ml' } },
   ],
   profit: 200,
 };

@@ -1,18 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Container, Row, Col, Table } from 'reactstrap';
-
-const getReadableDateWithTime = (y) => {
-  const pad2 = x => (x > 9 ? x : `0${x}`);
-
-  const date = new Date(y);
-  const day = date.getUTCDate();
-  const month = date.getUTCMonth() + 1;
-  const year = date.getUTCFullYear();
-  const hours = date.getUTCHours() + 1;
-  const minutes = date.getUTCMinutes();
-  return `${month} ${day} ${year} - ${pad2(hours)}:${pad2(minutes)}`;
-};
+import { Container, Row, Col } from 'reactstrap';
+import Table from '../../NoMoreTables';
+import { getReadableDateWithTime, formatMoney } from '../../displayHelpers';
 
 const ViewOne = ({ sale }) => {
   if (!sale) {
@@ -32,37 +22,38 @@ const ViewOne = ({ sale }) => {
 
   return (
     <Container>
-      <Table bordered>
+      <h2>Basic details</h2>
+      <Table mutateAt="991px">
         <thead>
           <tr>
             <th>Service name </th>
             <th>Client name</th>
-            <th>Value</th>
-            <th>Profit</th>
-            <th>Payment Method</th>
-            <th>Start time</th>
-            <th>End time</th>
-            <th>Time spent</th>
-            <th>Profit per hour</th>
+            <th className="text-right">Value</th>
+            <th className="text-right">Profit</th>
+            <th className="text-right">Payment Method</th>
+            <th className="text-right">Start time</th>
+            <th className="text-right">End time</th>
+            <th className="text-right">Time spent</th>
+            <th className="text-right">Profit per hour</th>
           </tr>
         </thead>
         <tbody>
           <tr>
-            <td>{sale.name}</td>
-            <td>{sale.client.name}</td>
-            <td>{parseInt(sale.payment.value_total, 10).toFixed(2)}</td>
-            <td>{parseInt(sale.profit, 10).toFixed(2)}</td>
-            <td>{sale.payment.method}</td>
-            <td align="right">{getReadableDateWithTime(sale.start_time)}</td>
-            <td align="right">{getReadableDateWithTime(sale.end_time)}</td>
-            <td align="right">{sale.time_spent} h</td>
-            <td align="right">{sale.profit_per_hour}</td>
+            <td data-title="Service name">{sale.name}</td>
+            <td data-title="Client name">{sale.client.name}</td>
+            <td data-title="Value charged" align="right">{formatMoney(sale.payment.value_total)}</td>
+            <td data-title="Profit" align="right">{formatMoney(sale.profit)}</td>
+            <td data-title="Payment method" align="right">{sale.payment.method}</td>
+            <td data-title="Start time" align="right">{getReadableDateWithTime(sale.start_time)}</td>
+            <td data-title="End time" align="right">{getReadableDateWithTime(sale.end_time)}</td>
+            <td data-title="Time spent" align="right">{sale.time_spent} h</td>
+            <td data-title="Profit per hour" align="right">{formatMoney(sale.profit_per_hour)}</td>
           </tr>
         </tbody>
       </Table>
-
+      <h2>Products used</h2>
       { sale.stockEntries.length > 0 &&
-      <Table>
+      <Table mutateAt="0">
         <thead>
           <tr>
             <th>Product name</th>
@@ -72,20 +63,20 @@ const ViewOne = ({ sale }) => {
         </thead>
         <tbody>
           {
-                sale.stockEntries.map(entry => (
-                  <tr key={entry.id}>
-                    <td>
-                      {entry.product.name}
-                    </td>
-                    <td align="right">
-                      {entry.qty}
-                    </td>
-                    <td align="right">
-                      {`${(entry.qty * entry.price_per_unit).toFixed(2)}`}
-                    </td>
-                  </tr>
+              sale.stockEntries.map(entry => (
+                <tr key={entry.id}>
+                  <td data-title="Name">
+                    {entry.product.name}
+                  </td>
+                  <td data-title="Measure Unit" align="right">
+                    {entry.qty} {entry.product.measure_unit}
+                  </td>
+                  <td data-title="Total Price" align="right">
+                    {`${(entry.qty * entry.price_per_unit).toFixed(2)}`}
+                  </td>
+                </tr>
               ))
-              }
+            }
         </tbody>
 
       </Table>
