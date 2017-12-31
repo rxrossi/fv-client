@@ -30,8 +30,51 @@ import Toggler from '../src/DateTimePicker/Toggler/';
 import DatePicker from '../src/DateTimePicker/DatePicker/';
 import getDays from '../src/DateTimePicker/helpers/getDays';
 import DateTimePicker from '../src/DateTimePicker/';
+import FilterableSelect from '../src/FilterableSelect/';
 
 const dummyFn = () => {};
+
+storiesOf('FilterableSelect/index', module)
+  .add('default', () => {
+    const options = [
+      { id: '1a', name: 'Ana' },
+      { id: '1b', name: 'Ana Julia' },
+      { id: '2a', name: 'Carla' },
+      { id: '3a', name: 'Carol' },
+      { id: '3b', name: 'Beatriz' },
+    ];
+
+    class TestComponent extends React.Component {
+      constructor(props) {
+        super(props);
+        this.state = {
+          person: '1b',
+        };
+        this.onChange = this.onChange.bind(this);
+      }
+      onChange(name) {
+        return (value) => {
+          console.log(name, value);
+          this.setState({ [name]: value });
+        };
+      }
+      render() {
+        return (
+          <div>
+            {this.state.person}
+            <FilterableSelect
+              options={this.props.options}
+              name="person"
+              label="Person"
+              value={this.state.person}
+              handleChange={this.onChange}
+            />
+          </div>);
+      }
+    }
+
+    return (<TestComponent options={options} />);
+  });
 
 storiesOf('DateTimePicker/index', module)
   .add('default', () => {
