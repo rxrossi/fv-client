@@ -8,11 +8,11 @@ import { fetchProfessionals } from '../../professionals/actions';
 import { addSale, changeField, appendToArrayOfFields, removeFromArrayOfFields, clearAddForm } from '../../sales/actions';
 
 const paymentOptions = [
-  'Money',
-  'Debit',
-  'Credit 1x',
-  'Credit 2x',
-  'Credit 3x',
+  { id: '1', name: 'Money' },
+  { id: '2', name: 'Debit' },
+  { id: '3', name: 'Credit 1x' },
+  { id: '4', name: 'Credit 2x' },
+  { id: '5', name: 'Credit 3x' },
 ];
 
 class Add extends React.Component {

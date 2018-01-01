@@ -120,21 +120,15 @@ const Add = ({
             </div>
 
             <div className="col-md-6">
-              <Input
+              <FilterableSelect
                 type="select"
                 value={values.payment_method}
                 error={errors.payment_method}
                 name="payment_method"
                 label="Payment Method"
-                onChange={handleChange}
-              >
-                <option>Select one</option>
-                {
-                        paymentOptions.map(option => (
-                          <option key={option} value={option}>{option}</option>
-                        ))
-                      }
-              </Input>
+                handleChange={handleChange}
+                options={paymentOptions}
+              />
             </div>
           </Row>
 
