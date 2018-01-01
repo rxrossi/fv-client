@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { Label } from 'reactstrap';
 import fuzzysort from 'fuzzysort';
 import styled from 'styled-components';
@@ -65,17 +66,25 @@ class FilterableSelect extends React.Component {
     this.backToFilter = this.backToFilter.bind(this);
   }
 
+  componentDidMount() {
+    const { value, options } = this.props;
+    const { selected } = this.state;
+
+    if (value && !selected) {
+      this.changeFilter('filter')({ target: { value: options.find(x => x.id === value).name } });
+    }
+  }
+
   changeFilter(name) {
     return (e) => {
-      const visibleOpts =
-        fuzzysort.go(e.target.value, this.props.options, { key: 'name' })
-          .map(x => x.obj)
-          .slice(0, this.props.maxOptsToShow);
+      const visibleOpts = e.target.value ?
+        fuzzysort.go(e.target.value, this.props.options, { key: 'name' }).map(x => x.obj) :
+        this.props.options;
 
 
       this.setState({
         [name]: e.target.value,
-        visibleOpts,
+        visibleOpts: visibleOpts.slice(0, this.props.maxOptsToShow),
       });
 
       if (visibleOpts.length === 1) {
@@ -89,13 +98,10 @@ class FilterableSelect extends React.Component {
     this.setState({ selected: true });
     return this.props.handleChange(this.props.name)(item.id);
   }
+
   backToFilter() {
     if (this.state.visibleOpts.length === 1) {
-      this.changeFilter('filter')({
-        target: {
-          value: this.state.filter.substring(0, this.state.filter.length - 1),
-        },
-      });
+      this.changeFilter('filter')({ target: { value: '' } });
     }
     return this.setState({ selected: false });
   }
@@ -103,7 +109,7 @@ class FilterableSelect extends React.Component {
   render() {
     const { visibleOpts, selected } = this.state;
     const {
-      value, options, error, name, label,
+      value, options, error, label,
     } = this.props;
 
     if (selected) {
@@ -125,19 +131,20 @@ class FilterableSelect extends React.Component {
         <Input
           type="text"
           name="filter"
+          error={error}
           label={label}
-          error={undefined}
           value={this.state.filter}
           onChange={this.changeFilter}
         />
         <Ul>
           {
             visibleOpts
-              .map(x =>
-                (<Li
+              .map(x => (
+                <Li
                   key={x.id}
                   onClick={() => this.select(x)}
-                >{x.name}
+                >
+                  {x.name}
                 </Li>))
           }
         </Ul>
@@ -145,6 +152,19 @@ class FilterableSelect extends React.Component {
     );
   }
 }
+
+FilterableSelect.propTypes = {
+  value: PropTypes.string.isRequired,
+  name: PropTypes.string.isRequired,
+  label: PropTypes.string.isRequired,
+  handleChange: PropTypes.func.isRequired,
+  error: PropTypes.objectOf(PropTypes.string).isRequired,
+  options: PropTypes.arrayOf(PropTypes.objectOf(PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.number,
+  ]))).isRequired,
+  maxOptsToShow: PropTypes.number,
+};
 
 FilterableSelect.defaultProps = {
   maxOptsToShow: 5,
