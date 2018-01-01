@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { Container, Row, Col, Form, Button } from 'reactstrap';
 import Input from '../../renderField';
 import FilterableSelect from '../../FilterableSelect';
+import DateTimePicker from '../../DateTimePicker';
 
 // eslint-disable-next-line
 const ProductsFields = ({ values, errors, productsForSelect, addField, removeField, handleChange }) => {
@@ -106,78 +107,68 @@ const Add = ({
             error={errors.name}
           />
 
-          <Row>
-            <div className="col-md-6">
-              <Input
-                onChange={handleChange}
-                value={values.value}
-                error={errors.value}
-                type="number"
-                name="value"
-                label="Price Charged"
-                placeholder="Value"
-              />
-            </div>
+          <Input
+            onChange={handleChange}
+            value={values.value}
+            error={errors.value}
+            type="number"
+            name="value"
+            label="Price Charged"
+            placeholder="Value"
+          />
 
-            <div className="col-md-6">
-              <FilterableSelect
-                type="select"
-                value={values.payment_method}
-                error={errors.payment_method}
-                name="payment_method"
-                label="Payment Method"
-                handleChange={handleChange}
-                options={paymentOptions}
-              />
-            </div>
-          </Row>
+          <FilterableSelect
+            type="select"
+            value={values.payment_method}
+            error={errors.payment_method}
+            name="payment_method"
+            label="Payment Method"
+            handleChange={handleChange}
+            options={paymentOptions}
+          />
 
           <Row>
-            <div className="col-md-6">
-              <Input
-                type="datetime-local"
-                value={values.start_time}
+            <Col className="text-center">
+              <DateTimePicker
+                date={values.start_time}
                 error={errors.start_time}
                 name="start_time"
                 label="Start Time"
                 onChange={handleChange}
               />
-            </div>
-            <div className="col-md-6">
-              <Input
-                type="datetime-local"
-                name="end_time"
-                value={values.end_time}
-                error={errors.end_time}
-                label="End Time"
-                onChange={handleChange}
-              />
-            </div>
+            </Col>
           </Row>
 
 
           <Row>
-            <div className="col-md-6">
-              <FilterableSelect
-                name="client"
-                value={values.client}
-                error={errors.client}
-                label="Select Client"
-                handleChange={handleChange}
-                options={clients}
+            <Col className="text-center">
+              <DateTimePicker
+                date={values.end_time}
+                error={errors.end_time}
+                name="end_time"
+                label="End Time"
+                onChange={handleChange}
               />
-            </div>
-            <div className="col-md-6">
-              <FilterableSelect
-                name="professional"
-                value={values.professional}
-                error={errors.professional}
-                label="Select Professional"
-                handleChange={handleChange}
-                options={professionals}
-              />
-            </div>
+            </Col>
           </Row>
+
+          <FilterableSelect
+            name="client"
+            value={values.client}
+            error={errors.client}
+            label="Select Client"
+            handleChange={handleChange}
+            options={clients}
+          />
+
+          <FilterableSelect
+            name="professional"
+            value={values.professional}
+            error={errors.professional}
+            label="Select Professional"
+            handleChange={handleChange}
+            options={professionals}
+          />
 
           <ProductsFields
             addField={addField}

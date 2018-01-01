@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Label } from 'reactstrap';
 import DatePicker from './DatePicker/';
 import TimePicker from './TimePicker/';
 import Toggler from './Toggler/';
@@ -26,13 +27,15 @@ class DateTimePicker extends React.Component {
   handleChangeDate(receivedDate) {
     const { day, month, year } = fromDate(receivedDate);
     const { hours, minutes } = fromDate(this.props.date);
-    this.props.onChange(new Date(year, month, day, hours, minutes));
+    const value = new Date(year, month, day, hours, minutes);
+    this.props.onChange(this.props.name)({ target: { value } });
   }
 
   handleChangeTime(receivedTime) {
     const [hours, minutes] = receivedTime.split(':');
     const { year, month, day } = fromDate(this.props.date);
-    this.props.onChange(new Date(year, month, day, hours, minutes));
+    const value = new Date(year, month, day, hours, minutes);
+    this.props.onChange(this.props.name)({ target: { value } });
   }
 
   render() {
@@ -40,7 +43,8 @@ class DateTimePicker extends React.Component {
     const time = `${pad2(date.getHours())}:${pad2(date.getMinutes())}`;
     const { picking } = this.state;
     return (
-      <div>
+      <div style={{ display: 'inline-block' }}>
+        <Label>{this.props.label}</Label>
         {
           this.state.picking === 'date' ?
             <DatePicker
@@ -64,11 +68,13 @@ class DateTimePicker extends React.Component {
 DateTimePicker.propTypes = {
   date: PropTypes.instanceOf(Date),
   picking: PropTypes.string,
+  name: PropTypes.string.isRequired,
+  label: PropTypes.string.isRequired,
   onChange: PropTypes.func.isRequired,
 };
 DateTimePicker.defaultProps = {
   date: new Date(),
-  picking: 'date',
+  picking: 'time',
 };
 
 export default DateTimePicker;

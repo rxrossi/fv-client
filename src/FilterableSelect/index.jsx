@@ -58,12 +58,12 @@ class FilterableSelect extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      visibleOpts: this.props.options.slice(0, this.props.maxOptsToShow),
+      visibleOpts: [],
       selected: false,
     };
     this.changeFilter = this.changeFilter.bind(this);
     this.select = this.select.bind(this);
-    this.backToFilter = this.backToFilter.bind(this);
+    this.unselect = this.unselect.bind(this);
   }
 
   componentDidMount() {
@@ -78,9 +78,7 @@ class FilterableSelect extends React.Component {
   changeFilter(name) {
     return (e) => {
       const visibleOpts = e.target.value ?
-        fuzzysort.go(e.target.value, this.props.options, { key: 'name' }).map(x => x.obj) :
-        this.props.options;
-
+        fuzzysort.go(e.target.value, this.props.options, { key: 'name' }).map(x => x.obj) : [];
 
       this.setState({
         [name]: e.target.value,
@@ -99,10 +97,10 @@ class FilterableSelect extends React.Component {
     return this.props.handleChange(name, path)({ target: { value: item.id } });
   }
 
-  backToFilter() {
-    if (this.state.visibleOpts.length === 1) {
-      this.changeFilter('filter')({ target: { value: '' } });
-    }
+  unselect() {
+    const { name, path } = this.props;
+    this.changeFilter('filter')({ target: { value: '' } });
+    this.props.handleChange(name, path)({ target: { value: '' } });
     return this.setState({ selected: false });
   }
 
@@ -116,7 +114,7 @@ class FilterableSelect extends React.Component {
       return (
         <div>
           <LocalLabel>{label}</LocalLabel>
-          <Button type="button" onClick={this.backToFilter}>
+          <Button type="button" onClick={this.unselect}>
             <i className="fa fa-chevron-left" aria-hidden="true" />
           </Button>
           <SelectedOpt>
