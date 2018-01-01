@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Container, Row, Col, Form, Button } from 'reactstrap';
 import Input from '../../renderField';
+import FilterableSelect from '../../FilterableSelect';
 
 // eslint-disable-next-line
 const ProductsFields = ({ values, errors, productsForSelect, addField, removeField, handleChange }) => {
@@ -13,24 +14,18 @@ const ProductsFields = ({ values, errors, productsForSelect, addField, removeFie
           // eslint-disable-next-line
           <Row key={index} className="my-2 p-2 bg-light mx-1 product-row">
             <div className="col-md-6">
-              <Input
+              <FilterableSelect
                 type="select"
                 name="product"
                 value={value.product}
                 error={errors[index] && errors[index].product}
                 path={['products', index]}
-                onChange={handleChange}
+                handleChange={handleChange}
                 label="Product"
-              >
-                <option>Select one</option>
-                {
-                  productsForSelect
-                    .filter(x => x.quantity > 0)
-                    .map(item => (
-                      <option key={item.id} value={item.id}>{item.name}</option>
-                  ))
+                options={
+                  productsForSelect.filter(x => x.quantity > 0)
                 }
-              </Input>
+              />
             </div>
             <div className="col-md-4">
               <Input
@@ -169,38 +164,24 @@ const Add = ({
 
           <Row>
             <div className="col-md-6">
-              <Input
-                type="select"
+              <FilterableSelect
                 name="client"
                 value={values.client}
                 error={errors.client}
                 label="Select Client"
-                onChange={handleChange}
-              >
-                <option>Pick a Client</option>
-                {
-                        clients.map(option => (
-                          <option key={option.id} value={option.id}>{option.name}</option>
-                        ))
-                      }
-              </Input>
+                handleChange={handleChange}
+                options={clients}
+              />
             </div>
             <div className="col-md-6">
-              <Input
-                type="select"
+              <FilterableSelect
                 name="professional"
                 value={values.professional}
                 error={errors.professional}
                 label="Select Professional"
-                onChange={handleChange}
-              >
-                <option>Pick A Professional</option>
-                {
-                        professionals.map(option => (
-                          <option key={option.id} value={option.id}>{option.name}</option>
-                        ))
-                      }
-              </Input>
+                handleChange={handleChange}
+                options={professionals}
+              />
             </div>
           </Row>
 

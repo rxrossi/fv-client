@@ -29,7 +29,7 @@ class Add extends React.Component {
     this.props.fetchProfessionals();
   }
 
-  handleChange(field, path) {
+  handleChange(field, path = []) {
     return ({ target: { value } }) => {
       this.props.changeField([...path, field], value);
     };

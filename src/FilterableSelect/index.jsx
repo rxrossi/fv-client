@@ -88,15 +88,15 @@ class FilterableSelect extends React.Component {
       });
 
       if (visibleOpts.length === 1) {
-        this.props.handleChange(this.props.name)(visibleOpts[0].id);
-        this.setState({ selected: true });
+        this.select(visibleOpts[0]);
       }
     };
   }
 
   select(item) {
+    const { name, path } = this.props;
     this.setState({ selected: true });
-    return this.props.handleChange(this.props.name)(item.id);
+    return this.props.handleChange(name, path)({ target: { value: item.id } });
   }
 
   backToFilter() {
@@ -157,6 +157,10 @@ FilterableSelect.propTypes = {
   value: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
   label: PropTypes.string.isRequired,
+  path: PropTypes.arrayOf(PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.number,
+  ])),
   handleChange: PropTypes.func.isRequired,
   error: PropTypes.objectOf(PropTypes.string).isRequired,
   options: PropTypes.arrayOf(PropTypes.objectOf(PropTypes.oneOfType([
@@ -168,6 +172,7 @@ FilterableSelect.propTypes = {
 
 FilterableSelect.defaultProps = {
   maxOptsToShow: 5,
+  path: [],
 };
 
 export default FilterableSelect;
