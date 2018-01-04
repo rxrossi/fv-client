@@ -107,6 +107,28 @@ const Add = ({
             error={errors.name}
           />
 
+          <Row>
+            <Col className="text-center">
+              <DateTimePicker
+                date={values.start_time}
+                error={errors.start_time}
+                name="start_time"
+                label="Start Time"
+                onChange={handleChange}
+              />
+            </Col>
+
+            <Col className="text-center">
+              <DateTimePicker
+                date={values.end_time}
+                error={errors.end_time}
+                name="end_time"
+                label="End Time"
+                onChange={handleChange}
+              />
+            </Col>
+          </Row>
+
           <Input
             onChange={handleChange}
             value={values.value}
@@ -127,30 +149,6 @@ const Add = ({
             options={paymentOptions}
           />
 
-          <Row>
-            <Col className="text-center">
-              <DateTimePicker
-                date={values.start_time}
-                error={errors.start_time}
-                name="start_time"
-                label="Start Time"
-                onChange={handleChange}
-              />
-            </Col>
-          </Row>
-
-
-          <Row>
-            <Col className="text-center">
-              <DateTimePicker
-                date={values.end_time}
-                error={errors.end_time}
-                name="end_time"
-                label="End Time"
-                onChange={handleChange}
-              />
-            </Col>
-          </Row>
 
           <FilterableSelect
             name="client"
