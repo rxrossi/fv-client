@@ -224,7 +224,7 @@ describe('Clients acceptance test', () => {
     });
 
     it('the store has the clients', () => {
-      expect(store.getState().clients.list).toEqual(clientsListExample);
+      expect(store.getState().clients.entities).toEqual(clientsListExample);
     });
 
     it('has the clients being listed', () => {

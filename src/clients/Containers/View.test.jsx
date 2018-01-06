@@ -6,8 +6,11 @@ import { Provider } from 'react-redux';
 import { configure, mount } from 'enzyme';
 import fetchMock from 'fetch-mock';
 import * as API_URLS from '../../APIInfo';
-import clients from '../../clients/reducer/index';
 import View from './View';
+
+import reusableReduxConfig from '../../../../../reusableCRUDRedux/src';
+
+const clients = reusableReduxConfig(API_URLS.CLIENTS, 'clients').reducer;
 
 // Configure Enzyme
 configure({ adapter: new Adapter() });
@@ -44,6 +47,6 @@ describe('View Container', () => {
     setImmediate(() => done());
   });
   it('componentDidMount fetchs data', () => {
-    expect(store.getState().clients.list).toEqual(clientsList);
+    expect(store.getState().clients.entities).toEqual(clientsList);
   });
 });

@@ -2,9 +2,8 @@ import React from 'react';
 import { Provider } from 'react-redux';
 import { createStore, combineReducers, applyMiddleware } from 'redux';
 import thunk from 'redux-thunk';
-import { reducer as formReducer } from 'redux-form';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
-import clients from './clients/reducer';
+import reusableReduxConfig from 'reusablecrudredux';
 import Clients from './clients/';
 import Products from './products';
 import products from './products/reducer';
@@ -14,26 +13,13 @@ import Purchases from './purchases';
 import purchases from './purchases/reducer';
 import Sales from './sales';
 import sales from './sales/reducer';
-import * as salesActions from './sales/actionTypes';
 import NavBar from './NavBar';
+import * as urls from './APIInfo';
 
 const Home = () => <p>This is home</p>;
 
-const salesAddReducer = (state, action) => {
-  switch (action.type) {
-    case salesActions.ADD_SUCCESS:
-      return undefined;
-    default:
-      return state;
-  }
-};
-
-
 export const reducer = combineReducers({
-  form: formReducer.plugin({
-    'sales add': salesAddReducer,
-  }),
-  clients,
+  clients: reusableReduxConfig(urls.CLIENTS, 'clients').reducer,
   products,
   professionals,
   purchases,

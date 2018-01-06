@@ -2,8 +2,12 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import Add from '../Components/Add';
-import { addClient, changeField, clearAddErrors } from '../actions/';
+import * as urls from '../../APIInfo';
+/*eslint-disable*/
+import reusableReduxConfig from 'reusablecrudredux';
 
+const { asyncActions, createFormFieldActions } = reusableReduxConfig(urls.CLIENTS, 'clients');
+const formActions = createFormFieldActions;
 
 class AddContainer extends React.Component {
   constructor(props) {
@@ -12,9 +16,9 @@ class AddContainer extends React.Component {
     this.handleChange = this.handleChange.bind(this);
   }
 
-  componentDidMount() {
-    this.props.clearAddErrors();
-  }
+  // componentDidMount() {
+  //   this.props.clearAddErrors();
+  // }
 
   handleChange(field) {
     return ({ target: { value } }) => {
@@ -45,14 +49,18 @@ class AddContainer extends React.Component {
 AddContainer.propTypes = {
   addClient: PropTypes.func.isRequired,
   changeField: PropTypes.func.isRequired,
-  clearAddErrors: PropTypes.func.isRequired,
+  // clearAddErrors: PropTypes.func.isRequired,
   values: PropTypes.objectOf(PropTypes.string).isRequired,
   errors: PropTypes.objectOf(PropTypes.string).isRequired,
 };
 
 const mapState = state => ({
-  values: state.clients.fields,
-  errors: state.clients.addErrors,
+  values: state.clients.formFields.create,
+  errors: state.clients.APIStatus.post.errors,
 });
 
-export default connect(mapState, { addClient, changeField, clearAddErrors })(AddContainer);
+export default connect(mapState, {
+  addClient: asyncActions.post,
+  changeField: formActions.changeField,
+  // clearAddErrors: formActions.clearErrors,
+})(AddContainer);

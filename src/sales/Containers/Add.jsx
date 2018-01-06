@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import AddComponent from '../Components/Add';
 import { fetchProducts } from '../../products/actions';
-import { fetchClients } from '../../clients/actions';
+// import { fetchClients } from '../../clients/actions';
 import { fetchProfessionals } from '../../professionals/actions';
 import { addSale, changeField, appendToArrayOfFields, removeFromArrayOfFields, clearAddForm } from '../../sales/actions';
 
@@ -25,7 +25,7 @@ class Add extends React.Component {
 
   componentDidMount() {
     this.props.fetchProducts();
-    this.props.fetchClients();
+    // this.props.fetchClients();
     this.props.fetchProfessionals();
   }
 
@@ -78,7 +78,7 @@ Add.propTypes = {
     id: PropTypes.string.isRequired,
     name: PropTypes.string.isRequired,
   })).isRequired,
-  fetchClients: PropTypes.func.isRequired,
+  // fetchClients: PropTypes.func.isRequired,
   fetchProducts: PropTypes.func.isRequired,
   fetchProfessionals: PropTypes.func.isRequired,
   changeField: PropTypes.func.isRequired,
@@ -111,7 +111,7 @@ const mapState = state => ({
 
 const mapDispatch = {
   fetchProducts,
-  fetchClients,
+  // fetchClients,
   fetchProfessionals,
   addSale,
   removeField: removeFromArrayOfFields,

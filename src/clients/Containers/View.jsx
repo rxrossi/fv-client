@@ -1,8 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import reusableReduxConfig from 'reusablecrudredux';
 import { connect } from 'react-redux';
 import ViewComponent from '../Components/View';
-import { fetchClients } from '../../clients/actions';
+import * as urls from '../../APIInfo';
+
+const { asyncActions } = reusableReduxConfig(urls.CLIENTS, 'clients');
 
 class Clients extends React.Component {
   componentDidMount() {
@@ -19,11 +22,11 @@ Clients.propTypes = {
 };
 
 const mapState = state => ({
-  clients: state.clients.list,
+  clients: state.clients.entities,
 });
 
 const mapDispatch = {
-  fetchClients,
+  fetchClients: asyncActions.get,
 };
 
 export default connect(mapState, mapDispatch)(Clients);
