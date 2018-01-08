@@ -65,7 +65,7 @@ describe('Form Client', () => {
     const sut = mountComponent(props);
 
     // Act
-    const aInput = sut.find('input[name="name"]').at(0);
+    const aInput = sut.find('input[name="name"]');
     aInput.simulate('change', { target: { value: 'a value' } });
 
     // Assert
