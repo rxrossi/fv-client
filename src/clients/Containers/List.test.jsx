@@ -1,5 +1,6 @@
 import React from 'react';
 import Adapter from 'enzyme-adapter-react-16';
+import { BrowserRouter as Router } from 'react-router-dom';
 import { createStore, combineReducers, applyMiddleware } from 'redux';
 import thunk from 'redux-thunk';
 import { Provider } from 'react-redux';
@@ -30,7 +31,9 @@ describe('List Container', () => {
 
     const App = () => (
       <Provider store={store}>
-        <List />
+        <Router>
+          <List />
+        </Router>
       </Provider>
     );
 

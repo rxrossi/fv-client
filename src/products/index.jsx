@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
 import Add from './Containers/Add';
 import View from './Containers/View';
 import ViewOne from './Containers/ViewOne';
@@ -24,8 +23,4 @@ Products.propTypes = {
   }).isRequired,
 };
 
-const mapState = state => ({
-  products: state.products.list,
-});
-
-export default connect(mapState, undefined)(Products);
+export default Products;

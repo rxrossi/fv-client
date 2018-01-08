@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { Container, Row, Col, Form, Button } from 'reactstrap';
 import InputField from '../../renderField';
 
-const Add = ({
+const FormComponent = ({
   handleSubmit, handleChange, values, errors, handleClear,
 }) => (
   <Container className="py-1">
@@ -47,16 +47,16 @@ const Add = ({
     </Row>
   </Container>
 );
-Add.propTypes = {
+FormComponent.propTypes = {
   handleSubmit: PropTypes.func.isRequired,
   handleChange: PropTypes.func.isRequired,
   handleClear: PropTypes.func.isRequired,
   values: PropTypes.objectOf(PropTypes.any),
   errors: PropTypes.objectOf(PropTypes.any),
 };
-Add.defaultProps = {
+FormComponent.defaultProps = {
   values: {},
   errors: {},
 };
 
-export default Add;
+export default FormComponent;

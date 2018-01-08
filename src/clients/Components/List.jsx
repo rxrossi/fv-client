@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 import { Container, Row, Col, Table, Button } from 'reactstrap';
 
 export const NO_CLIENTS_P_CLASS = 'no-clients-msg';
@@ -9,7 +10,7 @@ const Client = ({ client }) => (
     <td>{client.name}</td>
     <td>{client.phone}</td>
     <td align="center" width="30%">
-      <Button type="button">Edit</Button>
+      <Link className="btn" to={`/clients/${client.id}/edit`}>Edit</Link>
       <Button type="button" color="danger">Remove</Button>
     </td>
   </tr>

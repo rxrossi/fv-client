@@ -33,7 +33,7 @@ const RouterComponent = () => (
     <div>
       <NavBar />
       <Route exact path="/" component={Home} />
-      <Route path="/clients" component={Clients} />
+      <Route path="/clients/:id?/:action?" component={Clients} />
       <Route path="/products/:id?" component={Products} />
       <Route path="/professionals" component={Professionals} />
       <Route path="/purchases/:id?" component={Purchases} />
