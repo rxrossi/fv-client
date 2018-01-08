@@ -1,8 +1,6 @@
 # Client
 
 ## General
-+ [ ] Make the form reducers reusable
-+ [ ] Make the form actions reusable
 + [ ] Implement login
 + [ ] Fuzzy filter for Clients
 
@@ -14,3 +12,64 @@
 
 ## Clients
 + [ ] clicking the client goes to view one, this view one shows last sales for it
+
+# Writing acceptance test
+
+What needs to be tested
+- index
+  - check if the right components load
+- list (view many)
+  - check if the right component load
+  - check if props are correct (one for empty list, other for many?)
+- viewDetail (view one)
+  - check if the right component load, check if the props are correct
+- edit
+  - check if the right component load, check if the props are correct
+  - change the values (maybe without using the actual form?), assert if the right API call was made
+- delete
+  - check if the right component load, check if the props are correct
+  - check if that on confirm, the right action is called
+
+# Acceptance, Container and Connected Container tests
+
+## View 
+Assert that it calls the correct API Url on mount
+Asserts that its dumb component received the response as props
+
+## Form Add 
+Assert that it can change the values
+Assert that it calls the correct API Url with correct values
+
+## Form Edit
+Assert that it calls the correct API Url on mount - it might like clients/1/edit and might be necessary to fetch the data
+Asserts that its dumb component received the response as props
+Assert that it calls the correct API Url with correct values on submit
+
+## Delete
+Assert that the dumb component did mount
+Assert that it calls the API correctly
+
+The difference between writing unit tests of containers and acceptance tests
+both will need the redux store anyway, the difference is that acceptance adds the react router
+
+
+# Testing a form 
+## Presentational
+  - Check if the fields calls handleChange correctly
+  - check if submit calls the handleSumit correctly
+  - check if clear form will call handleClear correctly
+  (basically asserting that the onChange, onClick and onSubmit functions are being called correctly)
+## Container
+  - pass values
+  - assert if the functions of componentDidMount were called correctly
+  - check if clicking on submit will call the handleSumit with the given values
+  ---
+  (assert that the lifeCycle functions are called as expected)
+  (assert that its non lifeCycle methods are working as expected, like submit, that uses the values received by props)
+## Connected Container
+  - mount a store with the values
+  - assert that the presentational component has the values of the store
+  - assert that the presentational component did receive the correct handleChange, handleSubmit and handleClear actions ?
+  ---
+  (assert that the Container received the necessary functions and the necessary props not used by the presentational)
+  (assert that the Presentational received the necessary props (values and functions not used directly on the container) handleClear does not need to be called on Container for example)
