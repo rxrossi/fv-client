@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Container, Row, Col, Table } from 'reactstrap';
+import { Container, Row, Col, Table, Button } from 'reactstrap';
 
 export const NO_CLIENTS_P_CLASS = 'no-clients-msg';
 
@@ -8,6 +8,10 @@ const Client = ({ client }) => (
   <tr>
     <td>{client.name}</td>
     <td>{client.phone}</td>
+    <td align="center" width="30%">
+      <Button type="button">Edit</Button>
+      <Button type="button" color="danger">Remove</Button>
+    </td>
   </tr>
 );
 Client.propTypes = {
@@ -35,6 +39,7 @@ const Clients = ({ clients }) => {
                 <tr>
                   <th>Name</th>
                   <th>Phone</th>
+                  <th>Options</th>
                 </tr>
               </thead>
               <tbody>

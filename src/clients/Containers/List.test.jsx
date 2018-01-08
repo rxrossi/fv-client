@@ -6,7 +6,7 @@ import { Provider } from 'react-redux';
 import { configure, mount } from 'enzyme';
 import fetchMock from 'fetch-mock';
 import * as API_URLS from '../../APIInfo';
-import View from './View';
+import List from './List';
 
 import reusableReduxConfig from '../../../../../reusableCRUDRedux/src';
 
@@ -15,7 +15,7 @@ const clients = reusableReduxConfig(API_URLS.CLIENTS, 'clients').reducer;
 // Configure Enzyme
 configure({ adapter: new Adapter() });
 
-describe('View Container', () => {
+describe('List Container', () => {
   let store;
   const clientsList = [
     { id: '1', name: 'John', phone: '9 9999 9898' },
@@ -30,7 +30,7 @@ describe('View Container', () => {
 
     const App = () => (
       <Provider store={store}>
-        <View />
+        <List />
       </Provider>
     );
 

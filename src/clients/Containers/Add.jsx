@@ -1,24 +1,19 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import Add from '../Components/Add';
-import * as urls from '../../APIInfo';
-/*eslint-disable*/
 import reusableReduxConfig from 'reusablecrudredux';
+import Form from '../Components/Form';
+import * as urls from '../../APIInfo';
 
 const { asyncActions, createFormFieldActions } = reusableReduxConfig(urls.CLIENTS, 'clients');
 const formActions = createFormFieldActions;
 
-class AddContainer extends React.Component {
+class Add extends React.Component {
   constructor(props) {
     super(props);
     this.submit = this.submit.bind(this);
     this.handleChange = this.handleChange.bind(this);
   }
-
-  // componentDidMount() {
-  //   this.props.clearAddErrors();
-  // }
 
   handleChange(field) {
     return ({ target: { value } }) => {
@@ -37,19 +32,20 @@ class AddContainer extends React.Component {
 
   render() {
     return (
-      <Add
+      <Form
         handleSubmit={this.submit}
         handleChange={this.handleChange}
+        handleClear={this.props.clearFields}
         values={this.props.values}
         errors={this.props.errors}
       />
     );
   }
 }
-AddContainer.propTypes = {
+Add.propTypes = {
   addClient: PropTypes.func.isRequired,
   changeField: PropTypes.func.isRequired,
-  // clearAddErrors: PropTypes.func.isRequired,
+  clearFields: PropTypes.func.isRequired,
   values: PropTypes.objectOf(PropTypes.string).isRequired,
   errors: PropTypes.objectOf(PropTypes.string).isRequired,
 };
@@ -59,8 +55,10 @@ const mapState = state => ({
   errors: state.clients.APIStatus.post.errors,
 });
 
+export { Add };
+
 export default connect(mapState, {
   addClient: asyncActions.post,
   changeField: formActions.changeField,
-  // clearAddErrors: formActions.clearErrors,
-})(AddContainer);
+  clearFields: formActions.clear,
+})(Add);

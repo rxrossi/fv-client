@@ -1,30 +1,28 @@
 import React from 'react';
 import Adapter from 'enzyme-adapter-react-16';
-import { createStore, combineReducers } from 'redux';
-import { Provider } from 'react-redux';
 import { configure, mount } from 'enzyme';
-// import clients from '../reducer';
-import reusableReduxConfig from '../../../../../reusableCRUDRedux/src';
-import Add from './Add';
-import { changeFields, getFieldValue } from '../../test_helpers';
+import { Add } from './Add';
 // Configure Enzyme
 configure({ adapter: new Adapter() });
 
-const reusableRedux = reusableReduxConfig('http://localhost:5001/client', 'clients');
 
-function mountComponent() {
-  const reducer = combineReducers({
-    clients: reusableRedux.reducer,
-  });
-  const store = createStore(reducer);
+function mountComponent({
+  addClient,
+  changeField,
+  clearFields,
+  values,
+  errors,
+} = {}) {
+  const mockFn = () => {};
 
-  const App = () => (
-    <Provider store={store}>
-      <Add />
-    </Provider>
-  );
 
-  return mount(<App />);
+  return mount(<Add
+    addClient={addClient || mockFn}
+    changeField={changeField || mockFn}
+    clearFields={clearFields || mockFn}
+    values={values || {}}
+    errors={errors || {}}
+  />);
 }
 
 describe('Add Container', () => {
@@ -32,15 +30,46 @@ describe('Add Container', () => {
     mountComponent();
   });
 
-  it('changes the fields', () => {
-    const name = 'Carl';
-    const phone = '911';
-    const sut = mountComponent();
-    changeFields(sut, {
-      name,
-      phone,
+  describe('Container methods', () => {
+    it('class addClient correctly', () => {
+      // Prepare
+      const mockSubmit = jest.fn();
+      const mockEvt = {
+        preventDefault: jest.fn(),
+      };
+      const props = {
+        values: {
+          name: 'a name',
+          phone: '999',
+        },
+        addClient: mockSubmit,
+      };
+      const sut = mountComponent(props);
+
+      // Act
+      sut.instance().submit(mockEvt);
+
+      // Assert
+      expect(mockSubmit).toHaveBeenCalledWith(props.values);
+      expect(mockEvt.preventDefault).toHaveBeenCalledTimes(1);
     });
-    expect(getFieldValue(sut, 'name')).toEqual(name);
-    expect(getFieldValue(sut, 'phone')).toEqual(phone);
+
+    it('calls changeField correctly', () => {
+      // Prepare
+      const mockChangeField = jest.fn();
+      const props = {
+        changeField: mockChangeField,
+      };
+      const sut = mountComponent(props);
+      // Act
+      const evt = {
+        target: { value: 'a name' },
+      };
+      sut.instance().handleChange('name')(evt);
+      // Assert
+      expect(mockChangeField).toHaveBeenCalledTimes(1);
+      expect(mockChangeField).toHaveBeenCalledWith('name', 'a name');
+    });
   });
 });
+

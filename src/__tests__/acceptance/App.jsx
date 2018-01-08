@@ -3,7 +3,6 @@ import Adapter from 'enzyme-adapter-react-16';
 import { configure, mount } from 'enzyme';
 import fetchMock from 'fetch-mock';
 import App from '../../App';
-import { NO_CLIENTS_P_CLASS } from '../../clients/Components/View';
 
 // Configure Enzyme
 configure({ adapter: new Adapter() });
@@ -46,7 +45,6 @@ describe('App acceptance test', () => {
       clientsLink.simulate('click', { button: 0 });
 
       expect(sut.contains(HOME_TEXT)).toBe(false);
-      expect(sut.find(`.${NO_CLIENTS_P_CLASS}`).length).toBe(1);
     });
   });
 });

@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import reusableReduxConfig from 'reusablecrudredux';
 import { connect } from 'react-redux';
-import ViewComponent from '../Components/View';
+import List from '../Components/List';
 import * as urls from '../../APIInfo';
 
 const { asyncActions } = reusableReduxConfig(urls.CLIENTS, 'clients');
@@ -13,7 +13,7 @@ class Clients extends React.Component {
   }
 
   render() {
-    return <ViewComponent clients={this.props.clients} />;
+    return <List clients={this.props.clients} />;
   }
 }
 Clients.propTypes = {
