@@ -9,9 +9,12 @@ function mountComponent({
   editClient,
   changeField,
   clearFields,
+  setFields,
+  getClients,
   values,
   errors,
   clientId,
+  clients,
 } = {}) {
   const mockFn = () => {};
 
@@ -19,9 +22,12 @@ function mountComponent({
     editClient={editClient || mockFn}
     changeField={changeField || mockFn}
     clearFields={clearFields || mockFn}
+    setFields={setFields || mockFn}
+    getClients={getClients || mockFn}
     values={values || {}}
     errors={errors || {}}
     clientId={clientId}
+    clients={clients || []}
   />);
 }
 

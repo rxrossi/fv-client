@@ -35,7 +35,7 @@ class Add extends React.Component {
       <Form
         handleSubmit={this.submit}
         handleChange={this.handleChange}
-        handleClear={this.props.clearFields}
+        handleReset={this.props.clearFields}
         values={this.props.values}
         errors={this.props.errors}
       />

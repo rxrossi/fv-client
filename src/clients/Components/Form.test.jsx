@@ -7,7 +7,7 @@ configure({ adapter: new Adapter() });
 
 function mountComponent({
   handleChange,
-  handleClear,
+  handleReset,
   handleSubmit,
   values,
   errors,
@@ -16,7 +16,7 @@ function mountComponent({
   return mount(<Form
     handleSubmit={handleSubmit || mockFn}
     handleChange={handleChange || mockFn}
-    handleClear={handleClear || mockFn}
+    handleReset={handleReset || mockFn}
     values={errors || {}}
     errors={values || {}}
   />);
@@ -41,10 +41,10 @@ describe('Form Client', () => {
     expect(props.handleSubmit).toHaveBeenCalledTimes(1);
   });
 
-  it('calls handleClear when clicking the clear button', () => {
+  it('calls handleReset when clicking the clear button', () => {
     // Prepare
     const props = {
-      handleClear: jest.fn(),
+      handleReset: jest.fn(),
     };
     const sut = mountComponent(props);
 
@@ -53,10 +53,10 @@ describe('Form Client', () => {
     clearBtn.simulate('click');
 
     // Assert
-    expect(props.handleClear).toHaveBeenCalledTimes(1);
+    expect(props.handleReset).toHaveBeenCalledTimes(1);
   });
 
-  it('calls handleClear when changing a field', () => {
+  it('calls handleReset when changing a field', () => {
     // Prepare
     const mockHandleChange = jest.fn();
     const props = {

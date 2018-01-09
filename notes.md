@@ -1,5 +1,12 @@
 # Client
 
+## Clients
++ [ ] update form should adapt if it is updating or creating
+  + [ ] adptive title
+  + [ ] adptive save button text
+  + [ ] clear form needs to become reset form
++ [ ] clicking the client goes to view one, this view one shows last sales for it
+
 ## General
 + [ ] Implement login
 + [ ] Fuzzy filter for Clients
@@ -10,8 +17,6 @@
 ## Professionals
 + [ ] Show the total profit
 
-## Clients
-+ [ ] clicking the client goes to view one, this view one shows last sales for it
 
 # Writing acceptance test
 

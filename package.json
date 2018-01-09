@@ -44,7 +44,7 @@
     "redux": "^3.7.2",
     "redux-form": "^7.1.2",
     "redux-thunk": "^2.2.0",
-    "reusablecrudredux": "^1.0.3",
+    "reusablecrudredux": "^1.0.4",
     "style-loader": "0.19.0",
     "styled-components": "^2.4.0",
     "sw-precache-webpack-plugin": "0.11.4",

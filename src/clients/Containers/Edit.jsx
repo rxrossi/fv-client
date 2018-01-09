@@ -10,29 +10,29 @@ class Edit extends React.Component {
   constructor(props) {
     super(props);
     this.handleChange = this.handleChange.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleReset = this.handleReset.bind(this);
+    this.setFieldsWithInitialData = this.setFieldsWithInitialData.bind(this);
   }
 
   componentWillMount() {
-    this.props.getClients();
-    // place asyncActions.get
-
-    // if state.clients.formFields.update.id !== this.props.clientId
-    // find the client in the clients list and pass it to state.clients.formFields.update
-
-    // updateFormFieldActions should have a method replace,
-    // that would replace the whole state.clients.formFields.update with the given object
-
-    // updateFormFieldActions should have a reset method
-
-    // Form should have accept a prop of edit or update method
-    // So it can addapt the texts at: Title and button
-
-    // Probably containers will be reusable, think if it is possible
+    return this.props.getClients();
   }
 
-  componentDidMount() {
+  componentDidUpdate() {
+    if (this.props.values.id !== this.props.clientId) {
+      this.setFieldsWithInitialData();
+    }
+  }
+
+  setFieldsWithInitialData() {
     const client = this.props.clients.find(x => x.id === this.props.clientId);
-    this.props.setFields(client);
+    this.props.setFields(client || {});
+  }
+
+  handleReset() {
+    const client = this.props.clients.find(x => x.id === this.props.clientId);
+    this.props.setFields(client || {});
   }
 
   handleChange(name) {
@@ -45,14 +45,15 @@ class Edit extends React.Component {
   }
 
   render() {
-    const { clearFields, values, errors } = this.props;
+    const { values, errors } = this.props;
     return (
       <Form
         handleChange={this.handleChange}
         handleSubmit={this.handleSubmit}
-        handleClear={clearFields}
+        handleReset={this.handleReset}
         values={values}
         errors={errors}
+        updating
       />
     );
   }
@@ -62,7 +63,6 @@ Edit.propTypes = {
   errors: PropTypes.objectOf(PropTypes.string).isRequired,
   values: PropTypes.objectOf(PropTypes.string).isRequired,
   changeField: PropTypes.func.isRequired,
-  clearFields: PropTypes.func.isRequired,
   editClient: PropTypes.func.isRequired,
   getClients: PropTypes.func.isRequired,
   setFields: PropTypes.func.isRequired,
@@ -77,13 +77,10 @@ Edit.propTypes = {
 const { asyncActions, updateFormFieldActions } = reusableReduxConfig(urls.CLIENTS, 'clients');
 const formActions = updateFormFieldActions;
 
-console.log(formActions);
-
 const mapDispatch = {
   editClient: asyncActions.put,
   getClients: asyncActions.get,
   changeField: formActions.changeField,
-  clearFields: formActions.clear,
   setFields: formActions.set,
 };
 
