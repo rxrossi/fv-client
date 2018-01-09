@@ -13,11 +13,12 @@ class Clients extends React.Component {
   }
 
   render() {
-    return <List clients={this.props.clients} />;
+    return <List clients={this.props.clients} deleteFn={this.props.deleteFn} />;
   }
 }
 Clients.propTypes = {
   fetchClients: PropTypes.func.isRequired,
+  deleteFn: PropTypes.func.isRequired,
   clients: PropTypes.arrayOf(PropTypes.objectOf(PropTypes.string)).isRequired,
 };
 
@@ -27,6 +28,7 @@ const mapState = state => ({
 
 const mapDispatch = {
   fetchClients: asyncActions.get,
+  deleteFn: asyncActions.delete,
 };
 
 export default connect(mapState, mapDispatch)(Clients);

@@ -1,17 +1,23 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
-import { Container, Row, Col, Table, Button } from 'reactstrap';
+import { Container, Row, Col, Table } from 'reactstrap';
+import DeleteModal from './DeleteModal';
 
 export const NO_CLIENTS_P_CLASS = 'no-clients-msg';
 
-const Client = ({ client }) => (
+const Client = ({ client, deleteFn }) => (
   <tr>
     <td>{client.name}</td>
     <td>{client.phone}</td>
     <td align="center" width="30%">
       <Link className="btn" to={`/clients/${client.id}/edit`}>Edit</Link>
-      <Button type="button" color="danger">Remove</Button>
+      <DeleteModal
+        deleteFunction={() => deleteFn(client.id)}
+        entityName={client.name}
+      >
+        Delete
+      </DeleteModal>
     </td>
   </tr>
 );
@@ -21,10 +27,11 @@ Client.propTypes = {
     name: PropTypes.string.isRequired,
     phone: PropTypes.string.isRequired,
   }).isRequired,
+  deleteFn: PropTypes.func.isRequired,
 };
 export { Client };
 
-const Clients = ({ clients }) => {
+const Clients = ({ clients, deleteFn }) => {
   if (clients.length) {
     return (
       <Container className="py-1">
@@ -46,7 +53,7 @@ const Clients = ({ clients }) => {
               <tbody>
                 {
                   clients.map(client => (
-                    <Client key={client.id} client={client} />
+                    <Client key={client.id} client={client} deleteFn={deleteFn} />
                   ))
                 }
               </tbody>
@@ -79,6 +86,7 @@ Clients.propTypes = {
     name: PropTypes.string.isRequired,
     phone: PropTypes.string.isRequired,
   })),
+  deleteFn: PropTypes.func.isRequired,
 };
 Clients.defaultProps = {
   clients: [],
