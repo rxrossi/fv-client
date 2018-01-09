@@ -37,7 +37,7 @@ class DeleteModal extends React.Component {
           <ModalFooter>
             <Button
               color="danger"
-              onClick={this.toggle}
+              onClick={this.handleDelete}
               className="deleteBtn"
             >
               Confirm deletion of {entityName}
