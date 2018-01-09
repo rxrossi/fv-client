@@ -5,8 +5,8 @@ import 'font-awesome/css/font-awesome.min.css';
 import React from 'react';
 import { BrowserRouter as Router } from 'react-router-dom';
 import { storiesOf } from '@storybook/react';
-import ClientAddComponent from '../src/clients/Components/Add';
-import ClientViewComponent from '../src/clients/Components/View';
+import ClientAddComponent from '../src/clients/Components/Form';
+import ClientViewComponent from '../src/clients/Components/List';
 import ProductsViewComponent from '../src/products/Components/View';
 import ProductsViewOneComponent from '../src/products/Components/ViewOne';
 import ProductsAddComponent from '../src/products/Components/Add';
@@ -31,8 +31,12 @@ import DatePicker from '../src/DateTimePicker/DatePicker/';
 import getDays from '../src/DateTimePicker/helpers/getDays';
 import DateTimePicker from '../src/DateTimePicker/';
 import FilterableSelect from '../src/FilterableSelect/';
+import DeleteModal from '../src/clients/Components/DeleteModal';
 
 const dummyFn = () => {};
+
+storiesOf('Delete modal')
+  .add('default', () => <DeleteModal deleteFunction={() => {}} entityName="Mary" open />);
 
 storiesOf('FilterableSelect/index', module)
   .add('default', () => {

@@ -1,13 +1,19 @@
 # Client
 
 ## Clients
-+ [ ] update form should adapt if it is updating or creating
-  + [ ] adptive title
-  + [ ] adptive save button text
-  + [ ] clear form needs to become reset form
++ [X] update form should adapt if it is updating or creating
+  + [X] adptive title
+  + [X] adptive save button text
+  + [X] clear form needs to become reset form
++ [X] delete
+  + [X] clicking opens a modal to confirm
+  + [X] the modal shows the title of the client
+  + [X] the modal warns that sales related to him will be also deleted
+  + [ ] extract it to a container, it is using List for now
 + [ ] clicking the client goes to view one, this view one shows last sales for it
 
 ## General
++ [ ] generalize containers
 + [ ] Implement login
 + [ ] Fuzzy filter for Clients
 
