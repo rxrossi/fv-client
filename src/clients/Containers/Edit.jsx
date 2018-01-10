@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import reusableReduxConfig from 'reusablecrudredux';
 import Form from '../Components/Form';
@@ -9,6 +10,9 @@ import * as urls from '../../APIInfo';
 class Edit extends React.Component {
   constructor(props) {
     super(props);
+    this.state = {
+      shouldRedirect: false,
+    };
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleReset = this.handleReset.bind(this);
@@ -41,10 +45,15 @@ class Edit extends React.Component {
 
   handleSubmit(e) {
     e.preventDefault();
-    this.props.editClient(this.props.values);
+    this.props.editClient(this.props.values)
+      .then(() => this.setState({ shouldRedirect: true }));
   }
 
   render() {
+    if (this.state.shouldRedirect) {
+      return <Redirect push to="/clients" />;
+    }
+
     const { values, errors } = this.props;
     return (
       <Form

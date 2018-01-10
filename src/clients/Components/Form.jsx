@@ -8,7 +8,7 @@ const FormComponent = ({
 }) => {
   const title = updating ? 'Edting user' : 'Add a new';
   const saveBtnTxt = updating ? 'Save Changes' : 'Register';
-  const resetBtnTxt = updating ? 'Undo changes' : 'Reset Form';
+  const resetBtnTxt = updating ? 'Discard unsaved changes' : 'Clear Form';
 
   return (
     <Container className="py-1">
