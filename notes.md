@@ -2,6 +2,7 @@
 
 ## Clients
 + [ ] needs to change table to match other pages
++ [ ] undo changes on update form should clear put errors
 + [X] delete
   + [X] clicking opens a modal to confirm
   + [X] the modal shows the title of the client
@@ -10,6 +11,7 @@
 + [ ] clicking the client goes to view one, this view one shows last sales for it
 
 + [X] Successful client new features
+  + [ ] edit also redirects to clients home on error
   + [X] edit needs to clear form fields (reusableCrudRedux)
   + [X] needs to probably redirect or close
   + [X] to fix the above, my reusableCrudRedux action should throw on error

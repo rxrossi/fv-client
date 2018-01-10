@@ -19,7 +19,10 @@ class Clients extends React.Component {
 Clients.propTypes = {
   fetchClients: PropTypes.func.isRequired,
   deleteFn: PropTypes.func.isRequired,
-  clients: PropTypes.arrayOf(PropTypes.objectOf(PropTypes.string)).isRequired,
+  clients: PropTypes.arrayOf(PropTypes.objectOf(PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.number,
+  ]))).isRequired,
 };
 
 const mapState = state => ({

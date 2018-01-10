@@ -35,8 +35,8 @@ class Edit extends React.Component {
   }
 
   handleReset() {
-    const client = this.props.clients.find(x => x.id === this.props.clientId);
-    this.props.setFields(client || {});
+    this.props.clearFields().then(() =>
+      this.setFieldsWithInitialData());
   }
 
   handleChange(name) {
@@ -46,7 +46,11 @@ class Edit extends React.Component {
   handleSubmit(e) {
     e.preventDefault();
     this.props.editClient(this.props.values)
-      .then(() => this.setState({ shouldRedirect: true }));
+      .then((success) => {
+        if (success) {
+          this.setState({ shouldRedirect: true });
+        }
+      });
   }
 
   render() {
@@ -70,10 +74,14 @@ class Edit extends React.Component {
 
 Edit.propTypes = {
   errors: PropTypes.objectOf(PropTypes.string).isRequired,
-  values: PropTypes.objectOf(PropTypes.string).isRequired,
+  values: PropTypes.objectOf(PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.number,
+  ])).isRequired,
   changeField: PropTypes.func.isRequired,
   editClient: PropTypes.func.isRequired,
   getClients: PropTypes.func.isRequired,
+  clearFields: PropTypes.func.isRequired,
   setFields: PropTypes.func.isRequired,
   clientId: PropTypes.string.isRequired,
   clients: PropTypes.arrayOf(PropTypes.objectOf(PropTypes.oneOfType([
@@ -91,6 +99,7 @@ const mapDispatch = {
   getClients: asyncActions.get,
   changeField: formActions.changeField,
   setFields: formActions.set,
+  clearFields: formActions.clear,
 };
 
 const mapState = state => ({
