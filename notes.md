@@ -2,12 +2,13 @@
 
 ## Clients
 + [ ] needs to change table to match other pages
-+ [ ] undo changes on update form should clear put errors
++ [ ] edit cancel button that redirects
++ [X] undo changes on update form should clear put errors
 + [X] delete
   + [X] clicking opens a modal to confirm
   + [X] the modal shows the title of the client
   + [X] the modal warns that sales related to him will be also deleted
-  + [ ] extract it to a container, it is using List for now
+  + [X] extract it to a container, it is using List for now
 + [ ] clicking the client goes to view one, this view one shows last sales for it
 
 + [X] Successful client new features

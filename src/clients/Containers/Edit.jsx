@@ -16,6 +16,7 @@ class Edit extends React.Component {
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleReset = this.handleReset.bind(this);
+    this.handleCancel = this.handleCancel.bind(this);
     this.setFieldsWithInitialData = this.setFieldsWithInitialData.bind(this);
   }
 
@@ -37,6 +38,10 @@ class Edit extends React.Component {
   handleReset() {
     this.props.clearFields();
     this.setFieldsWithInitialData();
+  }
+
+  handleCancel() {
+    this.setState({ shouldRedirect: true });
   }
 
   handleChange(name) {
@@ -64,6 +69,7 @@ class Edit extends React.Component {
         handleChange={this.handleChange}
         handleSubmit={this.handleSubmit}
         handleReset={this.handleReset}
+        handleCancel={this.handleCancel}
         values={values}
         errors={errors}
         updating

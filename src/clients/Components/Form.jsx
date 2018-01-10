@@ -4,7 +4,7 @@ import { Container, Row, Col, Form, Button } from 'reactstrap';
 import InputField from '../../renderField';
 
 const FormComponent = ({
-  handleSubmit, handleChange, values, errors, handleReset, updating,
+  handleSubmit, handleChange, values, errors, handleReset, updating, handleCancel,
 }) => {
   const title = updating ? 'Edting user' : 'Add a new';
   const saveBtnTxt = updating ? 'Save Changes' : 'Register';
@@ -47,6 +47,17 @@ const FormComponent = ({
               block
             >{resetBtnTxt}
             </Button>
+            {
+              updating &&
+                <Button
+                  type="button"
+                  color="secondary"
+                  onClick={handleCancel}
+                  className="cancelBtn"
+                  block
+                >Cancel
+                </Button>
+            }
           </Form>
         </Col>
       </Row>
@@ -55,6 +66,7 @@ const FormComponent = ({
 };
 FormComponent.propTypes = {
   handleSubmit: PropTypes.func.isRequired,
+  handleCancel: PropTypes.func,
   handleChange: PropTypes.func.isRequired,
   handleReset: PropTypes.func.isRequired,
   values: PropTypes.objectOf(PropTypes.any),
@@ -65,6 +77,7 @@ FormComponent.defaultProps = {
   values: {},
   errors: {},
   updating: false,
+  handleCancel: () => {},
 };
 
 export default FormComponent;
