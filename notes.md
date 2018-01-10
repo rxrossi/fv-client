@@ -1,6 +1,11 @@
 # Client
 
 ## Clients
++ [ ] Successful client new features
+  + [ ] edit needs to clear form fields (reusableCrudRedux)
+  + [ ] needs to probably redirect or close
+  + [ ] to fix the above, my reusableCrudRedux action should throw on error
+  + [ ] add a then on asyncAction.put that redirects
 + [X] update form should adapt if it is updating or creating
   + [X] adptive title
   + [X] adptive save button text
