@@ -35,8 +35,8 @@ class Edit extends React.Component {
   }
 
   handleReset() {
-    this.props.clearFields().then(() =>
-      this.setFieldsWithInitialData());
+    this.props.clearFields();
+    this.setFieldsWithInitialData();
   }
 
   handleChange(name) {
