@@ -6,7 +6,12 @@ import DateTimePicker from './index';
 configure({ adapter: new Adapter() });
 
 function mountContainer(date, onChange = () => {}) {
-  return mount(<DateTimePicker date={date} onChange={onChange} />);
+  return mount(<DateTimePicker
+    date={date}
+    onChange={onChange}
+    name="Date"
+    label="Date"
+  />);
 }
 
 describe('DateTimePicker Component', () => {

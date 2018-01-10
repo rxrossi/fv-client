@@ -77,7 +77,6 @@ describe('Products ViewOne Component', () => {
 
     expect(text).toMatch(product.name);
     expect(text).toMatch(product.stock[0].sourceOrDestination.name);
-    expect(text).toMatch(product.stock[0].date);
   });
 
   it('shows a message saying that there is no entry if necessary', () => {
