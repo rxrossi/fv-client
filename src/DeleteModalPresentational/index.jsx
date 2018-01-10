@@ -27,7 +27,7 @@ class DeleteModal extends React.Component {
   render() {
     const { entityName } = this.props;
     return (
-      <div>
+      <div style={{ display: 'inline-block' }}>
         <Button color="danger" onClick={this.toggle}>Delete</Button>
         <Modal isOpen={this.state.modal} toggle={this.toggle} >
           <ModalHeader toggle={this.toggle}>Deleting {entityName}</ModalHeader>
