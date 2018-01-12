@@ -5,6 +5,8 @@ import editHOC from './Edit';
 // Configure Enzyme
 configure({ adapter: new Adapter() });
 
+const SomeRedirectComponent = () => <p>Redirecting</p>;
+
 const SomePresentational = () => (
   <p>Presentational component</p>
 );
@@ -15,8 +17,12 @@ function mountComponent({
   entities,
   fieldValues,
   changeField,
+  fetchEntities,
+  put,
+  appendField,
+  removeField,
 } = {}) {
-  const Edit = editHOC(SomePresentational);
+  const Edit = editHOC(SomePresentational, SomeRedirectComponent);
 
   return mount(<Edit
     entityId={entityId || 'e1'}
@@ -24,6 +30,10 @@ function mountComponent({
     fieldValues={fieldValues || {}}
     setFields={setFields || (() => {})}
     changeField={changeField || (() => {})}
+    put={put || (() => {})}
+    appendField={appendField || (() => {})}
+    removeField={removeField || (() => {})}
+    fetchEntities={fetchEntities || (() => {})}
   />);
 }
 
@@ -37,8 +47,10 @@ describe('Edit HOC', () => {
   });
 
   describe('Filling fields with initial data', () => {
-    xit('calls the fetchEntities function on mount', () => {
-
+    it('calls the fetchEntities function on mount', () => {
+      const fetchEntities = jest.fn();
+      mountComponent({ fetchEntities });
+      expect(fetchEntities).toHaveBeenCalledTimes(1);
     });
 
     it('expect it calls the setFields with the right entity', () => {
@@ -122,50 +134,76 @@ describe('Edit HOC', () => {
   describe('Appending a dynamic field', () => {
     it('calls the correct prop', () => {
       // Prepare
-
+      const appendField = jest.fn();
+      const sut = mountComponent({ appendField });
+      const nameOfArray = 'name of array';
+      const objectToAppend = {};
       // Act
-
+      sut.instance().handleAppendField(nameOfArray, objectToAppend);
       // Assert
+      expect(appendField).toHaveBeenCalledWith(nameOfArray, objectToAppend);
     });
   });
 
   describe('Removing a dynamic field', () => {
     it('calls the correct prop', () => {
       // Prepare
-
+      const removeField = jest.fn();
+      const sut = mountComponent({ removeField });
+      const path = 'some path';
       // Act
-
+      sut.instance().handleRemoveField(path);
       // Assert
+      expect(removeField).toHaveBeenCalledWith(path);
     });
   });
 
   describe('Reseting the form', () => {
-    xit('calls the correct prop', () => {
+    it('calls the correct prop', () => {
       // Prepare
+      const setFields = jest.fn();
+      const entities = [
+        { id: 'e1', name: 'name1' },
+        { id: 'e2', name: 'name2' },
+      ];
+
+      const sut = mountComponent({
+        entityId: 'e1', entities, setFields,
+      });
 
       // Act
-
+      sut.instance().handleReset();
       // Assert
+      expect(setFields).toHaveBeenCalledWith(entities[0]);
     });
   });
 
   describe('Canceling the edit', () => {
-    xit('renders the redirect component', () => {
+    it('renders the redirect component', () => {
       // Prepare
+      const sut = mountComponent();
 
       // Act
+      sut.instance().handleCancel();
+      sut.update();
 
       // Assert
+      expect(sut.find(SomeRedirectComponent).length).toBe(1);
     });
   });
 
   describe('PUT method', () => {
-    xit('calls the correct prop function with the correct values', () => {
+    it('calls the correct prop function with the correct values', () => {
       // Prepare
+      const put = jest.fn();
+      const fieldValues = { id: 'e2', name: 'name2' };
+      const sut = mountComponent({ fieldValues, put });
 
       // Act
+      sut.instance().handleSubmit();
 
       // Assert
+      expect(put).toHaveBeenCalledWith(fieldValues);
     });
   });
 });
