@@ -21,18 +21,21 @@ function mountComponent({
   put,
   appendField,
   removeField,
+  errors,
 } = {}) {
   const Edit = editHOC(SomePresentational, SomeRedirectComponent);
 
   return mount(<Edit
     entityId={entityId || 'e1'}
     entities={entities || []}
+    errors={errors || {}}
     fieldValues={fieldValues || {}}
     setFields={setFields || (() => {})}
     changeField={changeField || (() => {})}
     put={put || (() => {})}
     appendField={appendField || (() => {})}
     removeField={removeField || (() => {})}
+    clear={clear || (() => {})}
     fetchEntities={fetchEntities || (() => {})}
   />);
 }

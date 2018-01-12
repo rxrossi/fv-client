@@ -1,117 +1,30 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import { Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import reusableReduxConfig from 'reusablecrudredux';
 import Form from '../Components/Form';
 import * as urls from '../../APIInfo';
+import EditHOC from '../../HOC/Edit';
 
+const RedirectComponent = () => <Redirect to="/clients" />;
 
-class Edit extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      shouldRedirect: false,
-    };
-    this.handleChange = this.handleChange.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this);
-    this.handleReset = this.handleReset.bind(this);
-    this.handleCancel = this.handleCancel.bind(this);
-    this.setFieldsWithInitialData = this.setFieldsWithInitialData.bind(this);
-  }
-
-  componentWillMount() {
-    return this.props.getClients();
-  }
-
-  componentDidUpdate() {
-    if (this.props.values.id !== this.props.clientId) {
-      this.setFieldsWithInitialData();
-    }
-  }
-
-  setFieldsWithInitialData() {
-    const client = this.props.clients.find(x => x.id === this.props.clientId);
-    this.props.setFields(client || {});
-  }
-
-  handleReset() {
-    this.props.clearFields();
-    this.setFieldsWithInitialData();
-  }
-
-  handleCancel() {
-    this.setState({ shouldRedirect: true });
-  }
-
-  handleChange(name) {
-    return e => this.props.changeField(name, e.target.value);
-  }
-
-  handleSubmit(e) {
-    e.preventDefault();
-    this.props.editClient(this.props.values)
-      .then((success) => {
-        if (success) {
-          this.setState({ shouldRedirect: true });
-        }
-      });
-  }
-
-  render() {
-    if (this.state.shouldRedirect) {
-      return <Redirect push to="/clients" />;
-    }
-
-    const { values, errors } = this.props;
-    return (
-      <Form
-        handleChange={this.handleChange}
-        handleSubmit={this.handleSubmit}
-        handleReset={this.handleReset}
-        handleCancel={this.handleCancel}
-        values={values}
-        errors={errors}
-        updating
-      />
-    );
-  }
-}
-
-Edit.propTypes = {
-  errors: PropTypes.objectOf(PropTypes.string).isRequired,
-  values: PropTypes.objectOf(PropTypes.oneOfType([
-    PropTypes.string,
-    PropTypes.number,
-  ])).isRequired,
-  changeField: PropTypes.func.isRequired,
-  editClient: PropTypes.func.isRequired,
-  getClients: PropTypes.func.isRequired,
-  clearFields: PropTypes.func.isRequired,
-  setFields: PropTypes.func.isRequired,
-  clientId: PropTypes.string.isRequired,
-  clients: PropTypes.arrayOf(PropTypes.objectOf(PropTypes.oneOfType([
-    PropTypes.string,
-    PropTypes.number,
-  ]))).isRequired,
-};
-
+const Edit = EditHOC(Form, RedirectComponent);
 
 const { asyncActions, updateFormFieldActions } = reusableReduxConfig(urls.CLIENTS, 'clients');
 const formActions = updateFormFieldActions;
 
 const mapDispatch = {
-  editClient: asyncActions.put,
-  getClients: asyncActions.get,
+  put: asyncActions.put,
+  fetchEntities: asyncActions.get,
   changeField: formActions.changeField,
   setFields: formActions.set,
-  clearFields: formActions.clear,
+  clear: formActions.clear,
 };
 
 const mapState = state => ({
   errors: state.clients.APIStatus.put.errors,
-  values: state.clients.formFields.update,
-  clients: state.clients.entities,
+  fieldValues: state.clients.formFields.update,
+  entities: state.clients.entities,
 });
 
 export { Edit };

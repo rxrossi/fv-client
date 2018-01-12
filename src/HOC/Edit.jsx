@@ -7,7 +7,7 @@ export default (Component, RedirectComponent) => {
       super(props);
       this.state = { shouldRedirect: false };
       const entityToEdit = props.entities.find(x => x.id === props.entityId);
-      props.setFields(entityToEdit);
+      props.setFields(entityToEdit || {});
       props.fetchEntities();
       this.handleChange = this.handleChange.bind(this);
       this.handleReset = this.handleReset.bind(this);
@@ -42,9 +42,14 @@ export default (Component, RedirectComponent) => {
       this.props.removeField(path);
     }
 
-    handleSubmit() {
+    handleSubmit(e) {
+      e.preventDefault();
       const { put, fieldValues } = this.props;
-      put(fieldValues);
+      put(fieldValues).then((success) => {
+        if (success) {
+          this.setState({ shouldRedirect: true });
+        }
+      });
     }
 
     handleChange(name) {
@@ -52,6 +57,7 @@ export default (Component, RedirectComponent) => {
     }
 
     handleReset() {
+      this.props.clear();
       this.fillValuesWithCorrectEntity({ force: true });
     }
 
@@ -65,9 +71,17 @@ export default (Component, RedirectComponent) => {
         return <RedirectComponent />;
       }
 
+      const { fieldValues, errors } = this.props;
+
       return (
         <Component
           handleChange={this.handleChange}
+          handleSubmit={this.handleSubmit}
+          handleReset={this.handleReset}
+          handleCancel={this.handleCancel}
+          values={fieldValues}
+          errors={errors}
+          updating
         />
       );
     }
@@ -80,8 +94,9 @@ export default (Component, RedirectComponent) => {
     changeField: PropTypes.func.isRequired,
     fetchEntities: PropTypes.func.isRequired,
     put: PropTypes.func.isRequired,
-    appendField: PropTypes.func.isRequired,
-    removeField: PropTypes.func.isRequired,
+    clear: PropTypes.func.isRequired,
+    appendField: PropTypes.func,
+    removeField: PropTypes.func,
     fieldValues: PropTypes.objectOf(PropTypes.oneOfType([
       PropTypes.string,
       PropTypes.number,
@@ -90,7 +105,21 @@ export default (Component, RedirectComponent) => {
         PropTypes.number,
       ]))),
     ])).isRequired,
+    errors: PropTypes.objectOf(PropTypes.oneOfType([
+      PropTypes.string,
+      PropTypes.number,
+      PropTypes.arrayOf(PropTypes.objectOf(PropTypes.oneOfType([
+        PropTypes.string,
+        PropTypes.number,
+      ]))),
+    ])).isRequired,
   };
+
+  EditHOC.defaultProps = {
+    appendField: (() => {}),
+    removeField: (() => {}),
+  };
+
 
   return EditHOC;
 };
