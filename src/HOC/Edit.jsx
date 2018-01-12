@@ -44,8 +44,8 @@ export default (Component, RedirectComponent) => {
 
     handleSubmit(e) {
       e.preventDefault();
-      const { put, fieldValues } = this.props;
-      put(fieldValues).then((success) => {
+      const { submit, fieldValues } = this.props;
+      submit(fieldValues).then((success) => {
         if (success) {
           this.setState({ shouldRedirect: true });
         }
@@ -57,7 +57,7 @@ export default (Component, RedirectComponent) => {
     }
 
     handleReset() {
-      this.props.clear();
+      this.props.clearFields();
       this.fillValuesWithCorrectEntity({ force: true });
     }
 
@@ -93,8 +93,8 @@ export default (Component, RedirectComponent) => {
     setFields: PropTypes.func.isRequired,
     changeField: PropTypes.func.isRequired,
     fetchEntities: PropTypes.func.isRequired,
-    put: PropTypes.func.isRequired,
-    clear: PropTypes.func.isRequired,
+    submit: PropTypes.func.isRequired,
+    clearFields: PropTypes.func.isRequired,
     appendField: PropTypes.func,
     removeField: PropTypes.func,
     fieldValues: PropTypes.objectOf(PropTypes.oneOfType([

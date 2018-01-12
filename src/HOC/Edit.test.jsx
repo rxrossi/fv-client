@@ -17,8 +17,9 @@ function mountComponent({
   entities,
   fieldValues,
   changeField,
+  clearFields,
   fetchEntities,
-  put,
+  submit,
   appendField,
   removeField,
   errors,
@@ -32,10 +33,10 @@ function mountComponent({
     fieldValues={fieldValues || {}}
     setFields={setFields || (() => {})}
     changeField={changeField || (() => {})}
-    put={put || (() => {})}
+    submit={submit || (() => {})}
     appendField={appendField || (() => {})}
     removeField={removeField || (() => {})}
-    clear={clear || (() => {})}
+    clearFields={clearFields || (() => {})}
     fetchEntities={fetchEntities || (() => {})}
   />);
 }
@@ -198,15 +199,18 @@ describe('Edit HOC', () => {
   describe('PUT method', () => {
     it('calls the correct prop function with the correct values', () => {
       // Prepare
-      const put = jest.fn();
+      const submit = jest.fn();
+      submit.mockReturnValue(Promise.resolve());
+
       const fieldValues = { id: 'e2', name: 'name2' };
-      const sut = mountComponent({ fieldValues, put });
+      const sut = mountComponent({ fieldValues, submit });
+      const evt = { preventDefault: () => {} };
 
       // Act
-      sut.instance().handleSubmit();
+      sut.instance().handleSubmit(evt);
 
       // Assert
-      expect(put).toHaveBeenCalledWith(fieldValues);
+      expect(submit).toHaveBeenCalledWith(fieldValues);
     });
   });
 });
