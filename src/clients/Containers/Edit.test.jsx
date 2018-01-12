@@ -19,15 +19,15 @@ function mountComponent({
   const mockFn = () => {};
 
   return mount(<Edit
-    editClient={editClient || mockFn}
+    submit={editClient || mockFn}
     changeField={changeField || mockFn}
     clearFields={clearFields || mockFn}
     setFields={setFields || mockFn}
-    getClients={getClients || mockFn}
-    values={values || {}}
+    fetchEntities={getClients || mockFn}
+    fieldValues={values || {}}
     errors={errors || {}}
-    clientId={clientId}
-    clients={clients || []}
+    entityId={clientId}
+    entities={clients || []}
   />);
 }
 

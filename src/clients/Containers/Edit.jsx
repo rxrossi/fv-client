@@ -14,11 +14,11 @@ const { asyncActions, updateFormFieldActions } = reusableReduxConfig(urls.CLIENT
 const formActions = updateFormFieldActions;
 
 const mapDispatch = {
-  put: asyncActions.put,
+  submit: asyncActions.put,
   fetchEntities: asyncActions.get,
   changeField: formActions.changeField,
   setFields: formActions.set,
-  clear: formActions.clear,
+  clearFields: formActions.clear,
 };
 
 const mapState = state => ({
