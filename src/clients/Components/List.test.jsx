@@ -24,7 +24,7 @@ describe('Clients List component', () => {
   it('renders one client if one is given', () => {
     const sut = shallow(<List
       fetchClients={fakeFetch}
-      clients={clientsListExample.slice(0, 1)}
+      entities={clientsListExample.slice(0, 1)}
       deleteFn={() => {}}
     />);
 
@@ -35,7 +35,7 @@ describe('Clients List component', () => {
   it('renders one or more clients if one or more are given', () => {
     const sut = shallow(<List
       fetchClients={fakeFetch}
-      clients={clientsListExample}
+      entities={clientsListExample}
       deleteFn={() => {}}
     />);
 

@@ -28,8 +28,8 @@ Client.propTypes = {
 };
 export { Client };
 
-const Clients = ({ clients }) => {
-  if (clients.length) {
+const Clients = ({ entities }) => {
+  if (entities.length) {
     return (
       <Container className="py-1">
         <Row>
@@ -49,7 +49,7 @@ const Clients = ({ clients }) => {
               </thead>
               <tbody>
                 {
-                  clients.map(client => (
+                  entities.map(client => (
                     <Client key={client.id} client={client} />
                   ))
                 }
@@ -78,14 +78,14 @@ const Clients = ({ clients }) => {
 };
 
 Clients.propTypes = {
-  clients: PropTypes.arrayOf(PropTypes.shape({
+  entities: PropTypes.arrayOf(PropTypes.shape({
     id: PropTypes.string.isRequired,
     name: PropTypes.string.isRequired,
     phone: PropTypes.string.isRequired,
   })),
 };
 Clients.defaultProps = {
-  clients: [],
+  entities: [],
 };
 
 export default Clients;
