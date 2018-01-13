@@ -1,8 +1,8 @@
 # Client
 
 ## Clients
-+ [ ] extract clients containers to make them reusable
 + [ ] clicking the client goes to view one, this view one shows last sales for it
++ [X] extract clients containers to make them reusable
 + [X] needs to change table to match other pages
 + [X] edit cancel button that redirects
 + [X] undo changes on update form should clear put errors
@@ -25,33 +25,20 @@
   + [X] clear form needs to become reset form
 
 ## General
-+ [ ] generalize containers
 + [ ] Implement login
++ [X] generalize containers
 + [ ] Fuzzy filter for Clients
 
 ## Purchases
 + [ ] It seems possible to submit a purchase without stock entries
 
 ## Professionals
++ [ ] make form reusable
+  + [ ] works for add
+  + [ ] works for edit
++ [ ] make a delete container
++ [ ] integrate buttons of delete and edit to List Component
 + [ ] Show the total profit
-
-
-# Writing acceptance test
-
-What needs to be tested
-- index
-  - check if the right components load
-- list (view many)
-  - check if the right component load
-  - check if props are correct (one for empty list, other for many?)
-- viewDetail (view one)
-  - check if the right component load, check if the props are correct
-- edit
-  - check if the right component load, check if the props are correct
-  - change the values (maybe without using the actual form?), assert if the right API call was made
-- delete
-  - check if the right component load, check if the props are correct
-  - check if that on confirm, the right action is called
 
 # Acceptance, Container and Connected Container tests
 
