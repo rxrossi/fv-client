@@ -1,6 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 import { Container, Row, Col, Table } from 'reactstrap';
+import DeleteModal from '../Containers/DeleteModal';
 
 export const NO_PROFESSIONALS_P_CLASS = 'no-professionals-msg';
 
@@ -8,6 +10,12 @@ const Professional = ({ professional }) => (
   <tr>
     <td>{professional.name}</td>
     <td>TODO</td>
+    <td>
+      <Link className="btn btn-info" to={`/professionals/${professional.id}/edit`}>Edit</Link>
+      <DeleteModal entity={professional} >
+        Delete
+      </DeleteModal>
+    </td>
   </tr>
 );
 
@@ -18,8 +26,8 @@ Professional.propTypes = {
   }).isRequired,
 };
 
-const Professionals = ({ professionals }) => {
-  if (professionals.length) {
+const Professionals = ({ entities }) => {
+  if (entities.length) {
     return (
       <Container className="py-1">
         <Row>
@@ -34,11 +42,12 @@ const Professionals = ({ professionals }) => {
                 <tr>
                   <th>Name</th>
                   <th>Total Sales</th>
+                  <th>Options</th>
                 </tr>
               </thead>
               <tbody>
                 {
-                  professionals.map(professional => (
+                  entities.map(professional => (
                     <Professional key={professional.id} professional={professional} />
                   ))
                 }
@@ -67,13 +76,13 @@ const Professionals = ({ professionals }) => {
   );
 };
 Professionals.propTypes = {
-  professionals: PropTypes.arrayOf(PropTypes.shape({
+  entities: PropTypes.arrayOf(PropTypes.shape({
     id: PropTypes.string.isRequired,
     name: PropTypes.string.isRequired,
   })),
 };
 Professionals.defaultProps = {
-  professionals: [],
+  entities: [],
 };
 export default Professionals;
 

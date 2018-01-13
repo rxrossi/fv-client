@@ -1,12 +1,12 @@
 import React from 'react';
 import Adapter from 'enzyme-adapter-react-16';
 import { configure, mount } from 'enzyme';
-import Add from './Add';
+import Form from './Form';
 // Configure Enzyme
 configure({ adapter: new Adapter() });
 
-describe('Professionals Add Form', () => {
+describe('Professionals Form Form', () => {
   it('renders', () => {
-    mount(<Add handleSubmit={() => {}} handleChange={() => {}} values={{}} errors={{}} />);
+    mount(<Form handleSubmit={() => {}} handleChange={() => {}} values={{}} errors={{}} />);
   });
 });

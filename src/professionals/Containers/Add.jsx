@@ -1,63 +1,21 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import reusableReduxConfig from 'reusablecrudredux';
 import { connect } from 'react-redux';
-import AddComponent from '../Components/Add';
-import { addProfessional, clearAddForm, changeField } from '../actions';
+import Form from '../Components/Form';
+import createHOC from '../../HOC/Create';
+import * as urls from '../../APIInfo';
 
-class Add extends React.Component {
-  constructor(props) {
-    super(props);
-    this.submit = this.submit.bind(this);
-    this.handleChange = this.handleChange.bind(this);
-  }
+const { asyncActions, createFormFieldActions } = reusableReduxConfig(urls.PROFESSIONALS, 'professionals');
+const formActions = createFormFieldActions;
 
-  componentWillUnmount() {
-    this.props.clearAddForm();
-  }
-
-  handleChange(field) {
-    return ({ target: { value } }) => {
-      this.props.changeField(field, value);
-    };
-  }
-
-  submit(e) {
-    e.preventDefault();
-    this.props.addProfessional(this.props.values);
-    const firstInput = document.querySelector('input');
-    if (firstInput) {
-      firstInput.focus();
-    }
-  }
-
-  render() {
-    return (
-      <AddComponent
-        handleSubmit={this.submit}
-        handleChange={this.handleChange}
-        values={this.props.values}
-        errors={this.props.errors}
-      />
-    );
-  }
-}
-Add.propTypes = {
-  addProfessional: PropTypes.func.isRequired,
-  changeField: PropTypes.func.isRequired,
-  errors: PropTypes.objectOf(PropTypes.string).isRequired,
-  values: PropTypes.objectOf(PropTypes.string).isRequired,
-  clearAddForm: PropTypes.func.isRequired,
-};
+const Add = createHOC(Form);
 
 const mapState = state => ({
-  values: state.professionals.fields,
-  errors: state.professionals.addErrors,
+  fieldValues: state.professionals.formFields.create,
+  errors: state.professionals.APIStatus.post.errors,
 });
 
-const mapDispatch = {
-  addProfessional,
-  clearAddForm,
-  changeField,
-};
-
-export default connect(mapState, mapDispatch)(Add);
+export default connect(mapState, {
+  submit: asyncActions.post,
+  changeField: formActions.changeField,
+  clearFields: formActions.clear,
+})(Add);
