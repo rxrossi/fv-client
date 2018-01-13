@@ -10,7 +10,6 @@ import fetchMock from 'fetch-mock';
 import * as API_URLS from '../../APIInfo';
 import List from './List';
 
-
 const clients = reusableReduxConfig(API_URLS.CLIENTS, 'clients').reducer;
 
 // Configure Enzyme

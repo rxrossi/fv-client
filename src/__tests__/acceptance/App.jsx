@@ -21,7 +21,6 @@ describe('App acceptance test', () => {
   });
   afterEach(() => {
     fetchMock.restore();
-    fetchMock.reset();
   });
 
   describe('Mounting tests', () => {

@@ -4,7 +4,7 @@ import fetchMock from 'fetch-mock';
 import { configure, mount } from 'enzyme';
 import App from '../../App';
 import * as API_URLS from '../../APIInfo';
-import { NO_PROFESSIONALS_P_CLASS } from '../../professionals/Components/View';
+import { NO_PROFESSIONALS_P_CLASS } from '../../professionals/Components/List';
 // Configure Enzyme
 
 configure({ adapter: new Adapter() });
