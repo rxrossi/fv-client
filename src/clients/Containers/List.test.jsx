@@ -1,5 +1,6 @@
 import React from 'react';
 import Adapter from 'enzyme-adapter-react-16';
+import reusableReduxConfig from 'reusablecrudredux';
 import { BrowserRouter as Router } from 'react-router-dom';
 import { createStore, combineReducers, applyMiddleware } from 'redux';
 import thunk from 'redux-thunk';
@@ -9,7 +10,6 @@ import fetchMock from 'fetch-mock';
 import * as API_URLS from '../../APIInfo';
 import List from './List';
 
-import reusableReduxConfig from '../../../../../reusableCRUDRedux/src';
 
 const clients = reusableReduxConfig(API_URLS.CLIENTS, 'clients').reducer;
 
