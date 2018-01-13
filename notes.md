@@ -2,31 +2,9 @@
 
 ## Clients
 + [ ] clicking the client goes to view one, this view one shows last sales for it
-+ [X] extract clients containers to make them reusable
-+ [X] needs to change table to match other pages
-+ [X] edit cancel button that redirects
-+ [X] undo changes on update form should clear put errors
-+ [X] delete
-  + [X] clicking opens a modal to confirm
-  + [X] the modal shows the title of the client
-  + [X] the modal warns that sales related to him will be also deleted
-  + [X] extract it to a container, it is using List for now
-
-+ [X] Successful client new features
-  + [ ] edit also redirects to clients home on error
-  + [X] edit needs to clear form fields (reusableCrudRedux)
-  + [X] needs to probably redirect or close
-  + [X] to fix the above, my reusableCrudRedux action should throw on error
-  + [X] add a then on asyncAction.put that redirects
-  + [X] container edit should have state.redirect, on successful put, set it to true, on render, user a Redirect
-+ [X] update form should adapt if it is updating or creating
-  + [X] adptive title
-  + [X] adptive save button text
-  + [X] clear form needs to become reset form
 
 ## General
 + [ ] Implement login
-+ [X] generalize containers
 + [ ] Fuzzy filter for Clients
 
 ## Purchases
