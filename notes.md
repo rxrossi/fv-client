@@ -3,13 +3,6 @@
 ## Clients
 + [ ] clicking the client goes to view one, this view one shows last sales for it
 
-## General
-+ [ ] Implement login
-+ [ ] Fuzzy filter for Clients
-
-## Purchases
-+ [ ] It seems possible to submit a purchase without stock entries
-
 ## Professionals
 + [ ] make form reusable
   + [ ] works for add
@@ -17,6 +10,48 @@
 + [ ] make a delete container
 + [ ] integrate buttons of delete and edit to List Component
 + [ ] Show the total profit
+
+## Products
++ [ ] make form reusable
+  + [ ] works for add
+  + [ ] works for edit
++ [ ] Create a ViewDetails HOC
++ [ ] make a delete container
++ [ ] integrate buttons of delete and edit to List Component
++ [ ] Convert HOC
+  + [ ] List
+  + [ ] ViewDetail
+  + [ ] Add
+  + [ ] Edit
+
+## Purchases
++ [ ] make form reusable
+  + [ ] works for add
+  + [ ] works for edit
++ [ ] make a delete container
++ [ ] integrate buttons of delete and edit to List Component
++ [ ] Convert HOC
+  + [ ] List
+  + [ ] ViewDetail
+  + [ ] Add
+  + [ ] Edit
++ [ ] It seems possible to submit a purchase without stock entries
+
+## Sales
++ [ ] make form reusable
+  + [ ] works for add
+  + [ ] works for edit
++ [ ] make a delete container
++ [ ] integrate buttons of delete and edit to List Component
++ [ ] Convert HOC
+  + [ ] List
+  + [ ] ViewDetail
+  + [ ] Add
+  + [ ] Edit
+
+## General
++ [ ] Implement login
++ [ ] Fuzzy filter for Clients
 
 # Acceptance, Container and Connected Container tests
 
