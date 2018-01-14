@@ -100,9 +100,11 @@ export default (Component, RedirectComponent) => {
     fieldValues: PropTypes.objectOf(PropTypes.oneOfType([
       PropTypes.string,
       PropTypes.number,
+      PropTypes.bool,
       PropTypes.arrayOf(PropTypes.objectOf(PropTypes.oneOfType([
         PropTypes.string,
         PropTypes.number,
+        PropTypes.bool,
       ]))),
     ])).isRequired,
     errors: PropTypes.objectOf(PropTypes.oneOfType([

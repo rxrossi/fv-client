@@ -1,4 +1,6 @@
 # Client
+## General
++ [X] on delete rename to 'name deactivated at yyyy/mm/dd hh:mm:ss'
 
 ## Clients
 + [ ] clicking the client goes to view one, this view one shows last sales for it
