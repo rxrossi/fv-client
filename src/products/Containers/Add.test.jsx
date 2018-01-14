@@ -4,13 +4,12 @@ import { Provider } from 'react-redux';
 import { createStore, combineReducers } from 'redux';
 import { configure, mount } from 'enzyme';
 import Add from './Add';
-import products from '../reducer';
 // Configure Enzyme
 configure({ adapter: new Adapter() });
 
 function mountComponent() {
   const reducer = combineReducers({
-    products,
+    products: () => ({}),
   });
   const store = createStore(reducer);
 

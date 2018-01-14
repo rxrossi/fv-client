@@ -4,13 +4,14 @@ import { Link } from 'react-router-dom';
 import { Container, Row, Col } from 'reactstrap';
 import Table from '../../NoMoreTables';
 import { formatMoney } from '../../displayHelpers';
+import DeleteModal from '../Containers/Delete';
 
 export const NO_PRODUCTS_P_CLASS = 'no-products-msg';
 
-const Product = ({ product, linkToViewOne }) => (
+const Product = ({ product }) => (
   <tr>
     <td data-title="Name">
-      <Link to={linkToViewOne}>{product.name}</Link>
+      <Link className="btn btn-info" to={`/products/${product.id}`}>{product.name}</Link>
     </td>
     <td align="right" data-title="Quantity">
       {product.quantity} {product.measure_unit}
@@ -20,6 +21,12 @@ const Product = ({ product, linkToViewOne }) => (
     </td>
     <td align="right" data-title="Avg Price (5)">
       {formatMoney(product.avgPriceFiveLast)} per {product.measure_unit}
+    </td>
+    <td>
+      <Link className="btn btn-info" to={`/products/${product.id}/edit`}>Edit</Link>
+      <DeleteModal entity={product} >
+        Delete
+      </DeleteModal>
     </td>
   </tr>
 );
@@ -32,11 +39,10 @@ Product.propTypes = {
     price: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
     avgPriceFiveLast: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   }).isRequired,
-  linkToViewOne: PropTypes.string.isRequired,
 };
 
-const View = ({ products, baseUrl }) => {
-  if (products.length) {
+const List = ({ entities }) => {
+  if (entities.length) {
     return (
       <Container className="py-5">
         <Row>
@@ -53,15 +59,15 @@ const View = ({ products, baseUrl }) => {
                   <th className="text-right">Quantity</th>
                   <th className="text-right">Price</th>
                   <th className="text-right">Average price of last five per each</th>
+                  <th>Options</th>
                 </tr>
               </thead>
               <tbody>
                 {
-                  products.map(product =>
+                  entities.map(product =>
                     (<Product
                       key={product.id}
                       product={product}
-                      linkToViewOne={`${baseUrl}/${product.id}`}
                     />))
                 }
               </tbody>
@@ -91,8 +97,8 @@ const View = ({ products, baseUrl }) => {
   );
 };
 
-View.propTypes = {
-  products: PropTypes.arrayOf(PropTypes.shape({
+List.propTypes = {
+  entities: PropTypes.arrayOf(PropTypes.shape({
     id: PropTypes.string,
     name: PropTypes.string,
     measure_unit: PropTypes.string,
@@ -100,9 +106,8 @@ View.propTypes = {
     price: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
     avgPriceFiveLast: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   })),
-  baseUrl: PropTypes.string.isRequired,
 };
-View.defaultProps = {
-  products: [],
+List.defaultProps = {
+  entities: [],
 };
-export default View;
+export default List;

@@ -13,10 +13,7 @@ function listHOC(Component) {
   }
   List.propTypes = {
     fetchEntities: PropTypes.func.isRequired,
-    entities: PropTypes.arrayOf(PropTypes.objectOf(PropTypes.oneOfType([
-      PropTypes.string,
-      PropTypes.number,
-    ]))).isRequired,
+    entities: PropTypes.arrayOf(PropTypes.objectOf(PropTypes.any)).isRequired,
   };
 
   return List;

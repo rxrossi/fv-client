@@ -7,7 +7,6 @@ import reusableReduxConfig from 'reusablecrudredux';
 import Clients from './clients/';
 import Professionals from './professionals/';
 import Products from './products';
-import products from './products/reducer';
 import Purchases from './purchases';
 import purchases from './purchases/reducer';
 import Sales from './sales';
@@ -20,7 +19,7 @@ const Home = () => <p>This is home</p>;
 export const reducer = combineReducers({
   clients: reusableReduxConfig(urls.CLIENTS, 'clients').reducer,
   professionals: reusableReduxConfig(urls.PROFESSIONALS, 'professionals').reducer,
-  products,
+  products: reusableReduxConfig(urls.PRODUCTS, 'products').reducer,
   purchases,
   sales,
 });
@@ -33,7 +32,7 @@ const RouterComponent = () => (
       <NavBar />
       <Route exact path="/" component={Home} />
       <Route path="/clients/:id?/:action?" component={Clients} />
-      <Route path="/products/:id?" component={Products} />
+      <Route path="/products/:id?/:action?" component={Products} />
       <Route path="/professionals/:id?/:action?" component={Professionals} />
       <Route path="/purchases/:id?/:action?" component={Purchases} />
       <Route path="/sales/:id?" component={Sales} />

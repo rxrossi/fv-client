@@ -3,12 +3,12 @@ import PropTypes from 'prop-types';
 import reusableReduxConfig from 'reusablecrudredux';
 import { connect } from 'react-redux';
 import AddComponent from '../Components/Add';
-import { fetchProducts } from '../../products/actions';
 import * as urls from '../../APIInfo';
 // import { fetchClients } from '../../clients/actions';
 import { addSale, changeField, appendToArrayOfFields, removeFromArrayOfFields, clearAddForm } from '../../sales/actions';
 
 const { asyncActions: professionalsAsyncActions } = reusableReduxConfig(urls.PROFESSIONALS, 'professionals');
+const { asyncActions: productsAsyncActions } = reusableReduxConfig(urls.PRODUCTS, 'products');
 
 const paymentOptions = [
   { id: '1', name: 'Money' },
@@ -112,8 +112,9 @@ const mapState = state => ({
   paymentOptions,
 });
 
+
 const mapDispatch = {
-  fetchProducts,
+  fetchProducts: productsAsyncActions.get,
   // fetchClients,
   fetchProfessionals: professionalsAsyncActions.get,
   addSale,

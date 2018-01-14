@@ -2,7 +2,7 @@ import React from 'react';
 import Adapter from 'enzyme-adapter-react-16';
 import { BrowserRouter as Router } from 'react-router-dom';
 import { configure, mount } from 'enzyme';
-import View from './View';
+import List from './List';
 // Configure Enzyme
 configure({ adapter: new Adapter() });
 
@@ -38,7 +38,7 @@ describe('Products Component', () => {
     /* eslint-disable */
     const sut = mount(
       <Router>
-        <View products={productsList} baseUrl={'/products'} />
+        <List entities={productsList} />
       </Router>);
     /* eslint-enable */
     const text = sut.text();

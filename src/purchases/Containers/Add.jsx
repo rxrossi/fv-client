@@ -1,9 +1,11 @@
 import React from 'react';
+import reusableReduxConfig from 'reusablecrudredux';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { reset } from 'redux-form';
 import AddComponent from '../Components/Add';
-import { fetchProducts } from '../../products/actions';
+import * as urls from '../../APIInfo';
+// import { fetchProducts } from '../../products/actions';
 import { addPurchase, changeField, appendToArrayOfFields, removeFromArrayOfFields, clearAddForm } from '../actions';
 
 class Add extends React.Component {
@@ -70,11 +72,12 @@ Add.propTypes = {
   /* eslint-enable */
 };
 
+const { asyncActions: productsAsyncActions } = reusableReduxConfig(urls.PRODUCTS, 'products');
 
 const mapDispatch = {
   addPurchase,
   reset,
-  fetchProducts,
+  fetchProducts: productsAsyncActions.get,
   changeField,
   clearAddForm,
   removeField: removeFromArrayOfFields,

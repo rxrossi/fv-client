@@ -103,8 +103,8 @@ Stock.defaultProps = {
   stock: undefined,
 };
 
-const ViewOne = ({ product }) => {
-  if (!product) {
+const ViewOne = ({ entity }) => {
+  if (!entity) {
     return (
       <Container className="py-1">
         <Row>
@@ -120,15 +120,15 @@ const ViewOne = ({ product }) => {
       <Row>
         <Col>
           <h2>Overall Info</h2>
-          <Header product={product} />
+          <Header product={entity} />
           <h2 className="pt-4">Stock entries</h2>
-          <Stock product={product} />
+          <Stock product={entity} />
         </Col>
       </Row>
     </Container>);
 };
 ViewOne.propTypes = {
-  product: PropTypes.shape({
+  entity: PropTypes.shape({
     name: PropTypes.string,
     quantity: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
     price: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
@@ -143,7 +143,7 @@ ViewOne.propTypes = {
   }),
 };
 ViewOne.defaultProps = {
-  product: undefined,
+  entity: undefined,
 };
 
 export default ViewOne;
