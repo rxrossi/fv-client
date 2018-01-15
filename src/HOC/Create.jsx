@@ -1,7 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import filterProps from './filterProps';
 
-export default (Component) => {
+export default (Component, propsNamesToPass) => {
   class CreateHOC extends React.Component {
     constructor(props) {
       super(props);
@@ -35,15 +36,18 @@ export default (Component) => {
     }
 
     render() {
-      const { fieldValues, errors } = this.props;
+      const { fieldValues, errors, ...others } = this.props;
 
       return (
         <Component
           handleChange={this.handleChange}
           handleSubmit={this.handleSubmit}
           handleReset={this.handleReset}
+          handleAppendField={this.handleAppendField}
+          handleRemoveField={this.handleRemoveField}
           values={fieldValues}
           errors={errors}
+          {...filterProps(propsNamesToPass, others)}
         />
       );
     }

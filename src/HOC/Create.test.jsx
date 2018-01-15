@@ -17,8 +17,10 @@ function mountComponent({
   clearFields,
   errors,
   submit,
+  passProps,
+  ...others
 } = {}) {
-  const Create = createHOC(SomePresentational);
+  const Create = createHOC(SomePresentational, passProps);
 
   return mount(<Create
     changeField={changeField || (() => {})}
@@ -28,6 +30,7 @@ function mountComponent({
     errors={errors || {}}
     clearFields={clearFields || (() => {})}
     submit={submit || (() => {})}
+    {...others}
   />);
 }
 
@@ -39,7 +42,21 @@ describe('Create HOC', () => {
     // Assert
     expect(sut.find(SomePresentational).length).toBe(1);
   });
+  describe('Passing custom props', () => {
+    it('pass props to the presentational', () => {
+      // Prepare
+      const additionalEntities1 = ['one', 'two', 'three'];
+      const additionalEntities2 = ['1', '2', '3'];
+      const passProps = ['additionalEntities1', 'additionalEntities2'];
 
+      // Act
+      const sut = mountComponent({ additionalEntities1, additionalEntities2, passProps });
+
+      // Assert
+      expect(sut.find(SomePresentational).props().additionalEntities1).toEqual(additionalEntities1);
+      expect(sut.find(SomePresentational).props().additionalEntities2).toEqual(additionalEntities2);
+    });
+  });
   describe('Changing a field', () => {
     it('calls the correct prop when the presentational component calls its handleMethod', () => {
       // Prepare
