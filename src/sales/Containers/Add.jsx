@@ -1,14 +1,21 @@
-import React from 'react';
-import PropTypes from 'prop-types';
 import reusableReduxConfig from 'reusablecrudredux';
 import { connect } from 'react-redux';
-import AddComponent from '../Components/Add';
+import Form from '../Components/Form';
 import * as urls from '../../APIInfo';
-// import { fetchClients } from '../../clients/actions';
-import { addSale, changeField, appendToArrayOfFields, removeFromArrayOfFields, clearAddForm } from '../../sales/actions';
+import createHOC from '../../HOC/Create';
+
+const passProps = [
+  'products',
+  'clients',
+  'professionals',
+];
+
+const Add = createHOC(Form, passProps);
 
 const { asyncActions: professionalsAsyncActions } = reusableReduxConfig(urls.PROFESSIONALS, 'professionals');
 const { asyncActions: productsAsyncActions } = reusableReduxConfig(urls.PRODUCTS, 'products');
+const { asyncActions: clientsAsyncActions } = reusableReduxConfig(urls.CLIENTS, 'clients');
+const { asyncActions: salesAsyncActions, createFormFieldActions } = reusableReduxConfig(urls.SALES, 'sales');
 
 const paymentOptions = [
   { id: '1', name: 'Money' },
@@ -18,110 +25,25 @@ const paymentOptions = [
   { id: '5', name: 'Credit 3x' },
 ];
 
-class Add extends React.Component {
-  constructor(props) {
-    super(props);
-    this.submit = this.submit.bind(this);
-    this.handleChange = this.handleChange.bind(this);
-    this.addProductsField = this.addProductsField.bind(this);
-  }
-
-  componentDidMount() {
-    this.props.fetchProducts();
-    // this.props.fetchClients();
-    this.props.fetchProfessionals();
-  }
-
-  handleChange(field, path = []) {
-    return ({ target: { value } }) => {
-      this.props.changeField([...path, field], value);
-    };
-  }
-
-  addProductsField() {
-    this.props.addField('products', {});
-  }
-
-  submit(e) {
-    e.preventDefault();
-    this.props.addSale(this.props.values);
-    const firstInput = document.querySelector('input');
-    if (firstInput) {
-      firstInput.focus();
-    }
-  }
-
-  render() {
-    return (<AddComponent
-      handleClear={this.props.clearAddForm}
-      handleSubmit={this.submit}
-      handleChange={this.handleChange}
-      values={this.props.values}
-      errors={this.props.addErrors}
-      paymentOptions={this.props.paymentOptions}
-      clients={this.props.clients}
-      professionals={this.props.professionals}
-      productsForSelect={this.props.productsForSelect}
-      addField={this.addProductsField}
-      removeField={this.props.removeField}
-    />);
-  }
-}
-Add.propTypes = {
-  paymentOptions: PropTypes.arrayOf(PropTypes.string).isRequired,
-  clients: PropTypes.arrayOf(PropTypes.shape({
-    id: PropTypes.string.isRequired,
-    name: PropTypes.string.isRequired,
-  })).isRequired,
-  professionals: PropTypes.arrayOf(PropTypes.shape({
-    id: PropTypes.string.isRequired,
-    name: PropTypes.string.isRequired,
-  })).isRequired,
-  productsForSelect: PropTypes.arrayOf(PropTypes.shape({
-    id: PropTypes.string.isRequired,
-    name: PropTypes.string.isRequired,
-  })).isRequired,
-  // fetchClients: PropTypes.func.isRequired,
-  fetchProducts: PropTypes.func.isRequired,
-  fetchProfessionals: PropTypes.func.isRequired,
-  changeField: PropTypes.func.isRequired,
-  addField: PropTypes.func.isRequired,
-  removeField: PropTypes.func.isRequired,
-  clearAddForm: PropTypes.func.isRequired,
-  addSale: PropTypes.func.isRequired,
-  values: PropTypes.objectOf(PropTypes.oneOfType([
-    PropTypes.instanceOf(Date),
-    PropTypes.string,
-    PropTypes.number,
-    PropTypes.arrayOf(PropTypes.objectOf(PropTypes.oneOfType([
-      PropTypes.string,
-      PropTypes.number,
-    ]))),
-  ])).isRequired,
-  /*eslint-disable*/
-  addErrors: PropTypes.objectOf(PropTypes.oneOfType([PropTypes.string, PropTypes.array])).isRequired,
-  /* eslint-enable */
-};
-
 const mapState = state => ({
-  productsForSelect: state.products.list,
-  clients: state.clients.list,
-  professionals: state.professionals.list,
-  addErrors: state.sales.addErrors,
-  values: state.sales.fields,
+  products: state.products.entities,
+  clients: state.clients.entities,
+  professionals: state.professionals.entities,
+  errors: state.sales.APIStatus.post.errors,
+  fieldValues: state.sales.formFields.create,
   paymentOptions,
 });
 
 
 const mapDispatch = {
   fetchProducts: productsAsyncActions.get,
-  // fetchClients,
+  fetchClients: clientsAsyncActions.get,
   fetchProfessionals: professionalsAsyncActions.get,
-  addSale,
-  removeField: removeFromArrayOfFields,
-  addField: appendToArrayOfFields,
-  changeField,
-  clearAddForm,
+  submit: salesAsyncActions.post,
+  removeField: createFormFieldActions.removeField,
+  appendField: createFormFieldActions.appendField,
+  changeField: createFormFieldActions.changeField,
+  clearFields: createFormFieldActions.clear,
 };
 
 export default connect(mapState, mapDispatch)(Add);
