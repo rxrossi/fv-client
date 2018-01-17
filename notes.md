@@ -7,6 +7,7 @@
 + [ ] clicking the client goes to view one, this view one shows last sales for it
 
 ## Purchases
++ [ ] Delete
 + [ ] make form reusable
   + [ ] works for add
   + [ ] works for edit
@@ -26,9 +27,9 @@
 + [ ] make a delete container
 + [ ] integrate buttons of delete and edit to List Component
 + [ ] Convert HOC
-  + [ ] List
+  + [X] List
   + [ ] ViewDetail
-  + [ ] Add
+  + [X] Add
   + [ ] Edit
 
 ## General

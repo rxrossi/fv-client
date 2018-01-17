@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import { Container, Row, Col } from 'reactstrap';
 import Table from '../../NoMoreTables';
 import { getReadableDate, formatMoney } from '../../displayHelpers';
+import DeleteModal from '../Containers/Delete';
 
 const PurchaseRow = ({ purchase }) => (
   <tr>
@@ -11,9 +12,11 @@ const PurchaseRow = ({ purchase }) => (
     <td data-title="Date" align="right">{getReadableDate(purchase.date)}</td>
     <td data-title="Total value" align="right">{formatMoney(purchase.price)}</td>
     <td data-title="Options">
-      <Link to={`purchases/${purchase.id}`}>
-          See details
-      </Link>
+      <Link className="btn btn-info" to={`purchases/${purchase.id}`}> See details </Link>
+      <Link className="btn btn-info" to={`/Purchases/${purchase.id}/edit`}>Edit</Link>
+      <DeleteModal entity={purchase} >
+        Delete
+      </DeleteModal>
     </td>
   </tr>
 );
