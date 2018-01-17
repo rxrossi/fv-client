@@ -8,9 +8,16 @@ const passProps = [
   'products',
   'clients',
   'professionals',
+  'paymentOptions',
 ];
 
-const Add = createHOC(Form, passProps);
+const callPropsOnMount = [
+  'fetchClients',
+  'fetchProducts',
+  'fetchProfessionals',
+];
+
+const Add = createHOC(Form, passProps, callPropsOnMount);
 
 const { asyncActions: professionalsAsyncActions } = reusableReduxConfig(urls.PROFESSIONALS, 'professionals');
 const { asyncActions: productsAsyncActions } = reusableReduxConfig(urls.PRODUCTS, 'products');
@@ -33,7 +40,6 @@ const mapState = state => ({
   fieldValues: state.sales.formFields.create,
   paymentOptions,
 });
-
 
 const mapDispatch = {
   fetchProducts: productsAsyncActions.get,

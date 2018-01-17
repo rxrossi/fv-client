@@ -18,9 +18,10 @@ function mountComponent({
   errors,
   submit,
   passProps,
+  callPropsOnMount,
   ...others
 } = {}) {
-  const Create = createHOC(SomePresentational, passProps);
+  const Create = createHOC(SomePresentational, passProps, callPropsOnMount);
 
   return mount(<Create
     changeField={changeField || (() => {})}
@@ -42,6 +43,22 @@ describe('Create HOC', () => {
     // Assert
     expect(sut.find(SomePresentational).length).toBe(1);
   });
+  describe('Calling props on mount', () => {
+    it('calls the props', () => {
+      // Prepare
+      const mockOne = jest.fn();
+      const mockTwo = jest.fn();
+      const callPropsOnMount = ['mockOne', 'mockTwo'];
+
+      // Act
+      mountComponent({ mockOne, mockTwo, callPropsOnMount });
+
+      // Assert
+      expect(mockOne).toHaveBeenCalledTimes(1);
+      expect(mockTwo).toHaveBeenCalledTimes(1);
+    });
+  });
+
   describe('Passing custom props', () => {
     it('pass props to the presentational', () => {
       // Prepare
@@ -57,16 +74,17 @@ describe('Create HOC', () => {
       expect(sut.find(SomePresentational).props().additionalEntities2).toEqual(additionalEntities2);
     });
   });
+
   describe('Changing a field', () => {
     it('calls the correct prop when the presentational component calls its handleMethod', () => {
       // Prepare
       const changeField = jest.fn();
       const sut = mountComponent({ changeField });
       // Act
-      sut.instance().handleChange('name')({ target: { value: 'someVal' } });
+      sut.instance().handleChange('name', [])({ target: { value: 'someVal' } });
       // Assert
       expect(changeField).toHaveBeenCalledTimes(1);
-      expect(changeField).toHaveBeenCalledWith('name', 'someVal');
+      expect(changeField).toHaveBeenCalledWith(['name'], 'someVal');
     });
 
     it('passes handleChange method to Presentational', () => {
@@ -97,10 +115,11 @@ describe('Create HOC', () => {
       const removeField = jest.fn();
       const sut = mountComponent({ removeField });
       const path = 'some path';
+      const index = '1';
       // Act
-      sut.instance().handleRemoveField(path);
+      sut.instance().handleRemoveField(path, index);
       // Assert
-      expect(removeField).toHaveBeenCalledWith(path);
+      expect(removeField).toHaveBeenCalledWith(path, index);
     });
   });
 

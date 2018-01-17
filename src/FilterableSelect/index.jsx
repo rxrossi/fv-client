@@ -152,7 +152,7 @@ class FilterableSelect extends React.Component {
 }
 
 FilterableSelect.propTypes = {
-  value: PropTypes.string.isRequired,
+  value: PropTypes.string,
   name: PropTypes.string.isRequired,
   label: PropTypes.string.isRequired,
   path: PropTypes.arrayOf(PropTypes.oneOfType([
@@ -160,7 +160,7 @@ FilterableSelect.propTypes = {
     PropTypes.number,
   ])),
   handleChange: PropTypes.func.isRequired,
-  error: PropTypes.objectOf(PropTypes.string).isRequired,
+  error: PropTypes.objectOf(PropTypes.string),
   options: PropTypes.arrayOf(PropTypes.objectOf(PropTypes.oneOfType([
     PropTypes.string,
     PropTypes.number,
@@ -171,6 +171,8 @@ FilterableSelect.propTypes = {
 FilterableSelect.defaultProps = {
   maxOptsToShow: 5,
   path: [],
+  value: undefined,
+  error: undefined,
 };
 
 export default FilterableSelect;

@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import filterProps from './filterProps';
 
-export default (Component, propsNamesToPass) => {
+export default (Component, propsNamesToPass, callPropsOnMount = []) => {
   class CreateHOC extends React.Component {
     constructor(props) {
       super(props);
@@ -11,14 +11,16 @@ export default (Component, propsNamesToPass) => {
       this.handleSubmit = this.handleSubmit.bind(this);
       this.handleAppendField = this.handleAppendField.bind(this);
       this.handleRemoveField = this.handleRemoveField.bind(this);
+
+      callPropsOnMount.forEach(x => props[x]());
     }
 
     handleAppendField(path, value) {
       this.props.appendField(path, value);
     }
 
-    handleRemoveField(path) {
-      this.props.removeField(path);
+    handleRemoveField(path, index) {
+      this.props.removeField(path, index);
     }
 
     handleSubmit(e) {
@@ -27,8 +29,8 @@ export default (Component, propsNamesToPass) => {
       submit(fieldValues);
     }
 
-    handleChange(name) {
-      return e => this.props.changeField(name, e.target.value);
+    handleChange(name, path = []) {
+      return e => this.props.changeField([...path, name], e.target.value);
     }
 
     handleReset() {
@@ -62,9 +64,11 @@ export default (Component, propsNamesToPass) => {
     fieldValues: PropTypes.objectOf(PropTypes.oneOfType([
       PropTypes.string,
       PropTypes.number,
+      PropTypes.instanceOf(Date),
       PropTypes.arrayOf(PropTypes.objectOf(PropTypes.oneOfType([
         PropTypes.string,
         PropTypes.number,
+        PropTypes.instanceOf(Date),
       ]))),
     ])).isRequired,
     errors: PropTypes.objectOf(PropTypes.oneOfType([

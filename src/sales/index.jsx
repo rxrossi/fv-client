@@ -1,19 +1,19 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Add from './Containers/Add';
-import View from './Containers/View';
-import ViewOne from './Containers/ViewOne';
+import List from './Containers/List';
+import ViewDetails from './Containers/ViewDetails';
 
 const Sales = ({ match }) => {
   if (match.params.id) {
     return (
-      <ViewOne saleId={match.params.id} />
+      <ViewDetails saleId={match.params.id} />
     );
   }
   return (
     <div>
       <Add />
-      <View />
+      <List />
     </div>
   );
 };

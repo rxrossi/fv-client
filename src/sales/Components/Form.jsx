@@ -5,18 +5,16 @@ import Input from '../../renderField';
 import FilterableSelect from '../../FilterableSelect';
 import DateTimePicker from '../../DateTimePicker';
 
-// eslint-disable-next-line
-const ProductsFields = ({ values, errors, productsForSelect, addField, removeField, handleChange }) => {
-  return (
-    <Container>
-      <Row>
-        <Col>
-          {values.map((value, index) => (
-          // eslint-disable-next-line
-          <Row key={index} className="my-2 p-2 bg-light mx-1 product-row">
+const ProductsFields = ({
+  values, errors, products, handleAppendField, handleRemoveField, handleChange,
+}) => (
+  <Container>
+    <Row>
+      <Col>
+        {values.map((value, index) => (
+          <Row key={value.key || value.id} className="my-2 p-2 bg-light mx-1 product-row">
             <div className="col-md-6">
               <FilterableSelect
-                type="select"
                 name="product"
                 value={value.product}
                 error={errors[index] && errors[index].product}
@@ -24,22 +22,21 @@ const ProductsFields = ({ values, errors, productsForSelect, addField, removeFie
                 handleChange={handleChange}
                 label="Product"
                 options={
-                  productsForSelect.filter(x => x.quantity > 0)
+                  products.filter(x => x.quantity > 0)
                 }
               />
             </div>
             <div className="col-md-4">
               <Input
-                component="input"
                 type="number"
                 name="qty"
                 value={value.qty}
                 error={errors[index] && errors[index].qty}
                 label={`Quantity ${
                     (value.product &&
-                    productsForSelect &&
-                    productsForSelect.find(x => x.id === value.product) &&
-                    productsForSelect.find(x => x.id === value.product).measure_unit) || ''
+                    products &&
+                    products.find(x => x.id === value.product) &&
+                    products.find(x => x.id === value.product).measure_unit) || ''
                 }`}
                 path={['products', index]}
                 onChange={handleChange}
@@ -49,7 +46,7 @@ const ProductsFields = ({ values, errors, productsForSelect, addField, removeFie
               <Button
                 type="button"
                 color="danger"
-                onClick={() => removeField('products', index)}
+                onClick={() => handleRemoveField('products', index)}
                 className="remove-product mt-4 pb-3"
                 block
               >
@@ -58,40 +55,47 @@ const ProductsFields = ({ values, errors, productsForSelect, addField, removeFie
             </div>
           </Row>
           ))}
-        </Col>
-      </Row>
-      <Row>
-        <Button
-          type="button"
-          className="add-product my-2"
-          onClick={addField}
-          color="info"
-          block
-        >
+      </Col>
+    </Row>
+    <Row>
+      <Button
+        type="button"
+        className="add-product my-2"
+        onClick={() => handleAppendField('products', { key: Date.now() })}
+        color="info"
+        block
+      >
         Add Product
-        </Button>
-      </Row>
-    </Container>
-  );
+      </Button>
+    </Row>
+  </Container>
+);
+
+ProductsFields.propTypes = {
+  values: PropTypes.arrayOf(PropTypes.object),
+  errors: PropTypes.arrayOf(PropTypes.object),
+  products: PropTypes.arrayOf(PropTypes.object).isRequired,
+  handleAppendField: PropTypes.func.isRequired,
+  handleRemoveField: PropTypes.func.isRequired,
+  handleChange: PropTypes.func.isRequired,
 };
 ProductsFields.defaultProps = {
-  productsForSelect: [],
   values: [],
   errors: [],
 };
 
 const Add = ({
-  handleClear,
+  handleReset,
   handleSubmit,
   handleChange,
   paymentOptions,
   clients,
   professionals,
-  productsForSelect,
+  products,
   values,
   errors,
-  addField,
-  removeField,
+  handleAppendField,
+  handleRemoveField,
 }) => (
   <Container>
     <Row>
@@ -169,12 +173,12 @@ const Add = ({
           />
 
           <ProductsFields
-            addField={addField}
-            removeField={removeField}
+            handleAppendField={handleAppendField}
+            handleRemoveField={handleRemoveField}
             handleChange={handleChange}
             values={values.products}
             errors={errors.products}
-            productsForSelect={productsForSelect}
+            products={products}
           />
 
           <Row>
@@ -182,7 +186,7 @@ const Add = ({
               <Button color="primary" block type="submit">Save Sale</Button>
             </Col>
             <Col xs={4}>
-              <Button color="danger" block type="button" onClick={handleClear}>Clear Form</Button>
+              <Button color="danger" block type="button" onClick={handleReset}>Clear Form</Button>
             </Col>
           </Row>
         </Form>
@@ -194,10 +198,10 @@ const Add = ({
 Add.propTypes = {
   handleSubmit: PropTypes.func.isRequired,
   handleChange: PropTypes.func.isRequired,
-  addField: PropTypes.func.isRequired,
-  removeField: PropTypes.func.isRequired,
-  handleClear: PropTypes.func.isRequired,
-  paymentOptions: PropTypes.arrayOf(PropTypes.string).isRequired,
+  handleAppendField: PropTypes.func.isRequired,
+  handleRemoveField: PropTypes.func.isRequired,
+  handleReset: PropTypes.func.isRequired,
+  paymentOptions: PropTypes.arrayOf(PropTypes.object).isRequired,
   clients: PropTypes.arrayOf(PropTypes.shape({
     id: PropTypes.string.isRequired,
     name: PropTypes.string.isRequired,
@@ -218,7 +222,7 @@ Add.propTypes = {
   errors: PropTypes.objectOf(PropTypes.oneOfType([
     PropTypes.string, PropTypes.arrayOf(PropTypes.string),
   ])).isRequired,
-  productsForSelect: PropTypes.arrayOf(PropTypes.shape({
+  products: PropTypes.arrayOf(PropTypes.shape({
     id: PropTypes.string.isRequired,
     name: PropTypes.string.isRequired,
   })).isRequired,

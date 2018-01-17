@@ -10,7 +10,6 @@ import Products from './products';
 import Purchases from './purchases';
 import purchases from './purchases/reducer';
 import Sales from './sales';
-import sales from './sales/reducer';
 import NavBar from './NavBar';
 import * as urls from './APIInfo';
 
@@ -21,7 +20,7 @@ export const reducer = combineReducers({
   professionals: reusableReduxConfig(urls.PROFESSIONALS, 'professionals').reducer,
   products: reusableReduxConfig(urls.PRODUCTS, 'products').reducer,
   purchases,
-  sales,
+  sales: reusableReduxConfig(urls.SALES, 'sales').reducer,
 });
 
 export const store = createStore(reducer, applyMiddleware(thunk));
