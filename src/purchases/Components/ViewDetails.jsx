@@ -23,8 +23,8 @@ EntryRow.propTypes = {
   }).isRequired,
 };
 
-const ViewOne = ({ purchase }) => {
-  if (!purchase) {
+const ViewOne = ({ entity }) => {
+  if (!entity) {
     return (
       <Container className="py-1">
         <Row>
@@ -45,8 +45,8 @@ const ViewOne = ({ purchase }) => {
     <Container>
       <Row>
         <Col>
-          <h2 className="text-info text-center">Seller: {purchase.seller} </h2>
-          <p className="text-center">Date: {getReadableDate(purchase.date)}</p>
+          <h2 className="text-info text-center">Seller: {entity.seller} </h2>
+          <p className="text-center">Date: {getReadableDate(entity.date)}</p>
         </Col>
       </Row>
       <Row>
@@ -60,7 +60,7 @@ const ViewOne = ({ purchase }) => {
               </tr>
             </thead>
             <tbody>
-              { purchase.stockEntries.map(entry =>
+              { entity.stockEntries.map(entry =>
                 <EntryRow entry={entry} key={entry.id} />)}
             </tbody>
           </Table>
@@ -70,7 +70,7 @@ const ViewOne = ({ purchase }) => {
   );
 };
 ViewOne.propTypes = {
-  purchase: PropTypes.shape({
+  entity: PropTypes.shape({
     stockEntries: PropTypes.arrayOf(PropTypes.shape({
       id: PropTypes.string.isRequired,
       product: PropTypes.shape({
@@ -86,7 +86,7 @@ ViewOne.propTypes = {
   }),
 };
 ViewOne.defaultProps = {
-  purchase: undefined,
+  entity: undefined,
 };
 
 export default ViewOne;

@@ -8,7 +8,6 @@ import Clients from './clients/';
 import Professionals from './professionals/';
 import Products from './products';
 import Purchases from './purchases';
-import purchases from './purchases/reducer';
 import Sales from './sales';
 import NavBar from './NavBar';
 import * as urls from './APIInfo';
@@ -19,7 +18,7 @@ export const reducer = combineReducers({
   clients: reusableReduxConfig(urls.CLIENTS, 'clients').reducer,
   professionals: reusableReduxConfig(urls.PROFESSIONALS, 'professionals').reducer,
   products: reusableReduxConfig(urls.PRODUCTS, 'products').reducer,
-  purchases,
+  purchases: reusableReduxConfig(urls.PURCHASES, 'purchases').reducer,
   sales: reusableReduxConfig(urls.SALES, 'sales').reducer,
 });
 

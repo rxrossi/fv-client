@@ -4,7 +4,7 @@ import { Container, Row, Col, Form, Button } from 'reactstrap';
 import Input from '../../renderField';
 
 const ProductsFields = ({
-  values, errors, products, handleChange, addField, removeField,
+  values, errors, products, handleChange, handleAppendField, handleRemoveField,
 }) => (
   <div>
     <Row className="text-center">
@@ -62,7 +62,7 @@ const ProductsFields = ({
                 block
                 type="button"
                 className="remove-product mt-4 pb-3"
-                onClick={() => removeField('products', index)}
+                onClick={() => handleRemoveField('products', index)}
               >
                 Remove
               </Button>
@@ -77,7 +77,7 @@ const ProductsFields = ({
           type="button"
           block
           className="add-product my-2"
-          onClick={addField}
+          onClick={() => handleAppendField('products', { key: Date.now() })}
         >
           Add a product
         </Button>
@@ -87,8 +87,8 @@ const ProductsFields = ({
   </div>
 );
 ProductsFields.propTypes = {
-  addField: PropTypes.func.isRequired,
-  removeField: PropTypes.func.isRequired,
+  handleAppendField: PropTypes.func.isRequired,
+  handleRemoveField: PropTypes.func.isRequired,
   handleChange: PropTypes.func.isRequired,
   products: PropTypes.arrayOf(PropTypes.shape({
     id: PropTypes.string,
@@ -104,49 +104,53 @@ ProductsFields.propTypes = {
   ]))),
   errors: PropTypes.arrayOf(PropTypes.objectOf(PropTypes.string)),
 };
+
 ProductsFields.defaultProps = {
   products: [],
   values: [],
   errors: [],
 };
 
-const Add = ({
-  handleChange, handleSubmit, errors, values, addField, removeField, products,
-}) => (
-  <Container>
-    <Form onSubmit={handleSubmit}>
-      <Input
-        type="text"
-        value={values.seller}
-        error={errors.seller}
-        onChange={handleChange}
-        name="seller"
-        label="Company"
-        placeholder="The name of the company"
-      />
-      <Input
-        type="date"
-        value={values.date}
-        error={errors.date}
-        onChange={handleChange}
-        name="date"
-        label="Date"
-      />
-      <ProductsFields
-        addField={addField}
-        removeField={removeField}
-        handleChange={handleChange}
-        values={values.products}
-        errors={errors.products}
-        products={products}
-      />
-      <Button type="submit" color="primary" block>Save Sale</Button>
-    </Form>
-  </Container>
-);
-Add.propTypes = {
-  addField: PropTypes.func.isRequired,
-  removeField: PropTypes.func.isRequired,
+const FormComponent = ({
+  handleChange, handleSubmit, errors, values, handleAppendField, handleRemoveField, products,
+}) => {
+  console.log(values, products);
+  return (
+    <Container>
+      <Form onSubmit={handleSubmit}>
+        <Input
+          type="text"
+          value={values.seller}
+          error={errors.seller}
+          onChange={handleChange}
+          name="seller"
+          label="Company"
+          placeholder="The name of the company"
+        />
+        <Input
+          type="date"
+          value={values.date}
+          error={errors.date}
+          onChange={handleChange}
+          name="date"
+          label="Date"
+        />
+        <ProductsFields
+          handleAppendField={handleAppendField}
+          handleRemoveField={handleRemoveField}
+          handleChange={handleChange}
+          values={values.products}
+          errors={errors.products}
+          products={products}
+        />
+        <Button type="submit" color="primary" block>Save Sale</Button>
+      </Form>
+    </Container>
+  );
+};
+FormComponent.propTypes = {
+  handleAppendField: PropTypes.func.isRequired,
+  handleRemoveField: PropTypes.func.isRequired,
   handleChange: PropTypes.func.isRequired,
   handleSubmit: PropTypes.func.isRequired,
   errors: PropTypes.objectOf(PropTypes.oneOfType([
@@ -171,4 +175,4 @@ Add.propTypes = {
   })).isRequired,
 };
 
-export default Add;
+export default FormComponent;

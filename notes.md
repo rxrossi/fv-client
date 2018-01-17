@@ -6,27 +6,6 @@
 + [ ] NoMoreTables is not showing 'th' when screen gets smaller
 + [ ] clicking the client goes to view one, this view one shows last sales for it
 
-## Professionals
-+ [X] make form reusable
-  + [X] works for add
-  + [X] works for edit
-+ [X] make a delete container
-+ [X] integrate buttons of delete and edit to List Component
-+ [ ] Show the total profit
-
-## Products
-+ [X] make form reusable
-  + [X] works for add
-  + [X] works for edit
-+ [X] Create a ViewDetails HOC
-+ [X] make a delete container
-+ [X] integrate buttons of delete and edit to List Component
-+ [X] Convert HOC
-  + [X] List
-  + [X] ViewDetail
-  + [X] Add
-  + [X] Edit
-
 ## Purchases
 + [ ] make form reusable
   + [ ] works for add
@@ -34,9 +13,9 @@
 + [ ] make a delete container
 + [ ] integrate buttons of delete and edit to List Component
 + [ ] Convert HOC
-  + [ ] List
-  + [ ] ViewDetail
-  + [ ] Add
+  + [X] List
+  + [X] ViewDetail
+  + [X] Add
   + [ ] Edit
 + [ ] It seems possible to submit a purchase without stock entries
 
@@ -55,6 +34,27 @@
 ## General
 + [ ] Implement login
 + [ ] Fuzzy filter for Clients
+
+## Products
++ [X] make form reusable
+  + [X] works for add
+  + [X] works for edit
++ [X] Create a ViewDetails HOC
++ [X] make a delete container
++ [X] integrate buttons of delete and edit to List Component
++ [X] Convert HOC
+  + [X] List
+  + [X] ViewDetail
+  + [X] Add
+  + [X] Edit
+
+## Professionals
++ [X] make form reusable
+  + [X] works for add
+  + [X] works for edit
++ [X] make a delete container
++ [X] integrate buttons of delete and edit to List Component
++ [ ] Show the total profit
 
 # Acceptance, Container and Connected Container tests
 

@@ -5,13 +5,13 @@ import { Container, Row, Col } from 'reactstrap';
 import Table from '../../NoMoreTables';
 import { getReadableDate, formatMoney } from '../../displayHelpers';
 
-const PurchaseRow = ({ purchase, baseUrl }) => (
+const PurchaseRow = ({ purchase }) => (
   <tr>
     <td data-title="Seller">{purchase.seller}</td>
     <td data-title="Date" align="right">{getReadableDate(purchase.date)}</td>
     <td data-title="Total value" align="right">{formatMoney(purchase.price)}</td>
     <td data-title="Options">
-      <Link to={`${baseUrl}/${purchase.id}`}>
+      <Link to={`purchases/${purchase.id}`}>
           See details
       </Link>
     </td>
@@ -23,11 +23,10 @@ PurchaseRow.propTypes = {
     seller: PropTypes.string.isRequired,
     date: PropTypes.string.isRequired,
   }).isRequired,
-  baseUrl: PropTypes.string.isRequired,
 };
 
-const View = ({ purchases, baseUrl }) => {
-  if (!purchases.length) {
+const List = ({ entities }) => {
+  if (!entities.length) {
     return (
       <Container className="py-5">
         <Row>
@@ -56,20 +55,19 @@ const View = ({ purchases, baseUrl }) => {
           </tr>
         </thead>
         <tbody>
-          { purchases.map(purchase =>
-            <PurchaseRow key={purchase.id} purchase={purchase} baseUrl={baseUrl} />) }
+          { entities.map(purchase =>
+            <PurchaseRow key={purchase.id} purchase={purchase} />) }
         </tbody>
       </Table>
     </Container>
   );
 };
-View.propTypes = {
-  purchases: PropTypes.arrayOf(PropTypes.shape({
+List.propTypes = {
+  entities: PropTypes.arrayOf(PropTypes.shape({
     id: PropTypes.string.isRequired,
     seller: PropTypes.string.isRequired,
     date: PropTypes.string.isRequired,
   })).isRequired,
-  baseUrl: PropTypes.string.isRequired,
 };
 
-export default View;
+export default List;

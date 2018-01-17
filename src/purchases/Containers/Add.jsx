@@ -1,93 +1,36 @@
-import React from 'react';
 import reusableReduxConfig from 'reusablecrudredux';
-import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { reset } from 'redux-form';
-import AddComponent from '../Components/Add';
+import Form from '../Components/Form';
 import * as urls from '../../APIInfo';
-// import { fetchProducts } from '../../products/actions';
-import { addPurchase, changeField, appendToArrayOfFields, removeFromArrayOfFields, clearAddForm } from '../actions';
+import createHOC from '../../HOC/Create';
 
-class Add extends React.Component {
-  constructor(props) {
-    super(props);
-    this.submit = this.submit.bind(this);
-    this.handleChange = this.handleChange.bind(this);
-    this.addProductsField = this.addProductsField.bind(this);
-  }
+const passProps = [
+  'products',
+];
 
-  componentDidMount() {
-    this.props.clearAddForm();
-    this.props.fetchProducts();
-  }
+const callPropsOnMount = [
+  'fetchProducts',
+];
 
-  handleChange(field, path) {
-    return ({ target: { value } }) => {
-      this.props.changeField([...path, field], value);
-    };
-  }
+const Add = createHOC(Form, passProps, callPropsOnMount);
 
-  submit(e) {
-    e.preventDefault();
-    this.props.addPurchase(this.props.values);
-    const firstInput = document.querySelector('input');
-    if (firstInput) {
-      firstInput.focus();
-    }
-  }
-
-  addProductsField() {
-    this.props.addField('products', {});
-  }
-
-
-  render() {
-    return (
-      <AddComponent
-        errors={this.props.addErrors}
-        products={this.props.productsForSelect}
-        values={this.props.values}
-        addField={this.addProductsField}
-        removeField={this.props.removeField}
-        handleSubmit={this.submit}
-        handleChange={this.handleChange}
-      />);
-  }
-}
-
-Add.propTypes = {
-  productsForSelect: PropTypes.arrayOf(PropTypes.shape({
-    id: PropTypes.string,
-    name: PropTypes.string,
-  })).isRequired,
-  addPurchase: PropTypes.func.isRequired,
-  fetchProducts: PropTypes.func.isRequired,
-  changeField: PropTypes.func.isRequired,
-  clearAddForm: PropTypes.func.isRequired,
-  addField: PropTypes.func.isRequired,
-  removeField: PropTypes.func.isRequired,
-  /*eslint-disable*/
-  addErrors: PropTypes.objectOf(PropTypes.oneOfType([PropTypes.string, PropTypes.array])).isRequired,
-  values: PropTypes.objectOf(PropTypes.oneOfType([PropTypes.string, PropTypes.array])).isRequired,
-  /* eslint-enable */
-};
+const { asyncActions, createFormFieldActions } = reusableReduxConfig(urls.PURCHASES, 'purchases');
 
 const { asyncActions: productsAsyncActions } = reusableReduxConfig(urls.PRODUCTS, 'products');
 
-const mapDispatch = {
-  addPurchase,
-  reset,
-  fetchProducts: productsAsyncActions.get,
-  changeField,
-  clearAddForm,
-  removeField: removeFromArrayOfFields,
-  addField: appendToArrayOfFields,
-};
-
 const mapState = state => ({
-  productsForSelect: state.products.list,
-  addErrors: state.purchases.addErrors,
-  values: state.purchases.fields,
+  products: state.products.entities,
+  errors: state.purchases.APIStatus.post.errors,
+  fieldValues: state.purchases.formFields.create,
 });
+
+const mapDispatch = {
+  fetchProducts: productsAsyncActions.get,
+  submit: asyncActions.post,
+  removeField: createFormFieldActions.removeField,
+  appendField: createFormFieldActions.appendField,
+  changeField: createFormFieldActions.changeField,
+  clearFields: createFormFieldActions.clear,
+};
 
 export default connect(mapState, mapDispatch)(Add);
