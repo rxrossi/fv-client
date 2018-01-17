@@ -3,28 +3,29 @@
 + [X] on delete rename to 'name deactivated at yyyy/mm/dd hh:mm:ss'
 
 ## Clients
++ [ ] NoMoreTables is not showing 'th' when screen gets smaller
 + [ ] clicking the client goes to view one, this view one shows last sales for it
 
 ## Professionals
-+ [ ] make form reusable
-  + [ ] works for add
-  + [ ] works for edit
-+ [ ] make a delete container
-+ [ ] integrate buttons of delete and edit to List Component
++ [X] make form reusable
+  + [X] works for add
+  + [X] works for edit
++ [X] make a delete container
++ [X] integrate buttons of delete and edit to List Component
 + [ ] Show the total profit
 
 ## Products
-+ [ ] make form reusable
-  + [ ] works for add
-  + [ ] works for edit
-+ [ ] Create a ViewDetails HOC
-+ [ ] make a delete container
-+ [ ] integrate buttons of delete and edit to List Component
-+ [ ] Convert HOC
-  + [ ] List
-  + [ ] ViewDetail
-  + [ ] Add
-  + [ ] Edit
++ [X] make form reusable
+  + [X] works for add
+  + [X] works for edit
++ [X] Create a ViewDetails HOC
++ [X] make a delete container
++ [X] integrate buttons of delete and edit to List Component
++ [X] Convert HOC
+  + [X] List
+  + [X] ViewDetail
+  + [X] Add
+  + [X] Edit
 
 ## Purchases
 + [ ] make form reusable
