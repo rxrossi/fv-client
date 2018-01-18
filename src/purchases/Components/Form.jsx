@@ -112,7 +112,16 @@ ProductsFields.defaultProps = {
 };
 
 const FormComponent = ({
-  handleChange, handleSubmit, errors, values, handleAppendField, handleRemoveField, products,
+  handleChange,
+  handleSubmit,
+  errors,
+  values,
+  handleAppendField,
+  handleRemoveField,
+  products,
+  updating,
+  handleCancel,
+  handleReset,
 }) => (
   <Container>
     <Form onSubmit={handleSubmit}>
@@ -142,14 +151,36 @@ const FormComponent = ({
         products={products}
       />
       <Button type="submit" color="primary" block>Save Sale</Button>
+      <Button
+        type="button"
+        color="danger"
+        onClick={handleReset}
+        className="clearBtn"
+        block
+      >Reset
+      </Button>
+      {
+        updating &&
+          <Button
+            type="button"
+            color="secondary"
+            onClick={handleCancel}
+            className="cancelBtn"
+            block
+          >Cancel
+          </Button>
+      }
     </Form>
   </Container>
 );
 FormComponent.propTypes = {
+  updating: PropTypes.bool,
   handleAppendField: PropTypes.func.isRequired,
   handleRemoveField: PropTypes.func.isRequired,
   handleChange: PropTypes.func.isRequired,
   handleSubmit: PropTypes.func.isRequired,
+  handleReset: PropTypes.func.isRequired,
+  handleCancel: PropTypes.func.isRequired,
   errors: PropTypes.objectOf(PropTypes.oneOfType([
     PropTypes.string,
     PropTypes.arrayOf(PropTypes.string),
@@ -170,6 +201,10 @@ FormComponent.propTypes = {
     price: PropTypes.number,
     avgPriceFiveLast: PropTypes.number,
   })).isRequired,
+};
+
+FormComponent.defaultProps = {
+  updating: false,
 };
 
 export default FormComponent;

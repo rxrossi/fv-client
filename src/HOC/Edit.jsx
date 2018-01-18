@@ -91,6 +91,7 @@ export default (
       return (
         <Component
           handleChange={this.handleChange}
+          handleCancel={this.handleCancel}
           handleSubmit={this.handleSubmit}
           handleReset={this.handleReset}
           handleAppendField={this.handleAppendField}
