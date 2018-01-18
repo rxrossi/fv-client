@@ -8,7 +8,7 @@ import * as urls from '../../APIInfo';
 const DeleteModal = ({ entity, deleteFn }) => (
   <DeleteModalComponent
     deleteFunction={() => deleteFn(entity.id)}
-    entityName={entity.name}
+    entityName={entity.seller}
   />);
 
 DeleteModal.propTypes = {

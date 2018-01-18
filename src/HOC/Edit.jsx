@@ -1,13 +1,21 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import filterProps from './filterProps';
 
-export default (Component, RedirectComponent) => {
+export default (
+  Component,
+  RedirectComponent,
+  propsNamesToPass,
+  callPropsOnMount = [],
+  transformToEdit = (x => x),
+) => {
   class EditHOC extends React.Component {
     constructor(props) {
       super(props);
       this.state = { shouldRedirect: false };
       const entityToEdit = props.entities.find(x => x.id === props.entityId);
-      props.setFields(entityToEdit || {});
+      const transformedBody = transformToEdit(entityToEdit);
+      props.setFields(transformedBody || {});
       props.fetchEntities();
       this.handleChange = this.handleChange.bind(this);
       this.handleReset = this.handleReset.bind(this);
@@ -16,10 +24,16 @@ export default (Component, RedirectComponent) => {
       this.handleAppendField = this.handleAppendField.bind(this);
       this.handleRemoveField = this.handleRemoveField.bind(this);
       this.fillValuesWithCorrectEntity = this.fillValuesWithCorrectEntity.bind(this);
+
+      callPropsOnMount.forEach(x => props[x]());
     }
 
     componentDidUpdate() {
       this.fillValuesWithCorrectEntity();
+    }
+
+    componentWillUnmount() {
+      this.props.clearFields();
     }
 
     fillValuesWithCorrectEntity({ force } = {}) {
@@ -30,7 +44,8 @@ export default (Component, RedirectComponent) => {
       const entityToEdit = entities.find(x => x.id === entityId);
 
       if ((entityToEdit && (fieldValues.id !== entityToEdit.id)) || force) {
-        setFields(entityToEdit);
+        const transformedBody = transformToEdit(entityToEdit);
+        setFields(transformedBody);
       }
     }
 
@@ -38,13 +53,14 @@ export default (Component, RedirectComponent) => {
       this.props.appendField(path, value);
     }
 
-    handleRemoveField(path) {
-      this.props.removeField(path);
+    handleRemoveField(path, index) {
+      this.props.removeField(path, index);
     }
 
     handleSubmit(e) {
       e.preventDefault();
       const { submit, fieldValues } = this.props;
+      console.log(fieldValues);
       submit(fieldValues).then((success) => {
         if (success) {
           this.setState({ shouldRedirect: true });
@@ -52,8 +68,8 @@ export default (Component, RedirectComponent) => {
       });
     }
 
-    handleChange(name) {
-      return e => this.props.changeField(name, e.target.value);
+    handleChange(name, path = []) {
+      return e => this.props.changeField([...path, name], e.target.value);
     }
 
     handleReset() {
@@ -71,16 +87,18 @@ export default (Component, RedirectComponent) => {
         return <RedirectComponent />;
       }
 
-      const { fieldValues, errors } = this.props;
+      const { fieldValues, errors, ...others } = this.props;
 
       return (
         <Component
           handleChange={this.handleChange}
           handleSubmit={this.handleSubmit}
           handleReset={this.handleReset}
-          handleCancel={this.handleCancel}
+          handleAppendField={this.handleAppendField}
+          handleRemoveField={this.handleRemoveField}
           values={fieldValues}
           errors={errors}
+          {...filterProps(propsNamesToPass, others)}
           updating
         />
       );

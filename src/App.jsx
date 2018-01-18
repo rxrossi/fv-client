@@ -1,5 +1,6 @@
 import React from 'react';
 import { Provider } from 'react-redux';
+// import logger from 'redux-logger';
 import { createStore, combineReducers, applyMiddleware } from 'redux';
 import thunk from 'redux-thunk';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
@@ -33,7 +34,7 @@ const RouterComponent = () => (
       <Route path="/products/:id?/:action?" component={Products} />
       <Route path="/professionals/:id?/:action?" component={Professionals} />
       <Route path="/purchases/:id?/:action?" component={Purchases} />
-      <Route path="/sales/:id?" component={Sales} />
+      <Route path="/sales/:id?/:action?" component={Sales} />
     </div>
   </Router>
 );

@@ -113,38 +113,41 @@ ProductsFields.defaultProps = {
 
 const FormComponent = ({
   handleChange, handleSubmit, errors, values, handleAppendField, handleRemoveField, products,
-}) => (
-  <Container>
-    <Form onSubmit={handleSubmit}>
-      <Input
-        type="text"
-        value={values.seller}
-        error={errors.seller}
-        onChange={handleChange}
-        name="seller"
-        label="Company"
-        placeholder="The name of the company"
-      />
-      <Input
-        type="date"
-        value={values.date}
-        error={errors.date}
-        onChange={handleChange}
-        name="date"
-        label="Date"
-      />
-      <ProductsFields
-        handleAppendField={handleAppendField}
-        handleRemoveField={handleRemoveField}
-        handleChange={handleChange}
-        values={values.products}
-        errors={errors.products}
-        products={products}
-      />
-      <Button type="submit" color="primary" block>Save Sale</Button>
-    </Form>
-  </Container>
-);
+}) => {
+  console.log(values);
+  return (
+    <Container>
+      <Form onSubmit={handleSubmit}>
+        <Input
+          type="text"
+          value={values.seller}
+          error={errors.seller}
+          onChange={handleChange}
+          name="seller"
+          label="Company"
+          placeholder="The name of the company"
+        />
+        <Input
+          type="date"
+          value={values.date}
+          error={errors.date}
+          onChange={handleChange}
+          name="date"
+          label="Date"
+        />
+        <ProductsFields
+          handleAppendField={handleAppendField}
+          handleRemoveField={handleRemoveField}
+          handleChange={handleChange}
+          values={values.products}
+          errors={errors.products}
+          products={products}
+        />
+        <Button type="submit" color="primary" block>Save Sale</Button>
+      </Form>
+    </Container>
+  );
+};
 FormComponent.propTypes = {
   handleAppendField: PropTypes.func.isRequired,
   handleRemoveField: PropTypes.func.isRequired,

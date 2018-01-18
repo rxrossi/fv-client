@@ -1,6 +1,5 @@
 import reusableReduxConfig from 'reusablecrudredux';
 import { connect } from 'react-redux';
-import { withRouter } from 'react-router-dom';
 import ListComponent from '../Components/List';
 import listHOC from '../../HOC/List';
 import * as urls from '../../APIInfo';
@@ -16,4 +15,4 @@ const mapDispatch = {
   fetchEntities: asyncActions.get,
 };
 
-export default withRouter(connect(mapState, mapDispatch)(List));
+export default connect(mapState, mapDispatch)(List);
