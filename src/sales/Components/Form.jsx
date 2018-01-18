@@ -217,15 +217,13 @@ Add.propTypes = {
     PropTypes.arrayOf(PropTypes.objectOf(PropTypes.oneOfType([
       PropTypes.string,
       PropTypes.number,
+      PropTypes.object,
     ]))),
   ])).isRequired,
   errors: PropTypes.objectOf(PropTypes.oneOfType([
     PropTypes.string, PropTypes.arrayOf(PropTypes.string),
   ])).isRequired,
-  products: PropTypes.arrayOf(PropTypes.shape({
-    id: PropTypes.string.isRequired,
-    name: PropTypes.string.isRequired,
-  })).isRequired,
+  products: PropTypes.arrayOf(PropTypes.object).isRequired,
 };
 
 export default Add;

@@ -13,7 +13,7 @@ function listHOC(Component) {
   }
   List.propTypes = {
     fetchEntities: PropTypes.func.isRequired,
-    entities: PropTypes.arrayOf(PropTypes.objectOf(PropTypes.any)).isRequired,
+    entities: PropTypes.arrayOf(PropTypes.object).isRequired,
   };
 
   return List;

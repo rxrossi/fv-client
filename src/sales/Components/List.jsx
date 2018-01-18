@@ -25,13 +25,17 @@ Sale.propTypes = {
     client: PropTypes.objectOf(PropTypes.oneOfType([PropTypes.string, PropTypes.number])),
     professional: PropTypes.objectOf(PropTypes.oneOfType([PropTypes.string, PropTypes.number])),
     stockEntries: PropTypes.arrayOf(PropTypes.shape({
-      product: PropTypes.objectOf(PropTypes.oneOfType([PropTypes.string, PropTypes.number])),
+      product: PropTypes.objectOf(PropTypes.oneOfType([
+        PropTypes.string,
+        PropTypes.number,
+        PropTypes.bool,
+      ])),
     })),
   }).isRequired,
 };
 
 
-const View = ({ entities }) => {
+const List = ({ entities }) => {
   if (!entities || entities.length === 0) {
     return (
       <Container className="py-5">
@@ -71,20 +75,12 @@ const View = ({ entities }) => {
   );
 };
 
-View.propTypes = {
-  entities: PropTypes.arrayOf(PropTypes.shape({
-    id: PropTypes.string.isRequired,
-    name: PropTypes.string.isRequired,
-    stockEntries: PropTypes.arrayOf(PropTypes.objectOf(PropTypes.oneOfType([
-      PropTypes.string,
-      PropTypes.number,
-      PropTypes.objectOf(PropTypes.oneOfType([PropTypes.string, PropTypes.number])),
-    ]))),
-  })),
+List.propTypes = {
+  entities: PropTypes.arrayOf(PropTypes.objectOf(PropTypes.any)),
 };
 
-View.defaultProps = {
+List.defaultProps = {
   entities: [],
 };
 
-export default View;
+export default List;
