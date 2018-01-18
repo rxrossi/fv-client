@@ -8,9 +8,6 @@ import EditConnected from './Containers/Edit';
 const Purchases = ({ match }) => {
   if (match.params.id) {
     if (match.params.action === 'edit') {
-      // should I do this or the container itself can get the the param?
-      // seems like it can be more reusable this way
-
       return <EditConnected entityId={match.params.id} />;
     }
     return <ViewDetails entityId={match.params.id} />;

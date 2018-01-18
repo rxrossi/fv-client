@@ -22,20 +22,20 @@
 + [X] It seems possible to submit a purchase without stock entries
 
 ## Sales
-+ [ ] make form reusable
-  + [ ] works for add
-  + [ ] works for edit
++ [X] make form reusable
+  + [X] works for add
+  + [X] works for edit
 + [X] make a delete container
 + [X] integrate buttons of delete and edit to List Component
-+ [ ] Convert HOC
++ [X] Convert HOC
   + [X] List
   + [X] ViewDetail
   + [X] Add
-  + [ ] Edit
+  + [X] Edit
 
 ## General
 + [ ] Implement login
-+ [ ] Fuzzy filter for Clients
++ [X] Fuzzy filter for Clients
 
 ## Products
 + [X] make form reusable

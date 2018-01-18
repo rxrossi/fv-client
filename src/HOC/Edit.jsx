@@ -119,10 +119,12 @@ export default (
       PropTypes.string,
       PropTypes.number,
       PropTypes.bool,
+      PropTypes.object,
       PropTypes.arrayOf(PropTypes.objectOf(PropTypes.oneOfType([
         PropTypes.string,
         PropTypes.number,
         PropTypes.bool,
+        PropTypes.object,
       ]))),
     ])).isRequired,
     errors: PropTypes.objectOf(PropTypes.oneOfType([

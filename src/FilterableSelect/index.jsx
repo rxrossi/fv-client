@@ -66,20 +66,20 @@ class FilterableSelect extends React.Component {
     this.unselect = this.unselect.bind(this);
   }
 
-  componentDidMount() {
-    const { value, options } = this.props;
-    const { selected } = this.state;
-
-    if (value && !selected) {
-      this.changeFilter('filter')({ target: { value: options.find(x => x.id === value).name } });
-    }
-  }
-
   componentWillReceiveProps() {
     this.setState({
       filter: '',
       visibleOpts: [],
     });
+  }
+
+  componentDidUpdate() {
+    const { value, options } = this.props;
+    const { selected } = this.state;
+
+    if (value && !selected && options.length) {
+      this.changeFilter('filter')({ target: { value: options.find(x => x.id === value).name } });
+    }
   }
 
   changeFilter(name) {
@@ -169,10 +169,7 @@ FilterableSelect.propTypes = {
   ])),
   handleChange: PropTypes.func.isRequired,
   error: PropTypes.objectOf(PropTypes.string),
-  options: PropTypes.arrayOf(PropTypes.objectOf(PropTypes.oneOfType([
-    PropTypes.string,
-    PropTypes.number,
-  ]))).isRequired,
+  options: PropTypes.arrayOf(PropTypes.objectOf(PropTypes.any)).isRequired,
   maxOptsToShow: PropTypes.number,
 };
 
