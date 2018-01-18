@@ -60,7 +60,6 @@ export default (
     handleSubmit(e) {
       e.preventDefault();
       const { submit, fieldValues } = this.props;
-      console.log(fieldValues);
       submit(fieldValues).then((success) => {
         if (success) {
           this.setState({ shouldRedirect: true });
