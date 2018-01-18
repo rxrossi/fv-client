@@ -3,21 +3,25 @@ import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { Container, Row, Col } from 'reactstrap';
 import { getReadableDate, formatMoney } from '../../displayHelpers';
+import DeleteModal from '../Containers/Delete';
 import Table from '../../NoMoreTables';
 
 const Sale = ({ sale }) => (
   <tr>
-    <td data-title="Service name">
-      <Link to={`/sales/${sale.id}`}>
-        {sale.name}
-      </Link>
-    </td>
+    <td data-title="Service name"> {sale.name} </td>
     <td data-title="Client">{sale.client.name}</td>
     <td data-title="Professional">{sale.professional.name}</td>
     <td data-title="Start time">{getReadableDate(sale.start_time)}</td>
     <td data-title="Profit" align="right">{formatMoney(sale.profit)}</td>
     <td data-title="Profit p/h" align="right">{formatMoney(sale.profit_per_hour)}</td>
     <td data-title="Time spent" align="right">{sale.time_spent}</td>
+    <td data-title="Options">
+      <Link className="btn btn-info" to={`sales/${sale.id}`}> See details </Link>
+      <Link className="btn btn-info" to={`/sales/${sale.id}/edit`}>Edit</Link>
+      <DeleteModal entity={sale} >
+        Delete
+      </DeleteModal>
+    </td>
   </tr>
 );
 Sale.propTypes = {

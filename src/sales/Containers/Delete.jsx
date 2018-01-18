@@ -16,7 +16,7 @@ DeleteModal.propTypes = {
   entity: PropTypes.objectOf(PropTypes.any).isRequired,
 };
 
-const { asyncActions } = reusableReduxConfig(urls.PRODUCTS, 'products');
+const { asyncActions } = reusableReduxConfig(urls.SALES, 'sales');
 
 export default connect(undefined, {
   deleteFn: asyncActions.delete,

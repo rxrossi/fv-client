@@ -25,8 +25,8 @@
 + [ ] make form reusable
   + [ ] works for add
   + [ ] works for edit
-+ [ ] make a delete container
-+ [ ] integrate buttons of delete and edit to List Component
++ [X] make a delete container
++ [X] integrate buttons of delete and edit to List Component
 + [ ] Convert HOC
   + [X] List
   + [X] ViewDetail
