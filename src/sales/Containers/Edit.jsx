@@ -41,7 +41,6 @@ const transform = (purchase) => {
   }
   return {
     ...purchase,
-    /*eslint-disable*/
     client: purchase.client.id,
     professional: purchase.professional.id,
     value: purchase.payment.value_total,
