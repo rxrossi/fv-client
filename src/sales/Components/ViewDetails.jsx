@@ -4,8 +4,8 @@ import { Container, Row, Col } from 'reactstrap';
 import Table from '../../NoMoreTables';
 import { getReadableDateWithTime, formatMoney } from '../../displayHelpers';
 
-const ViewOne = ({ sale }) => {
-  if (!sale) {
+const ViewOne = ({ entity }) => {
+  if (!entity) {
     return (
       <Container className="py-1">
         <Row>
@@ -39,23 +39,25 @@ const ViewOne = ({ sale }) => {
         </thead>
         <tbody>
           <tr>
-            <td data-title="Service name">{sale.name}</td>
-            <td data-title="Client name">{sale.client.name}</td>
+            <td data-title="Service name">{entity.name}</td>
+            <td data-title="Client name">{entity.client.name}</td>
             <td data-title="Value charged" align="right">
-              {formatMoney(sale.payment.value_total)}
+              {formatMoney(entity.payment.value_total)}
             </td>
-            <td data-title="Profit" align="right">{formatMoney(sale.profit)}</td>
-            <td data-title="Payment method" align="right">{sale.payment.method}</td>
+            <td data-title="Profit" align="right">{formatMoney(entity.profit)}</td>
+            <td data-title="Payment method" align="right">{entity.payment.method}</td>
             <td data-title="Start time" align="right">
-              {getReadableDateWithTime(sale.start_time)}
+              {getReadableDateWithTime(entity.start_time)}
             </td>
-            <td data-title="End time" align="right">{getReadableDateWithTime(sale.end_time)}</td>
-            <td data-title="Time spent" align="right">{sale.time_spent} h</td>
-            <td data-title="Profit per hour" align="right">{formatMoney(sale.profit_per_hour)}</td>
+            <td data-title="End time" align="right">{getReadableDateWithTime(entity.end_time)}</td>
+            <td data-title="Time spent" align="right">{entity.time_spent} h</td>
+            <td data-title="Profit per hour" align="right">
+              {formatMoney(entity.profit_per_hour)}
+            </td>
           </tr>
         </tbody>
       </Table>
-      { sale.stockEntries.length > 0 &&
+      { entity.stockEntries.length > 0 &&
       <Container className="py-4">
         <Row>
           <h2>Products used</h2>
@@ -71,7 +73,7 @@ const ViewOne = ({ sale }) => {
             </thead>
             <tbody>
               {
-                    sale.stockEntries.map(entry => (
+                    entity.stockEntries.map(entry => (
                       <tr key={entry.id}>
                         <td data-title="Name">
                           {entry.product.name}
@@ -96,7 +98,7 @@ const ViewOne = ({ sale }) => {
 };
 
 ViewOne.propTypes = {
-  sale: PropTypes.shape({
+  entity: PropTypes.shape({
     name: PropTypes.string.isRequired,
     profit: PropTypes.number.isRequired,
     payment: PropTypes.shape({
@@ -119,7 +121,7 @@ ViewOne.propTypes = {
 };
 
 ViewOne.defaultProps = {
-  sale: undefined,
+  entity: undefined,
 };
 
 export default ViewOne;

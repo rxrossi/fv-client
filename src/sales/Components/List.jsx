@@ -31,8 +31,8 @@ Sale.propTypes = {
 };
 
 
-const View = ({ sales }) => {
-  if (!sales || sales.length === 0) {
+const View = ({ entities }) => {
+  if (!entities || entities.length === 0) {
     return (
       <Container className="py-5">
         <Row>
@@ -64,7 +64,7 @@ const View = ({ sales }) => {
           </tr>
         </thead>
         <tbody>
-          { sales.map(sale => <Sale key={sale.id} sale={sale} />) }
+          { entities.map(sale => <Sale key={sale.id} sale={sale} />) }
         </tbody>
       </Table>
     </Container>
@@ -72,7 +72,7 @@ const View = ({ sales }) => {
 };
 
 View.propTypes = {
-  sales: PropTypes.arrayOf(PropTypes.shape({
+  entities: PropTypes.arrayOf(PropTypes.shape({
     id: PropTypes.string.isRequired,
     name: PropTypes.string.isRequired,
     stockEntries: PropTypes.arrayOf(PropTypes.objectOf(PropTypes.oneOfType([
@@ -84,7 +84,7 @@ View.propTypes = {
 };
 
 View.defaultProps = {
-  sales: [],
+  entities: [],
 };
 
 export default View;

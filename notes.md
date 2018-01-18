@@ -7,18 +7,19 @@
 + [ ] clicking the client goes to view one, this view one shows last sales for it
 
 ## Purchases
-+ [ ] Delete
-+ [ ] make form reusable
-  + [ ] works for add
-  + [ ] works for edit
-+ [ ] make a delete container
-+ [ ] integrate buttons of delete and edit to List Component
-+ [ ] Convert HOC
++ [ ] Switch select to FilterableSelect
++ [X] Delete
++ [X] make form reusable
+  + [X] works for add
+  + [X] works for edit
++ [X] make a delete container
++ [X] integrate buttons of delete and edit to List Component
++ [X] Convert HOC
   + [X] List
   + [X] ViewDetail
   + [X] Add
-  + [ ] Edit
-+ [ ] It seems possible to submit a purchase without stock entries
+  + [X] Edit
++ [X] It seems possible to submit a purchase without stock entries
 
 ## Sales
 + [ ] make form reusable
@@ -28,7 +29,7 @@
 + [ ] integrate buttons of delete and edit to List Component
 + [ ] Convert HOC
   + [X] List
-  + [ ] ViewDetail
+  + [X] ViewDetail
   + [X] Add
   + [ ] Edit
 

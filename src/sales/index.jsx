@@ -7,7 +7,7 @@ import ViewDetails from './Containers/ViewDetails';
 const Sales = ({ match }) => {
   if (match.params.id) {
     return (
-      <ViewDetails saleId={match.params.id} />
+      <ViewDetails entityId={match.params.id} />
     );
   }
   return (

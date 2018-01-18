@@ -10,7 +10,7 @@ const RedirectComponent = () => <Redirect to="/products" />;
 
 const Edit = EditHOC(Form, RedirectComponent);
 
-const { asyncActions, updateFormFieldActions } = reusableReduxConfig(urls.PRODUCTS, 'products');
+const { asyncActions, updateFormFieldActions } = reusableReduxConfig(urls.SALES, 'sales');
 const formActions = updateFormFieldActions;
 
 const mapDispatch = {

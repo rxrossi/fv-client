@@ -180,7 +180,7 @@ FormComponent.propTypes = {
   handleChange: PropTypes.func.isRequired,
   handleSubmit: PropTypes.func.isRequired,
   handleReset: PropTypes.func.isRequired,
-  handleCancel: PropTypes.func.isRequired,
+  handleCancel: PropTypes.func,
   errors: PropTypes.objectOf(PropTypes.oneOfType([
     PropTypes.string,
     PropTypes.arrayOf(PropTypes.string),
@@ -204,6 +204,7 @@ FormComponent.propTypes = {
 };
 
 FormComponent.defaultProps = {
+  handleCancel: (() => {}),
   updating: false,
 };
 

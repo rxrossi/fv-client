@@ -75,6 +75,13 @@ class FilterableSelect extends React.Component {
     }
   }
 
+  componentWillReceiveProps() {
+    this.setState({
+      filter: '',
+      visibleOpts: [],
+    });
+  }
+
   changeFilter(name) {
     return (e) => {
       const visibleOpts = e.target.value ?
@@ -104,13 +111,14 @@ class FilterableSelect extends React.Component {
     return this.setState({ selected: false });
   }
 
+
   render() {
     const { visibleOpts, selected } = this.state;
     const {
       value, options, error, label,
     } = this.props;
 
-    if (selected) {
+    if (selected && value) {
       return (
         <div>
           <LocalLabel>{label}</LocalLabel>

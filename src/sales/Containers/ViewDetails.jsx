@@ -6,10 +6,10 @@ import viewDetailsHOC from '../../HOC/ViewDetails';
 
 const ViewDetails = viewDetailsHOC(ViewDetailsComponent);
 
-const { asyncActions } = reusableReduxConfig(urls.CLIENTS, 'clients');
+const { asyncActions } = reusableReduxConfig(urls.SALES, 'sales');
 
 const mapState = state => ({
-  sales: state.sales.entities,
+  entities: state.sales.entities,
 });
 
 const mapDispatch = {

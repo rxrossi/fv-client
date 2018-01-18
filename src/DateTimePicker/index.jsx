@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Label } from 'reactstrap';
+import { FormFeedback, Label } from 'reactstrap';
 import DatePicker from './DatePicker/';
 import TimePicker from './TimePicker/';
 import Toggler from './Toggler/';
@@ -16,6 +16,9 @@ class DateTimePicker extends React.Component {
     this.handleTogglerClick = this.handleTogglerClick.bind(this);
     this.handleChangeDate = this.handleChangeDate.bind(this);
     this.handleChangeTime = this.handleChangeTime.bind(this);
+
+    const currTime = new Date();
+    props.onChange(props.name)({ target: { value: currTime } });
   }
 
   handleTogglerClick() {
@@ -39,7 +42,7 @@ class DateTimePicker extends React.Component {
   }
 
   render() {
-    const { date } = this.props;
+    const { date, error, label } = this.props;
     const time = `${pad2(date.getHours())}:${pad2(date.getMinutes())}`;
     const { picking } = this.state;
     return (
@@ -61,6 +64,10 @@ class DateTimePicker extends React.Component {
           show={picking === 'time' ? 'date' : 'clock'}
           handleClick={this.handleTogglerClick}
         />
+        {
+          error &&
+            <FormFeedback>{label}</FormFeedback>
+        }
       </div>
     );
   }
@@ -68,6 +75,7 @@ class DateTimePicker extends React.Component {
 DateTimePicker.propTypes = {
   date: PropTypes.instanceOf(Date),
   picking: PropTypes.string,
+  error: PropTypes.string,
   name: PropTypes.string.isRequired,
   label: PropTypes.string.isRequired,
   onChange: PropTypes.func.isRequired,
@@ -75,6 +83,7 @@ DateTimePicker.propTypes = {
 DateTimePicker.defaultProps = {
   date: new Date(),
   picking: 'time',
+  error: undefined,
 };
 
 export default DateTimePicker;
