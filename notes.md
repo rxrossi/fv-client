@@ -1,4 +1,10 @@
 # Client
+## Auth
++ [ ] make a login page
++ [ ] wrap all routes with HOC that requires a token to be store
+  It would be wise to store the token in local store!?
++ [ ] make a create user page
+
 ## General
 + [X] on delete rename to 'name deactivated at yyyy/mm/dd hh:mm:ss'
 
