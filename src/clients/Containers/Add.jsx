@@ -3,8 +3,9 @@ import reusableReduxConfig from 'reusablecrudredux';
 import Form from '../Components/Form';
 import * as urls from '../../APIInfo';
 import createHOC from '../../HOC/Create';
+import { headerCreator } from '../../auth/actions';
 
-const { asyncActions, createFormFieldActions } = reusableReduxConfig(urls.CLIENTS, 'clients');
+const { asyncActions, createFormFieldActions } = reusableReduxConfig(urls.CLIENTS, 'clients', headerCreator);
 const formActions = createFormFieldActions;
 
 const Add = createHOC(Form);

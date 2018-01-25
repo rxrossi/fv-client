@@ -96,107 +96,104 @@ const FormComponent = ({
   errors,
   handleAppendField,
   handleRemoveField,
-}) => {
-  console.log(values);
-  return (
-    <Container>
-      <Row>
-        <Col>
-          <Form onSubmit={handleSubmit}>
-            <Input
-              onChange={handleChange}
-              type="text"
-              name="name"
-              label="Service Name"
-              placeholder="Name of the service"
-              value={values.name}
-              error={errors.name}
-            />
+}) => (
+  <Container>
+    <Row>
+      <Col>
+        <Form onSubmit={handleSubmit}>
+          <Input
+            onChange={handleChange}
+            type="text"
+            name="name"
+            label="Service Name"
+            placeholder="Name of the service"
+            value={values.name}
+            error={errors.name}
+          />
 
-            <Row>
-              <Col className="text-center">
-                <DateTimePicker
-                  date={values.start_time}
-                  error={errors.start_time}
-                  name="start_time"
-                  label="Start Time"
-                  onChange={handleChange}
-                />
-              </Col>
+          <Row>
+            <Col className="text-center">
+              <DateTimePicker
+                date={values.start_time}
+                error={errors.start_time}
+                name="start_time"
+                label="Start Time"
+                onChange={handleChange}
+              />
+            </Col>
 
-              <Col className="text-center">
-                <DateTimePicker
-                  date={values.end_time}
-                  error={errors.end_time}
-                  name="end_time"
-                  label="End Time"
-                  onChange={handleChange}
-                />
-              </Col>
-            </Row>
+            <Col className="text-center">
+              <DateTimePicker
+                date={values.end_time}
+                error={errors.end_time}
+                name="end_time"
+                label="End Time"
+                onChange={handleChange}
+              />
+            </Col>
+          </Row>
 
-            <Input
-              onChange={handleChange}
-              value={values.value}
-              error={errors.value}
-              type="number"
-              name="value"
-              label="Price Charged"
-              placeholder="Value"
-            />
+          <Input
+            onChange={handleChange}
+            value={values.value}
+            error={errors.value}
+            type="number"
+            name="value"
+            label="Price Charged"
+            placeholder="Value"
+          />
 
-            <FilterableSelect
-              type="select"
-              value={values.payment_method}
-              error={errors.payment_method}
-              name="payment_method"
-              label="Payment Method"
-              handleChange={handleChange}
-              options={paymentOptions}
-            />
+          <FilterableSelect
+            type="select"
+            value={values.payment_method}
+            error={errors.payment_method}
+            name="payment_method"
+            label="Payment Method"
+            handleChange={handleChange}
+            options={paymentOptions}
+          />
 
 
-            <FilterableSelect
-              name="client"
-              value={values.client}
-              error={errors.client}
-              label="Select Client"
-              handleChange={handleChange}
-              options={clients}
-            />
+          <FilterableSelect
+            name="client"
+            value={values.client}
+            error={errors.client}
+            label="Select Client"
+            handleChange={handleChange}
+            options={clients}
+          />
 
-            <FilterableSelect
-              name="professional"
-              value={values.professional}
-              error={errors.professional}
-              label="Select Professional"
-              handleChange={handleChange}
-              options={professionals}
-            />
+          <FilterableSelect
+            name="professional"
+            value={values.professional}
+            error={errors.professional}
+            label="Select Professional"
+            handleChange={handleChange}
+            options={professionals}
+          />
 
-            <ProductsFields
-              handleAppendField={handleAppendField}
-              handleRemoveField={handleRemoveField}
-              handleChange={handleChange}
-              values={values.products}
-              errors={errors.products}
-              products={products}
-            />
+          <ProductsFields
+            handleAppendField={handleAppendField}
+            handleRemoveField={handleRemoveField}
+            handleChange={handleChange}
+            values={values.products}
+            errors={errors.products}
+            products={products}
+          />
 
-            <Row>
-              <Col xs={8}>
-                <Button color="primary" block type="submit">Save Sale</Button>
-              </Col>
-              <Col xs={4}>
-                <Button color="danger" block type="button" onClick={handleReset}>Clear Form</Button>
-              </Col>
-            </Row>
-          </Form>
-        </Col>
-      </Row>
-    </Container>
-  );
-};
+          <Row>
+            <Col xs={8}>
+              <Button color="primary" block type="submit">Save Sale</Button>
+            </Col>
+            <Col xs={4}>
+              <Button color="danger" block type="button" onClick={handleReset}>Clear Form</Button>
+            </Col>
+          </Row>
+        </Form>
+      </Col>
+    </Row>
+  </Container>
+);
 
 FormComponent.propTypes = {
   handleSubmit: PropTypes.func.isRequired,

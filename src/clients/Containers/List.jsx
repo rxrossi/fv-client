@@ -3,8 +3,9 @@ import { connect } from 'react-redux';
 import List from '../Components/List';
 import * as urls from '../../APIInfo';
 import listHOC from '../../HOC/List';
+import { headerCreator } from '../../auth/actions';
 
-const { asyncActions } = reusableReduxConfig(urls.CLIENTS, 'clients');
+const { asyncActions } = reusableReduxConfig(urls.CLIENTS, 'clients', headerCreator);
 
 const ListContainer = listHOC(List);
 

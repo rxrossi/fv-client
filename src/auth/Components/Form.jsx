@@ -14,8 +14,8 @@ const Register = ({
           <InputField
             type="text"
             onChange={handleChange}
-            value={values.name}
-            error={errors.name}
+            value={values.email}
+            error={errors.email}
             name="email"
             label="Email"
             placeholder="Email"
@@ -23,8 +23,8 @@ const Register = ({
           <InputField
             type="password"
             onChange={handleChange}
-            value={values.name}
-            error={errors.name}
+            value={values.password}
+            error={errors.password}
             name="password"
             label="Password"
             placeholder="password"
@@ -34,8 +34,8 @@ const Register = ({
             <InputField
               type="password"
               onChange={handleChange}
-              value={values.name}
-              error={errors.name}
+              value={values.confirmPassword}
+              error={errors.confirmPassword}
               name="confirmPassword"
               label="Confirm password"
               placeholder="Type the password again"

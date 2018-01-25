@@ -5,12 +5,13 @@ import reusableReduxConfig from 'reusablecrudredux';
 import Form from '../Components/Form';
 import * as urls from '../../APIInfo';
 import EditHOC from '../../HOC/Edit';
+import { headerCreator } from '../../auth/actions';
 
 const RedirectComponent = () => <Redirect to="/clients" />;
 
 const Edit = EditHOC(Form, RedirectComponent);
 
-const { asyncActions, updateFormFieldActions } = reusableReduxConfig(urls.CLIENTS, 'clients');
+const { asyncActions, updateFormFieldActions } = reusableReduxConfig(urls.CLIENTS, 'clients', headerCreator);
 const formActions = updateFormFieldActions;
 
 const mapDispatch = {

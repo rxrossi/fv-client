@@ -24,9 +24,14 @@ class Auth extends React.Component {
   }
 
   handleChange(name) {
-    return e => this.set.state({
-      [name]: e.target.value,
-    });
+    return (e) => {
+      this.setState({
+        fields: {
+          ...this.state.fields,
+          [name]: e.target.value,
+        },
+      });
+    };
   }
 
   render() {

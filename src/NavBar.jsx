@@ -1,4 +1,6 @@
 import React from 'react';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 import { NavLink } from 'react-router-dom';
 import {
   Collapse,
@@ -11,7 +13,81 @@ import {
   Col,
 } from 'reactstrap';
 
-export default class NavBar extends React.Component {
+const NavForLoggedIn = () => (
+  <Nav className="ml-auto" pills>
+    <NavItem>
+      <NavLink
+        className="nav-link"
+        to="/clients"
+      >
+        Clients
+      </NavLink>
+    </NavItem>
+    <NavItem>
+      <NavLink
+        className="nav-link"
+        to="/products"
+      >
+        Products
+      </NavLink>
+    </NavItem>
+    <NavItem>
+      <NavLink
+        className="nav-link"
+        to="/professionals"
+      >
+        Professionals
+      </NavLink>
+    </NavItem>
+    <NavItem>
+      <NavLink
+        className="nav-link"
+        to="/purchases"
+      >
+        Purchases
+      </NavLink>
+    </NavItem>
+    <NavItem>
+      <NavLink
+        className="nav-link"
+        to="/sales"
+      >
+        Sales
+      </NavLink>
+    </NavItem>
+    <NavItem>
+      <NavLink
+        className="btn"
+        to="/logout"
+      >
+        Logout
+      </NavLink>
+    </NavItem>
+  </Nav>
+);
+
+const NavForNotLoggedIn = () => (
+  <Nav className="ml-auto" pills>
+    <NavItem>
+      <NavLink
+        className="nav-link"
+        to="/register"
+      >
+  Register
+      </NavLink>
+    </NavItem>
+    <NavItem>
+      <NavLink
+        className="nav-link"
+        to="/login"
+      >
+      Login
+      </NavLink>
+    </NavItem>
+  </Nav>
+);
+
+class NavBar extends React.Component {
   constructor(props) {
     super(props);
 
@@ -35,48 +111,11 @@ export default class NavBar extends React.Component {
               <NavLink className="navbar-brand" to="/">DManager</NavLink>
               <NavbarToggler onClick={this.toggle} />
               <Collapse isOpen={this.state.isOpen} navbar>
-                <Nav className="ml-auto" pills>
-                  <NavItem>
-                    <NavLink
-                      className="nav-link"
-                      to="/clients"
-                    >
-                      Clients
-                    </NavLink>
-                  </NavItem>
-                  <NavItem>
-                    <NavLink
-                      className="nav-link"
-                      to="/products"
-                    >
-                      Products
-                    </NavLink>
-                  </NavItem>
-                  <NavItem>
-                    <NavLink
-                      className="nav-link"
-                      to="/professionals"
-                    >
-                      Professionals
-                    </NavLink>
-                  </NavItem>
-                  <NavItem>
-                    <NavLink
-                      className="nav-link"
-                      to="/purchases"
-                    >
-                      Purchases
-                    </NavLink>
-                  </NavItem>
-                  <NavItem>
-                    <NavLink
-                      className="nav-link"
-                      to="/sales"
-                    >
-                      Sales
-                    </NavLink>
-                  </NavItem>
-                </Nav>
+                {
+                  this.props.isLogged ?
+                    <NavForLoggedIn /> :
+                    <NavForNotLoggedIn />
+                }
               </Collapse>
             </Navbar>
           </Col>
@@ -85,3 +124,18 @@ export default class NavBar extends React.Component {
     );
   }
 }
+
+NavBar.propTypes = {
+  isLogged: PropTypes.string,
+};
+
+NavBar.defaultProps = {
+  isLogged: undefined,
+};
+
+const mapState = state => ({
+  isLogged: state.auth.token,
+});
+
+
+export default connect(mapState)(NavBar);
