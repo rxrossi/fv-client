@@ -3,8 +3,9 @@ import reusableReduxConfig from 'reusablecrudredux';
 import ViewComponent from '../Components/List';
 import * as urls from '../../APIInfo';
 import listHOC from '../../HOC/List';
+import { headerCreator } from '../../auth/actions';
 
-const { asyncActions } = reusableReduxConfig(urls.PRODUCTS, 'products');
+const { asyncActions } = reusableReduxConfig(urls.PRODUCTS, 'products', headerCreator);
 
 const List = listHOC(ViewComponent);
 

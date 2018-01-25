@@ -4,6 +4,7 @@ import reusableReduxConfig from 'reusablecrudredux';
 import { connect } from 'react-redux';
 import DeleteModalComponent from '../../DeleteModalPresentational';
 import * as urls from '../../APIInfo';
+import { headerCreator } from '../../auth/actions';
 
 const DeleteModal = ({ entity, deleteFn }) => (
   <DeleteModalComponent
@@ -16,7 +17,7 @@ DeleteModal.propTypes = {
   entity: PropTypes.objectOf(PropTypes.any).isRequired,
 };
 
-const { asyncActions } = reusableReduxConfig(urls.PRODUCTS, 'products');
+const { asyncActions } = reusableReduxConfig(urls.PRODUCTS, 'products', headerCreator);
 
 export default connect(undefined, {
   deleteFn: asyncActions.delete,

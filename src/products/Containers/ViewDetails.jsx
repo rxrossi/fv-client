@@ -3,10 +3,11 @@ import reusableReduxConfig from 'reusablecrudredux';
 import ViewDetailsPrensentational from '../Components/ViewDetails';
 import * as urls from '../../APIInfo';
 import viewDetailsHOC from '../../HOC/ViewDetails';
+import { headerCreator } from '../../auth/actions';
 
 const ViewDetails = viewDetailsHOC(ViewDetailsPrensentational);
 
-const { asyncActions } = reusableReduxConfig(urls.PRODUCTS, 'products');
+const { asyncActions } = reusableReduxConfig(urls.PRODUCTS, 'products', headerCreator);
 
 const mapState = state => ({
   errors: state.products.APIStatus.put.errors,
