@@ -1,67 +1,14 @@
 # Client
-## Auth
-+ [ ] make a login page
-+ [ ] wrap all routes with HOC that requires a token to be store
-  It would be wise to store the token in local store!?
-+ [ ] make a create user page
-
-## General
-+ [X] on delete rename to 'name deactivated at yyyy/mm/dd hh:mm:ss'
 
 ## Clients
 + [ ] NoMoreTables is not showing 'th' when screen gets smaller
 + [ ] clicking the client goes to view one, this view one shows last sales for it
++ [ ] Fuzzy filter for Clients
 
 ## Purchases
 + [ ] Switch select to FilterableSelect
-+ [X] Delete
-+ [X] make form reusable
-  + [X] works for add
-  + [X] works for edit
-+ [X] make a delete container
-+ [X] integrate buttons of delete and edit to List Component
-+ [X] Convert HOC
-  + [X] List
-  + [X] ViewDetail
-  + [X] Add
-  + [X] Edit
-+ [X] It seems possible to submit a purchase without stock entries
-
-## Sales
-+ [X] make form reusable
-  + [X] works for add
-  + [X] works for edit
-+ [X] make a delete container
-+ [X] integrate buttons of delete and edit to List Component
-+ [X] Convert HOC
-  + [X] List
-  + [X] ViewDetail
-  + [X] Add
-  + [X] Edit
-
-## General
-+ [ ] Implement login
-+ [X] Fuzzy filter for Clients
-
-## Products
-+ [X] make form reusable
-  + [X] works for add
-  + [X] works for edit
-+ [X] Create a ViewDetails HOC
-+ [X] make a delete container
-+ [X] integrate buttons of delete and edit to List Component
-+ [X] Convert HOC
-  + [X] List
-  + [X] ViewDetail
-  + [X] Add
-  + [X] Edit
 
 ## Professionals
-+ [X] make form reusable
-  + [X] works for add
-  + [X] works for edit
-+ [X] make a delete container
-+ [X] integrate buttons of delete and edit to List Component
 + [ ] Show the total profit
 
 # Acceptance, Container and Connected Container tests
