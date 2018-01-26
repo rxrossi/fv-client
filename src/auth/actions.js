@@ -8,8 +8,9 @@ const setToken = token => ({
   token,
 });
 
-const authFailure = () => ({
+const authFailure = (errorMsg = 'Something went wrong') => ({
   type: AUTH_FAILURE,
+  errorMsg,
 });
 
 const headers = {
@@ -53,6 +54,11 @@ export const login = body => (dispatch) => {
         localStorage.setItem('token', json.body);
         return dispatch(setToken(json.body));
       }
+      if (json.code === 401) {
+        return dispatch(authFailure('Invalid credentials'));
+      }
+      console.log(json);
+
       return dispatch(authFailure());
     });
 };

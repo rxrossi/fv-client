@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Container, Row, Form, Button } from 'reactstrap';
+import { Container, Row, Form, Button, Col } from 'reactstrap';
 import InputField from '../../renderField';
 
 const Register = ({
@@ -10,39 +10,47 @@ const Register = ({
   return (
     <Container>
       <Row>
-        <Form onSubmit={handleSubmit}>
-          <InputField
-            type="text"
-            onChange={handleChange}
-            value={values.email}
-            error={errors.email}
-            name="email"
-            label="Email"
-            placeholder="Email"
-          />
-          <InputField
-            type="password"
-            onChange={handleChange}
-            value={values.password}
-            error={errors.password}
-            name="password"
-            label="Password"
-            placeholder="password"
-          />
-          {
-          registering &&
+        <Col>
+          <Form onSubmit={handleSubmit}>
+            <InputField
+              type="text"
+              onChange={handleChange}
+              value={values.email}
+              error={errors.email}
+              name="email"
+              label="Email"
+              placeholder="Email"
+            />
             <InputField
               type="password"
               onChange={handleChange}
-              value={values.confirmPassword}
-              error={errors.confirmPassword}
-              name="confirmPassword"
-              label="Confirm password"
-              placeholder="Type the password again"
+              value={values.password}
+              error={errors.password}
+              name="password"
+              label="Password"
+              placeholder="Password"
             />
-        }
-          <Button type="submit" color="primary" block>{btnTxt}</Button>
-        </Form>
+            {
+              registering &&
+                <InputField
+                  type="password"
+                  onChange={handleChange}
+                  value={values.confirmPassword}
+                  error={errors.confirmPassword}
+                  name="confirmPassword"
+                  label="Confirm password"
+                  placeholder="Type the password again"
+                />
+            }
+            <Button type="submit" color="primary" block>{btnTxt}</Button>
+            <hr />
+            {
+              errors.general &&
+                <p className="alert alert-danger text-center">{errors.general}</p>
+            }
+          </Form>
+
+        </Col>
       </Row>
     </Container>
   );

@@ -4,14 +4,24 @@ import { connect } from 'react-redux';
 import { login } from '../actions';
 import Generic from './Generic';
 
-const Login = ({ loginFn }) => (
+const Login = ({ loginFn, error }) => (
   <Generic
     submit={loginFn}
+    errors={{ general: error }}
   />
 );
 
 Login.propTypes = {
   loginFn: PropTypes.func.isRequired,
+  error: PropTypes.string,
 };
 
-export default connect(undefined, { loginFn: login })(Login);
+Login.defaultProps = {
+  error: undefined,
+};
+
+const mapState = state => ({
+  error: state.auth.errorMsg,
+});
+
+export default connect(mapState, { loginFn: login })(Login);

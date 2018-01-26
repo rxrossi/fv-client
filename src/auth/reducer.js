@@ -11,7 +11,7 @@ export default (state = {}, action) => {
     case AUTH_FAILURE:
       return {
         ...state,
-        errorMsg: 'some error',
+        errorMsg: action.errorMsg,
       };
     default:
       return state;

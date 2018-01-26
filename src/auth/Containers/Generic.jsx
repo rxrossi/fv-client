@@ -11,7 +11,6 @@ class Auth extends React.Component {
         password: '',
         confirmPassword: '',
       },
-      errors: {},
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -40,7 +39,7 @@ class Auth extends React.Component {
         handleChange={this.handleChange}
         handleSubmit={this.handleSubmit}
         values={this.state.fields}
-        errors={this.state.errors}
+        errors={this.props.errors}
         registering={this.props.registering}
       />
     );
@@ -49,11 +48,13 @@ class Auth extends React.Component {
 
 Auth.defaultProps = {
   registering: false,
+  errors: {},
 };
 
 Auth.propTypes = {
   registering: PropTypes.bool,
   submit: PropTypes.func.isRequired,
+  errors: PropTypes.objectOf(PropTypes.string),
 };
 
 export default Auth;
