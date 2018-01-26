@@ -1,3 +1,4 @@
+/* eslint-disable */
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
@@ -57,7 +58,7 @@ const NavForLoggedIn = () => (
     </NavItem>
     <NavItem>
       <NavLink
-        className="btn"
+        className="nav-link"
         to="/logout"
       >
         Logout
@@ -73,7 +74,7 @@ const NavForNotLoggedIn = () => (
         className="nav-link"
         to="/register"
       >
-  Register
+        Register
       </NavLink>
     </NavItem>
     <NavItem>
@@ -81,7 +82,7 @@ const NavForNotLoggedIn = () => (
         className="nav-link"
         to="/login"
       >
-      Login
+        Login
       </NavLink>
     </NavItem>
   </Nav>
@@ -96,6 +97,7 @@ class NavBar extends React.Component {
       isOpen: false,
     };
   }
+
   toggle() {
     this.setState({
       isOpen: !this.state.isOpen,
@@ -138,4 +140,4 @@ const mapState = state => ({
 });
 
 
-export default connect(mapState)(NavBar);
+export default connect(mapState, null, null, { pure: false })(NavBar);
