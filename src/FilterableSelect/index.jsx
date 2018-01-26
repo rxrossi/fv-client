@@ -168,7 +168,7 @@ FilterableSelect.propTypes = {
     PropTypes.number,
   ])),
   handleChange: PropTypes.func.isRequired,
-  error: PropTypes.objectOf(PropTypes.string),
+  error: PropTypes.string,
   options: PropTypes.arrayOf(PropTypes.objectOf(PropTypes.any)).isRequired,
   maxOptsToShow: PropTypes.number,
 };

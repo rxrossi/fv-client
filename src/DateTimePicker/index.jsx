@@ -17,10 +17,8 @@ class DateTimePicker extends React.Component {
     this.handleChangeDate = this.handleChangeDate.bind(this);
     this.handleChangeTime = this.handleChangeTime.bind(this);
 
-    if (!props.date) {
-      const currTime = new Date();
-      props.onChange(props.name)({ target: { value: currTime } });
-    }
+    const date = new Date(props.date);
+    props.onChange(props.name)({ target: { value: date } });
   }
 
   handleTogglerClick() {
@@ -44,7 +42,7 @@ class DateTimePicker extends React.Component {
   }
 
   render() {
-    const { error, label } = this.props;
+    const { error } = this.props;
     const date = this.props.date instanceof Date ? this.props.date : new Date(this.props.date);
 
     const time = `${pad2(date.getHours())}:${pad2(date.getMinutes())}`;
@@ -70,7 +68,7 @@ class DateTimePicker extends React.Component {
         />
         {
           error &&
-            <FormFeedback>{label}</FormFeedback>
+            <FormFeedback>{error}</FormFeedback>
         }
       </div>
     );
@@ -87,6 +85,7 @@ DateTimePicker.propTypes = {
   label: PropTypes.string.isRequired,
   onChange: PropTypes.func.isRequired,
 };
+
 DateTimePicker.defaultProps = {
   date: new Date(),
   picking: 'time',
