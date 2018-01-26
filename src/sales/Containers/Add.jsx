@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import Form from '../Components/Form';
 import * as urls from '../../APIInfo';
 import createHOC from '../../HOC/Create';
+import { headerCreator } from '../../auth/actions';
 
 const passProps = [
   'products',
@@ -19,10 +20,10 @@ const callPropsOnMount = [
 
 const Add = createHOC(Form, passProps, callPropsOnMount);
 
-const { asyncActions: professionalsAsyncActions } = reusableReduxConfig(urls.PROFESSIONALS, 'professionals');
-const { asyncActions: productsAsyncActions } = reusableReduxConfig(urls.PRODUCTS, 'products');
-const { asyncActions: clientsAsyncActions } = reusableReduxConfig(urls.CLIENTS, 'clients');
-const { asyncActions: salesAsyncActions, createFormFieldActions } = reusableReduxConfig(urls.SALES, 'sales');
+const { asyncActions: professionalsAsyncActions } = reusableReduxConfig(urls.PROFESSIONALS, 'professionals', headerCreator);
+const { asyncActions: productsAsyncActions } = reusableReduxConfig(urls.PRODUCTS, 'products', headerCreator);
+const { asyncActions: clientsAsyncActions } = reusableReduxConfig(urls.CLIENTS, 'clients', headerCreator);
+const { asyncActions: salesAsyncActions, createFormFieldActions } = reusableReduxConfig(urls.SALES, 'sales', headerCreator);
 
 const paymentOptions = [
   { id: '1', name: 'Money' },

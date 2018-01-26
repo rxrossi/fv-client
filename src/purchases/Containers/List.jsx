@@ -3,8 +3,9 @@ import { connect } from 'react-redux';
 import ListComponent from '../Components/List';
 import listHOC from '../../HOC/List';
 import * as urls from '../../APIInfo';
+import { headerCreator } from '../../auth/actions';
 
-const { asyncActions } = reusableReduxConfig(urls.PURCHASES, 'purchases');
+const { asyncActions } = reusableReduxConfig(urls.PURCHASES, 'purchases', headerCreator);
 const List = listHOC(ListComponent);
 
 const mapState = state => ({

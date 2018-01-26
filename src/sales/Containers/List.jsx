@@ -3,8 +3,9 @@ import reusableReduxConfig from 'reusablecrudredux';
 import * as urls from '../../APIInfo';
 import ListComponent from '../Components/List';
 import listHOC from '../../HOC/List';
+import { headerCreator } from '../../auth/actions';
 
-const { asyncActions } = reusableReduxConfig(urls.SALES, 'sales');
+const { asyncActions } = reusableReduxConfig(urls.SALES, 'sales', headerCreator);
 const List = listHOC(ListComponent);
 
 const mapState = state => ({

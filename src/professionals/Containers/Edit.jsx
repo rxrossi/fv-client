@@ -5,8 +5,9 @@ import { connect } from 'react-redux';
 import Form from '../Components/Form';
 import editHOC from '../../HOC/Edit';
 import * as urls from '../../APIInfo';
+import { headerCreator } from '../../auth/actions';
 
-const { asyncActions, updateFormFieldActions } = reusableReduxConfig(urls.PROFESSIONALS, 'professionals');
+const { asyncActions, updateFormFieldActions } = reusableReduxConfig(urls.PROFESSIONALS, 'professionals', headerCreator);
 const formActions = updateFormFieldActions;
 
 const RedirectComponent = () => <Redirect to="/professionals" />;

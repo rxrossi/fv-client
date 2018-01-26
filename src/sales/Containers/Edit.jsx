@@ -5,6 +5,7 @@ import reusableReduxConfig from 'reusablecrudredux';
 import Form from '../Components/Form';
 import * as urls from '../../APIInfo';
 import EditHOC from '../../HOC/Edit';
+import { headerCreator } from '../../auth/actions';
 
 const RedirectComponent = () => <Redirect to="/sales" />;
 
@@ -51,10 +52,10 @@ const transform = (purchase) => {
 
 const Edit = EditHOC(Form, RedirectComponent, passProps, callPropsOnMount, transform);
 
-const { asyncActions: professionalsAsyncActions } = reusableReduxConfig(urls.PROFESSIONALS, 'professionals');
-const { asyncActions: productsAsyncActions } = reusableReduxConfig(urls.PRODUCTS, 'products');
-const { asyncActions: clientsAsyncActions } = reusableReduxConfig(urls.CLIENTS, 'clients');
-const { asyncActions, updateFormFieldActions } = reusableReduxConfig(urls.SALES, 'sales');
+const { asyncActions: professionalsAsyncActions } = reusableReduxConfig(urls.PROFESSIONALS, 'professionals', headerCreator);
+const { asyncActions: productsAsyncActions } = reusableReduxConfig(urls.PRODUCTS, 'products', headerCreator);
+const { asyncActions: clientsAsyncActions } = reusableReduxConfig(urls.CLIENTS, 'clients', headerCreator);
+const { asyncActions, updateFormFieldActions } = reusableReduxConfig(urls.SALES, 'sales', headerCreator);
 
 const mapDispatch = {
   fetchProducts: productsAsyncActions.get,
