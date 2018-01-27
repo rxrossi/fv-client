@@ -10,6 +10,8 @@ class Auth extends React.Component {
         email: '',
         password: '',
         confirmPassword: '',
+        errors: {},
+        successMsg: null,
       },
     };
     this.handleChange = this.handleChange.bind(this);
@@ -19,7 +21,10 @@ class Auth extends React.Component {
   handleSubmit(e) {
     e.preventDefault();
     const { submit } = this.props;
-    submit(this.state.fields);
+    submit(this.state.fields)
+      .then((res) => {
+        this.setState(res);
+      });
   }
 
   handleChange(name) {
@@ -39,7 +44,8 @@ class Auth extends React.Component {
         handleChange={this.handleChange}
         handleSubmit={this.handleSubmit}
         values={this.state.fields}
-        errors={this.props.errors}
+        errors={this.state.errors}
+        successMsg={this.state.successMsg}
         registering={this.props.registering}
       />
     );
@@ -48,13 +54,11 @@ class Auth extends React.Component {
 
 Auth.defaultProps = {
   registering: false,
-  errors: {},
 };
 
 Auth.propTypes = {
   registering: PropTypes.bool,
   submit: PropTypes.func.isRequired,
-  errors: PropTypes.objectOf(PropTypes.string),
 };
 
 export default Auth;

@@ -1,4 +1,4 @@
-import { SET_TOKEN, REMOVE_TOKEN, AUTH_FAILURE } from './constants';
+import { SET_TOKEN, REMOVE_TOKEN } from './constants';
 
 export default (state = {}, action) => {
   switch (action.type) {
@@ -8,11 +8,6 @@ export default (state = {}, action) => {
       };
     case REMOVE_TOKEN:
       return {};
-    case AUTH_FAILURE:
-      return {
-        ...state,
-        errorMsg: action.errorMsg,
-      };
     default:
       return state;
   }

@@ -1,12 +1,21 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 import { Container, Row, Form, Button, Col } from 'reactstrap';
 import InputField from '../../renderField';
 
 const Register = ({
-  handleSubmit, handleChange, values, errors, registering,
+  handleSubmit, handleChange, values, errors, registering, successMsg,
 }) => {
   const btnTxt = registering ? 'Register' : 'Login';
+  if (successMsg) {
+    return (
+      <Container>
+        <p className="alert alert-success text-center">{successMsg}</p>
+        <Link to="/Login" className="btn btn-primary btn-block">Go to Login</Link>
+      </Container>
+    );
+  }
   return (
     <Container>
       <Row>
@@ -43,10 +52,12 @@ const Register = ({
                 />
             }
             <Button type="submit" color="primary" block>{btnTxt}</Button>
-            <hr />
             {
               errors.general &&
-                <p className="alert alert-danger text-center">{errors.general}</p>
+                <div>
+                  <hr />
+                  <p className="alert alert-danger text-center">{errors.general}</p>
+                </div>
             }
           </Form>
 
@@ -62,12 +73,14 @@ Register.propTypes = {
   values: PropTypes.objectOf(PropTypes.any),
   errors: PropTypes.objectOf(PropTypes.any),
   registering: PropTypes.bool,
+  successMsg: PropTypes.string,
 };
 
 Register.defaultProps = {
   values: {},
   errors: {},
   registering: false,
+  successMsg: undefined,
 };
 
 export default Register;
