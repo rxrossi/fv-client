@@ -34,6 +34,10 @@ const Field = ({
         <FormFeedback>{label} must be greater than zero</FormFeedback>
     }
     {
+      error === 'UNMATCHED_PW' &&
+        <FormFeedback>Passwords does not match</FormFeedback>
+    }
+    {
       error === 'BLANK' &&
         <FormFeedback>{label} is required</FormFeedback>
     }

@@ -30,7 +30,6 @@ export const register = body => fetch(URLS.USERS, {
   headers,
 }).then(res => res.json())
   .then((json) => {
-    console.log(json);
     if (json.code === 200) {
       return {
         successMsg: 'User Created',
