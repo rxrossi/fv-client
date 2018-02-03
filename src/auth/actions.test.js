@@ -16,7 +16,7 @@ describe('Register user actions', () => {
 
     fetchMock.post(URLS.USERS, {
       body: {
-        code: 200,
+        statusCode: 200,
       },
     }, {
       name: 'register',
@@ -25,7 +25,7 @@ describe('Register user actions', () => {
     // Act
     const response = await register(body);
     // Assert
-    expect(response).toBe(true);
+    expect(response.errors).toBe(undefined);
     expect(fetchMock.calls('register').length).toBe(1);
   });
 
@@ -36,9 +36,14 @@ describe('Register user actions', () => {
       password: 'passw',
     };
 
+    const errors = {
+      name: 'NOT_UNIQUE',
+    };
+
     fetchMock.post(URLS.USERS, {
       body: {
-        code: 422,
+        statusCode: 422,
+        errors,
       },
     }, {
       name: 'register',
@@ -47,7 +52,7 @@ describe('Register user actions', () => {
     // Act
     const response = await register(body);
     // Assert
-    expect(response).toBe(false);
+    expect(response).toEqual({ errors });
     expect(fetchMock.calls('register').length).toBe(1);
   });
 });

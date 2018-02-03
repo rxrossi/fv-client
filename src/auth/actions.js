@@ -30,12 +30,12 @@ export const register = body => fetch(URLS.USERS, {
   headers,
 }).then(res => res.json())
   .then((json) => {
-    if (json.code === 200) {
+    if (json.statusCode === 200) {
       return {
         successMsg: 'User Created',
       };
     }
-    if (json.code === 422) {
+    if (json.statusCode === 422) {
       return {
         errors: json.errors,
       };
@@ -58,13 +58,13 @@ export const login = body => dispatch => fetch(URLS.TOKEN, {
   headers,
 }).then(res => res.json())
   .then((json) => {
-    if (json.code === 200) {
+    if (json.statusCode === 200) {
       localStorage.setItem('token', json.body);
       dispatch(setToken(json.body));
       return true;
     }
 
-    if (json.code === 401) {
+    if (json.statusCode === 401) {
       return {
         errors: {
           general: 'Invalid credentials',
