@@ -23,18 +23,21 @@ class Auth extends React.Component {
     const { submit } = this.props;
     submit(this.state.fields)
       .then((res) => {
-        this.setState(res);
+        if (typeof res === 'object') {
+          this.setState(res);
+        }
       });
   }
 
   handleChange(name) {
-    return (e) => {
-      this.setState({
+    return ({ target: { value } }) => {
+      this.setState(state => ({
+        ...state,
         fields: {
-          ...this.state.fields,
-          [name]: e.target.value,
+          ...state.fields,
+          [name]: value,
         },
-      });
+      }));
     };
   }
 
