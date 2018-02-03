@@ -25,7 +25,7 @@ describe('Clients acceptance test', () => {
     // setting up the fake server response
     fetchMock.get(API_URLS.CLIENTS, {
       body: {
-        code: 200,
+        statusCode: 200,
         body: clientList,
       },
     });

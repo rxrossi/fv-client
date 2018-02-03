@@ -4,9 +4,10 @@ import fetchMock from 'fetch-mock';
 import { configure, mount } from 'enzyme';
 import App, { store } from '../../App';
 import * as API_URLS from '../../APIInfo';
-import ProductViewComponent from '../../products/Components/View';
+import ProductViewComponent from '../../products/Components/List';
 // Configure Enzyme
 configure({ adapter: new Adapter() });
+
 
 describe('Products Page', () => {
   describe('o products yet', () => {
@@ -15,7 +16,7 @@ describe('Products Page', () => {
     beforeEach((done) => {
       fetchMock.get(API_URLS.PRODUCTS, {
         body: {
-          code: 200,
+          statusCode: 200,
           body: [],
         },
       });
@@ -107,7 +108,7 @@ describe('Products Page', () => {
     beforeEach((done) => {
       fetchMock.get(API_URLS.PRODUCTS, {
         body: {
-          code: 200,
+          statusCode: 200,
           body: productsList,
         },
       });
@@ -122,7 +123,7 @@ describe('Products Page', () => {
     });
 
     it('has the products in the store', () => {
-      const actual = store.getState().products.list;
+      const actual = store.getState().products.entities;
       expect(actual).toEqual(productsList);
     });
 
@@ -145,15 +146,15 @@ describe('Products Page', () => {
         .restore()
         .reset()
         .get(API_URLS.PRODUCTS, {
-          code: 200,
+          statusCode: 200,
           body: [],
         });
 
       fetchMock.post(
         (url, opts) =>
           url === API_URLS.PRODUCTS
-          && opts
-          && opts.body === JSON.stringify(productExample)
+        && opts
+        && opts.body === JSON.stringify(productExample)
         ,
         {
           body: {
@@ -164,12 +165,11 @@ describe('Products Page', () => {
               avgPriceFiveLast: '',
               id: '4',
             },
-            code: 201,
+            statusCode: 201,
           },
         },
       );
 
-      // Go to Clients page
       sut = await mount(<App />);
       sut.find('a[href="/products"]').simulate('click', { button: 0 });
 
@@ -284,7 +284,7 @@ describe('Products Page', () => {
     beforeEach((done) => {
       fetchMock.get(API_URLS.PRODUCTS, {
         body: {
-          code: 200,
+          statusCode: 200,
           body: productsList,
         },
       });
