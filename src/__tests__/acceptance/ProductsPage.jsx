@@ -2,43 +2,15 @@ import React from 'react';
 import Adapter from 'enzyme-adapter-react-16';
 import fetchMock from 'fetch-mock';
 import { configure, mount } from 'enzyme';
-import App, { store } from '../../App';
+import App from '../../App';
 import * as API_URLS from '../../APIInfo';
-import ProductViewComponent from '../../products/Components/List';
+import { AddComponent } from '../../products/Containers/Add';
+import { ListComponent } from '../../products/Containers/List';
 // Configure Enzyme
 configure({ adapter: new Adapter() });
 
 
 describe('Products Page', () => {
-  describe('o products yet', () => {
-    let sut;
-
-    beforeEach((done) => {
-      fetchMock.get(API_URLS.PRODUCTS, {
-        body: {
-          statusCode: 200,
-          body: [],
-        },
-      });
-      sut = mount(<App />);
-      sut.find('a[href="/products"]').simulate('click', { button: 0 });
-      setImmediate(() => done());
-    });
-
-    afterEach(() => {
-      fetchMock.reset();
-      fetchMock.restore();
-    });
-
-    it('has a form', () => {
-      const form = sut.find('form');
-      expect(form.length).toBe(1);
-    });
-
-    it('displays the no products warning', () => {
-    });
-  });
-
   describe('With products', () => {
     let sut;
 
@@ -122,98 +94,12 @@ describe('Products Page', () => {
       fetchMock.restore();
     });
 
-    it('has the products in the store', () => {
-      const actual = store.getState().products.entities;
-      expect(actual).toEqual(productsList);
-    });
-
-    it('receives the correct props', () => {
-      const props = sut.find(ProductViewComponent).props();
-      expect(props.products).toEqual(productsList);
-    });
-  });
-
-  describe('Form submit success case', () => {
-    let sut;
-
-    const productExample = {
-      name: 'NEW PROD',
-      measure_unit: 'ml',
-    };
-
-    beforeAll(async (done) => {
-      fetchMock
-        .restore()
-        .reset()
-        .get(API_URLS.PRODUCTS, {
-          statusCode: 200,
-          body: [],
-        });
-
-      fetchMock.post(
-        (url, opts) =>
-          url === API_URLS.PRODUCTS
-        && opts
-        && opts.body === JSON.stringify(productExample)
-        ,
-        {
-          body: {
-            body: {
-              ...productExample,
-              quantity: '',
-              price: '',
-              avgPriceFiveLast: '',
-              id: '4',
-            },
-            statusCode: 201,
-          },
-        },
-      );
-
-      sut = await mount(<App />);
-      sut.find('a[href="/products"]').simulate('click', { button: 0 });
-
-      await setImmediate(() =>
-        Promise.resolve());
-
-      // Fill up form and submit
-      sut.find('input[name="name"]')
-        .simulate('change', { target: { value: productExample.name } });
-      sut.find('select[name="measure_unit"]')
-        .simulate('change', { target: { value: productExample.measure_unit } });
-
-      sut.find('form').simulate('submit');
-
-      await setImmediate(() => done());
-    });
-
-    afterAll(() => {
-      fetchMock.restore();
-      fetchMock.reset();
-    });
-
-    it('has a name and measure unit field', () => {
-      const nameInpt = sut.find('input[name="name"]');
-      const measureUnit = sut.find('select[name="measure_unit"]');
-      const submitBtn = sut.find('button[type="submit"]');
-
-      expect(nameInpt.length).toBe(1);
-      expect(measureUnit.length).toBe(1);
-      expect(submitBtn.length).toBe(1);
-    });
-
-    it('calls the API with expected data on submit', () => {
-      expect(fetchMock.calls().matched.length).toBe(2);
-    });
-
-    it('clears the field on submit', () => {
+    it.only('loads the correct components', () => {
       sut.update();
-      expect(sut.find('input[name="name"]').props().value).toEqual('');
-      expect(sut.find('select[name="measure_unit"]').props().value).toEqual('');
-    });
-
-    it('shows the recently added product', () => {
-      expect(sut.text()).toMatch(productExample.name);
+      const ListMounted = sut.find(ListComponent);
+      expect(ListMounted.length).toBe(1);
+      expect(ListMounted.props().entities).toEqual(productsList);
+      expect(sut.find(AddComponent).length).toBe(1);
     });
   });
 
@@ -301,7 +187,7 @@ describe('Products Page', () => {
       setImmediate(() => done());
     });
 
-    it('check if stock renders', () => {
+    it.only('check if stock renders', () => {
       expect(sut.text()).toMatch(product.stock[0].sourceOrDestination.name);
     });
   });
