@@ -124,7 +124,7 @@ describe('Edit HOC', () => {
       sut.instance().handleChange('name')({ target: { value: 'someVal' } });
       // Assert
       expect(changeField).toHaveBeenCalledTimes(1);
-      expect(changeField).toHaveBeenCalledWith('name', 'someVal');
+      expect(changeField).toHaveBeenCalledWith(['name'], 'someVal');
     });
 
     it('passes handleChange method to Presentational', () => {
@@ -156,9 +156,9 @@ describe('Edit HOC', () => {
       const sut = mountComponent({ removeField });
       const path = 'some path';
       // Act
-      sut.instance().handleRemoveField(path);
+      sut.instance().handleRemoveField(path, 1);
       // Assert
-      expect(removeField).toHaveBeenCalledWith(path);
+      expect(removeField).toHaveBeenCalledWith(path, 1);
     });
   });
 
