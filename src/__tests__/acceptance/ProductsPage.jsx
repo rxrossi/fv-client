@@ -94,7 +94,7 @@ describe('Products Page', () => {
       fetchMock.restore();
     });
 
-    it.only('loads the correct components', () => {
+    it('loads the correct components', () => {
       sut.update();
       const ListMounted = sut.find(ListComponent);
       expect(ListMounted.length).toBe(1);
@@ -187,7 +187,7 @@ describe('Products Page', () => {
       setImmediate(() => done());
     });
 
-    it.only('check if stock renders', () => {
+    it('check if stock renders', () => {
       expect(sut.text()).toMatch(product.stock[0].sourceOrDestination.name);
     });
   });

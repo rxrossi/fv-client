@@ -4,6 +4,8 @@ import fetchMock from 'fetch-mock';
 import { configure, mount } from 'enzyme';
 import App from '../../App';
 import * as API_URLS from '../../APIInfo';
+import { AddComponent } from '../../purchases/Containers/Add';
+import { ListComponent } from '../../purchases/Containers/List';
 // Configure Enzyme
 
 configure({ adapter: new Adapter() });
@@ -69,14 +71,14 @@ describe('Purchases Page', () => {
   beforeEach((done) => {
     fetchMock.get(API_URLS.PURCHASES, {
       body: {
-        code: 200,
+        statusCode: 200,
         body: purchases,
       },
     });
 
     fetchMock.get(API_URLS.PRODUCTS, {
       body: {
-        code: 200,
+        statusCode: 200,
         body: products,
       },
     });
@@ -102,7 +104,7 @@ describe('Purchases Page', () => {
             ],
             id: '4',
           },
-          code: 201,
+          statusCode: 201,
         },
       },
       {
@@ -114,138 +116,28 @@ describe('Purchases Page', () => {
     setImmediate(() => done());
   });
 
-  it('renders a form', () => {
-    expect(sut.find('form').length).toBe(1);
-  });
-
-  describe('Purchases view list of purchases', () => {
-    it('shows the first purchase', () => {
-      expect(sut.text()).toMatch(purchase.seller);
-    });
+  it.only('renders the correct components', () => {
+    sut.update();
+    const ListMounted = sut.find(ListComponent);
+    expect(ListMounted.length).toBe(1);
+    expect(ListMounted.props().entities).toEqual(purchases);
+    expect(sut.find(AddComponent).length).toBe(1);
   });
 
   describe('ViewOne of purchases', () => {
     beforeEach((done) => {
       sut.update();
-      const viewOneBtn = sut.find(`a[href="/purchases/${purchase.id}"]`);
+      const viewOneBtn = sut.find(`a[href="purchases/${purchase.id}"]`);
       viewOneBtn.simulate('click', { button: 0 });
       setImmediate(() => done());
     });
 
-    it('shows the products', () => {
+    it.only('shows the products', () => {
+      sut.update();
       const text = sut.text();
       expect(text).toMatch(purchase.seller);
       expect(text).toMatch(purchase.stockEntries[0].product.name);
       expect(text).toMatch(purchase.stockEntries[0].qty.toString());
-    });
-  });
-
-  describe('Using the form (success case)', () => {
-    beforeEach(() => {
-      sut.update();
-      sut.find('button.add-product').simulate('click');
-    });
-
-    beforeEach(() => {
-      sut.update();
-      sut.find('button.add-product').simulate('click');
-    });
-
-    beforeEach((done) => {
-      // Selecting inputs
-      const sellerInput = sut.find('input[name="seller"]');
-      const dateInput = sut.find('input[name="date"]');
-
-      const groupOfFields = sut.find('form').find('div.product-row').at(0);
-      const nameSelect = groupOfFields.find('select');
-      const qtyInput = groupOfFields.find('input[name="qty"]');
-      const valueInput = groupOfFields.find('input[name="total_price"]');
-
-      const groupOfFields2 = sut.find('form').find('div.product-row').at(1);
-      const nameSelect2 = groupOfFields2.find('select');
-      const qtyInput2 = groupOfFields2.find('input[name="qty"]');
-      const valueInput2 = groupOfFields2.find('input[name="total_price"]');
-
-      // Changing values
-      // Header
-      sellerInput.simulate('change', { target: { value: 'Company one' } });
-      dateInput.simulate('change', { target: { value: '10 27 2017' } });
-
-      // First product
-      nameSelect.simulate('change', { target: { value: expectedPostData.products[0].id } });
-      qtyInput.simulate('change', { target: { value: 1 } });
-      valueInput.simulate('change', { target: { value: 10 } });
-
-      // Second product
-      nameSelect2.simulate('change', { target: { value: expectedPostData.products[1].id } });
-      qtyInput2.simulate('change', { target: { value: 2 } });
-      valueInput2.simulate('change', { target: { value: 20 } });
-
-      // Submiting
-      sut.find('form').simulate('submit');
-      setImmediate(() => done());
-    });
-
-    afterEach(() => {
-      fetchMock.restore();
-      fetchMock.reset();
-    });
-
-    it('calls fetchMock on submit', () => {
-      const mockPostPurchase = fetchMock.calls('post_purchases_success');
-      expect(mockPostPurchase.length).toBe(1);
-    });
-  });
-
-  describe('Using the form (blank fields)', () => {
-    const errorsExample = {
-      date: 'adklasjlkdasjkl',
-    };
-
-    beforeEach((done) => {
-      sut = mount(<App />);
-      sut.find('a[href="/purchases"]').simulate('click', { button: 0 });
-      setImmediate(() => done());
-    });
-
-    beforeEach((done) => {
-      sut.update();
-      fetchMock.post(
-        (url, opts) => (
-          url === API_URLS.PURCHASES
-            && opts
-            && opts.body === JSON.stringify({ products: [{}] })
-        )
-        ,
-        {
-          body: {
-            errors: errorsExample,
-            code: 422,
-          },
-        },
-        {
-          name: 'post_purchases_failure',
-        },
-      );
-      sut.update();
-      sut.find('button.add-product').simulate('click');
-
-      // Submiting
-      sut.find('form').simulate('submit');
-
-      setImmediate(() => done());
-    });
-
-    it('adds to the purchases add component props the errors', () => {
-      sut.update();
-
-      // check props
-      const addErrorsFromProps = sut.find('Add').at(1).props().errors;
-      expect(addErrorsFromProps).toEqual(errorsExample);
-
-      // check if the right fetch mock was called
-      const mockPostPurchase = fetchMock.calls('post_purchases_failure');
-      expect(mockPostPurchase.length).toBe(1);
     });
   });
 });

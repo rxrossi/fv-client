@@ -13,7 +13,7 @@ const callPropsOnMount = [
   'fetchProducts',
 ];
 
-const Add = createHOC(Form, passProps, callPropsOnMount);
+const AddComponent = createHOC(Form, passProps, callPropsOnMount);
 
 const { asyncActions, createFormFieldActions } = reusableReduxConfig(urls.PURCHASES, 'purchases', headerCreator);
 
@@ -34,4 +34,6 @@ const mapDispatch = {
   clearFields: createFormFieldActions.clear,
 };
 
-export default connect(mapState, mapDispatch)(Add);
+export { AddComponent };
+
+export default connect(mapState, mapDispatch)(AddComponent);
