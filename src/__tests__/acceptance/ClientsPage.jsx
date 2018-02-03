@@ -40,9 +40,10 @@ describe('Clients acceptance test', () => {
 
   describe('Initial page', () => {
     it('loads the correct components', () => {
+      sut.update();
       const ListMounted = sut.find(List);
       expect(ListMounted.length).toBe(1);
-      expect(ListMounted.props()).toBe(1);
+      expect(ListMounted.props().entities).toEqual(clientList);
       expect(sut.find(Add).length).toBe(1);
     });
   });
