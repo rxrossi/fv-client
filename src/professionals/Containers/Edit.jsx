@@ -28,4 +28,6 @@ const mapDispatch = {
   clearFields: formActions.clear,
 };
 
+export { Edit };
+
 export default connect(mapState, mapDispatch)(Edit);
