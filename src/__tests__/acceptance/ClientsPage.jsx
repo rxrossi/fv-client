@@ -5,7 +5,7 @@ import fetchMock from 'fetch-mock';
 import { Edit } from '../../clients/Containers/Edit';
 import { Add } from '../../clients/Containers/Add';
 import App from '../../App';
-import List from '../../clients/Containers/List';
+import { List } from '../../clients/Containers/List';
 import * as API_URLS from '../../APIInfo';
 
 const clientList = [
@@ -18,9 +18,7 @@ configure({ adapter: new Adapter() });
 
 describe('Clients acceptance test', () => {
   let sut;
-  afterEach(() => {
-    fetchMock.restore();
-  });
+
   beforeEach((done) => {
     // setting up the fake server response
     fetchMock.get(API_URLS.CLIENTS, {
@@ -29,15 +27,22 @@ describe('Clients acceptance test', () => {
         body: clientList,
       },
     });
+
     // Going to Clients page
     sut = mount(<App />);
     sut.find('a[href="/clients"]').simulate('click', { button: 0 });
     setImmediate(() => done());
   });
 
+  afterEach(() => {
+    fetchMock.restore();
+  });
+
   describe('Initial page', () => {
     it('loads the correct components', () => {
-      expect(sut.find(List).length).toBe(1);
+      const ListMounted = sut.find(List);
+      expect(ListMounted.length).toBe(1);
+      expect(ListMounted.props()).toBe(1);
       expect(sut.find(Add).length).toBe(1);
     });
   });

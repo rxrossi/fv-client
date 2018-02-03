@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import AddConnected from './Containers/Add';
-import List from './Containers/List';
+import ListContainer from './Containers/List';
 import EditConnected from './Containers/Edit';
 
 const Clients = ({ match }) => {
@@ -17,7 +17,7 @@ const Clients = ({ match }) => {
   return (
     <div>
       <AddConnected />
-      <List />
+      <ListContainer />
     </div>
   );
 };

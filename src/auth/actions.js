@@ -72,6 +72,14 @@ export const login = body => dispatch => fetch(URLS.TOKEN, {
       };
     }
 
+    if (json.statusCode === 500) {
+      return {
+        errors: {
+          general: 'Server error (500)',
+        },
+      };
+    }
+
     return {
       errors: {
         general: 'Unexpected error',
