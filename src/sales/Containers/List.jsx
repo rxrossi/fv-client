@@ -6,7 +6,7 @@ import listHOC from '../../HOC/List';
 import { headerCreator } from '../../auth/actions';
 
 const { asyncActions } = reusableReduxConfig(urls.SALES, 'sales', headerCreator);
-const List = listHOC(ListComponent);
+const ListContainer = listHOC(ListComponent);
 
 const mapState = state => ({
   entities: state.sales.entities,
@@ -16,4 +16,5 @@ const mapDispatch = {
   fetchEntities: asyncActions.get,
 };
 
-export default connect(mapState, mapDispatch)(List);
+export { ListContainer };
+export default connect(mapState, mapDispatch)(ListContainer);
