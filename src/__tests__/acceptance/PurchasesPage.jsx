@@ -4,8 +4,8 @@ import fetchMock from 'fetch-mock';
 import { configure, mount } from 'enzyme';
 import App from '../../App';
 import * as API_URLS from '../../APIInfo';
-import { AddComponent } from '../../purchases/Containers/Add';
-import { ListComponent } from '../../purchases/Containers/List';
+import FormComponent from '../../purchases/Components/Form';
+import ListComponent from '../../purchases/Components/List';
 // Configure Enzyme
 
 configure({ adapter: new Adapter() });
@@ -121,7 +121,7 @@ describe('Purchases Page', () => {
     const ListMounted = sut.find(ListComponent);
     expect(ListMounted.length).toBe(1);
     expect(ListMounted.props().entities).toEqual(purchases);
-    expect(sut.find(AddComponent).length).toBe(1);
+    expect(sut.find(FormComponent).length).toBe(1);
   });
 
   describe('ViewOne of purchases', () => {

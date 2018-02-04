@@ -4,8 +4,8 @@ import fetchMock from 'fetch-mock';
 import { configure, mount } from 'enzyme';
 import App from '../../App';
 import * as API_URLS from '../../APIInfo';
-import { AddComponent } from '../../professionals/Containers/Add';
-import { ListComponent } from '../../professionals/Containers/List';
+import FormComponent from '../../professionals/Components/Form';
+import ListComponent from '../../professionals/Components/List';
 
 // Configure Enzyme
 configure({ adapter: new Adapter() });
@@ -41,7 +41,7 @@ describe('Professionals Page', () => {
       const ListMounted = sut.find(ListComponent);
       expect(ListMounted.length).toBe(1);
       expect(ListMounted.props().entities).toEqual(professionalsListExample);
-      expect(sut.find(AddComponent).length).toBe(1);
+      expect(sut.find(FormComponent).length).toBe(1);
     });
   });
 });

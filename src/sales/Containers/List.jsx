@@ -16,5 +16,4 @@ const mapDispatch = {
   fetchEntities: asyncActions.get,
 };
 
-export { ListContainer };
 export default connect(mapState, mapDispatch)(ListContainer);
