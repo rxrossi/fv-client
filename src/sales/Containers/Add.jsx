@@ -18,7 +18,7 @@ const callPropsOnMount = [
   'fetchProfessionals',
 ];
 
-const AddComponent = createHOC(Form, passProps, callPropsOnMount);
+const AddContainer = createHOC(Form, passProps, callPropsOnMount);
 
 const { asyncActions: professionalsAsyncActions } = reusableReduxConfig(urls.PROFESSIONALS, 'professionals', headerCreator);
 const { asyncActions: productsAsyncActions } = reusableReduxConfig(urls.PRODUCTS, 'products', headerCreator);
@@ -53,5 +53,4 @@ const mapDispatch = {
   clearFields: createFormFieldActions.clear,
 };
 
-export { AddComponent };
-export default connect(mapState, mapDispatch)(AddComponent);
+export default connect(mapState, mapDispatch)(AddContainer);

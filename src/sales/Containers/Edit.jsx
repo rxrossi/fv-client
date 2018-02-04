@@ -50,7 +50,7 @@ const transform = (purchase) => {
   };
 };
 
-const Edit = EditHOC(Form, RedirectComponent, passProps, callPropsOnMount, transform);
+const EditContainer = EditHOC(Form, RedirectComponent, passProps, callPropsOnMount, transform);
 
 const { asyncActions: professionalsAsyncActions } = reusableReduxConfig(urls.PROFESSIONALS, 'professionals', headerCreator);
 const { asyncActions: productsAsyncActions } = reusableReduxConfig(urls.PRODUCTS, 'products', headerCreator);
@@ -80,6 +80,5 @@ const mapState = state => ({
   paymentOptions,
 });
 
-export { Edit };
 
-export default connect(mapState, mapDispatch)(Edit);
+export default connect(mapState, mapDispatch)(EditContainer);

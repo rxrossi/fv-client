@@ -3,8 +3,8 @@ import Adapter from 'enzyme-adapter-react-16';
 import { configure, mount } from 'enzyme';
 import fetchMock from 'fetch-mock';
 import { Edit } from '../../clients/Containers/Edit';
-import { Add } from '../../clients/Containers/Add';
-import { List } from '../../clients/Containers/List';
+import FormComponent from '../../clients/Components/Form';
+import ListComponent from '../../clients/Components/List';
 import App from '../../App';
 import * as API_URLS from '../../APIInfo';
 
@@ -41,10 +41,10 @@ describe('Clients acceptance test', () => {
   describe('Initial page', () => {
     it('loads the correct components', () => {
       sut.update();
-      const ListMounted = sut.find(List);
+      const ListMounted = sut.find(ListComponent);
       expect(ListMounted.length).toBe(1);
       expect(ListMounted.props().entities).toEqual(clientList);
-      expect(sut.find(Add).length).toBe(1);
+      expect(sut.find(FormComponent).length).toBe(1);
     });
   });
 
