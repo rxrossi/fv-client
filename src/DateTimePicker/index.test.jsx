@@ -5,7 +5,7 @@ import DateTimePicker from './index';
 // Configure Enzyme
 configure({ adapter: new Adapter() });
 
-function mountContainer(date, onChange = () => {}) {
+function mountContainer(date, onChange = (() => () => {})) {
   return mount(<DateTimePicker
     date={date}
     onChange={onChange}
