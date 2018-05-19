@@ -19,7 +19,7 @@ Client of multi tenant app for micro entrepreneurs that sells services. For the 
 There is a live version here: [https://rxrossi.github.io/fv-client/](https://rxrossi.github.io/fv-client/)
 
 ## Npm commands
-npm start
-npm test (integration and unit testing)
-npm run storybook
-npm build (for the files to be used in any server)
+- npm start
+- npm test (integration and unit testing)
+- npm run storybook
+- npm build (for the files to be used in any server)
